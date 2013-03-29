@@ -1,0 +1,84 @@
+<!DOCTYPE html><meta charset="utf-8"><title>从 Tumblr 迁移到 Octopress</title><meta name="author" content="Chris Yip"><meta name="description" content="以前一直在用 Tumblr 作为 blog 托管，因为简单，还不用管流量、图片托管等问题，也支持自定义域名，不过最近开始满足不了我的一些需求：
+
+非 Photo 类型的文章难插入多张图片，通常都是用别的图床来放置图片，比如 Droplr；
+CSS/JS 的处理比较郁闷。
+
+所以就打算迁移到 GitHub + Octopress 上，虽然所有东西都是公开的。
+附 Octopress 简单教程：
+第一步，在 GitHub 创建一个新的 repo，将其命名为 &quot;username.github.com&quot;，&quot;username&quot; 是你的用户名。
+第二步，创建好之后，去 admin 页面选择 &quot;Automatic Page Generator&quot;。
+第三步，安装 Octopress：
+git clone git://github.com/imathis/octopress.git octopress
+cd octopress # 保证安装了 Ruby 和 rbenv/RVM，进入目录时会问你是否信任 .rvmrc，选是
+gem install bundler
+# rbenv 需要跑 `rbenv rehash`
+bundle install
+rake install
+rake setup_github_pages # 填入你的 repo 地址
+rake generate
+
+
+一些常用的操作如下：
+rake new_post[&quot;title&quot;]：创建新的文章，title 尽量用英文吧，Mac Terminal 打中文会报错。创建的文章会用时间戳的方式，如 2012-11-02-moved-from-tumblr.markdown 保存到 source/_post 下，用任意编辑器打开即可。
+rake new_page[page-name]：创建新的页面，比如个人简介什么的，会放在 source/page-name 下，默认主页是 index.markdown。
+rake generate：把所有文件转换并复制到 public/ 下面。rake watch 会监视文件并实时转换。
+rake preview：启动一个 localhost:4000 服务器供预览。
+rake deploy：如果没问题了，就用这个命令把文件提交到 GitHub。
+因为这个 repo（按照上面的例子是 octopress）和你的 GitHub pages 并不是同一个 repo，所以你可以再建一个 repo，把东西提交上去，这样也方便你写草稿，还可以用 Bitbucket 的免费私有 repo。
+如果执行 rake new_post 或 rake generate 时碰到了类似 invalid byte sequence in US-ASCII (ArgumentError) 的问题，编辑一下这两个文件：
+# rvm-path/gems/ruby-version/gems/jekyll-version/lib/jekyll/tags/include.rb
+# 把 source = File.read(@file) 改成：
+source = File.read(@file, :encoding =&gt; &quot;utf-8&quot;)
+
+# rvm-path/gems/ruby-version/gems/jekyll-version/lib/jekyll/convertible.rb
+# 把 self.content = File.read(File.join(base, name)) 改成：
+self.content = File.read(File.join(base, name), :encoding =&gt; &quot;utf-8&quot;)
+
+根据你的配置，把 rvm-path，ruby-version 和 jekyll-version 改成实际的路径。一般情况，rvm-path 是 ~/.rvm/。
+或者在你的 .bashrc、.zshrc 等文件加入以下两个变量：
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+
+这个问题是由于 Python 2.X 并没有把 Unicode 作为默认编码格式，Jekyll 也没有声明要用 Unicode 处理文件。"><meta name="keywords" content="iOS, JavaScript, HTML, CSS, Objective-C, Freelancer, Web Development, Mobile Development, Mac, OS X, Mac Development, Development, 前端开发, 移动开发, Ruby"><meta property="og:title" content="从 Tumblr 迁移到 Octopress"><meta property="og:site_name" content="I'm Chris"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><link rel="shortcut icon" href="/favicon.ico"><link rel="alternate" href="/atom.xml" title="I'm Chris" type="application/atom+xml"><link rel="stylesheet" href="/css/style.css" media="screen"><script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script><script>var _gaq=_gaq||[];_gaq.push(["_setAccount","UA-15420910-3"]);_gaq.push(["_trackPageview"]);(function(){var a=document.createElement("script");a.type="text/javascript";a.async=!0;a.src=("https:"==document.location.protocol?"https://ssl":"http://www")+".google-analytics.com/ga.js";var b=document.getElementsByTagName("script")[0];b.parentNode.insertBefore(a,b)})();</script><!--[if IE]><div style="width:100%;position:fixed;top:0;left:0;background:#f00;color:#fff;text-align:center">Internet Explorer series are not supported.</div><![endif]--><header id="header" class="inner page-header"><h1><a href="/">I'm Chris</a></h1><div class="menubar"><nav id="header-menu" class="header-menu"><a class="toggle-menu">Menu</a><ul><li><a href="/about" class="menu-item">About</a></li><li><a href="/archives" class="menu-item">Archives</a></li><li><a href="/works" class="menu-item">Works</a></li></ul></nav><form action="http://google.com/search" method="get" class="search"><input name="q" autocomplete="off" class="search-field"><input type="hidden" name="q" value="site:chrisyip.im"><a class="button"></a></form><div class="follow_me"><a href="https://github.com/chrisyip" title="GitHub" class="github">GitHub</a><a href="https://twitter.com/chrisyipw" title="Twitter" class="twitter">Twitter</a><a href="/atom.xml" title="RSS" class="rss">RSS</a></div></div></header><div id="content" class="inner content"><article class=""><header class="entry-header"><h2 class="title"><a href="/post/moved-from-tumblr/">从 Tumblr 迁移到 Octopress</a></h2></header><div class="entry-content"><p>以前一直在用 Tumblr 作为 blog 托管，因为简单，还不用管流量、图片托管等问题，也支持自定义域名，不过最近开始满足不了我的一些需求：</p>
+<ul>
+<li>非 Photo 类型的文章难插入多张图片，通常都是用别的图床来放置图片，比如 Droplr；</li>
+<li>CSS/JS 的处理比较郁闷。</li>
+</ul>
+<p>所以就打算迁移到 GitHub + <a href="http://octopress.org/">Octopress</a> 上，虽然所有东西都是公开的。</p>
+<p>附 Octopress 简单教程：</p>
+<p>第一步，在 GitHub 创建一个新的 repo，将其命名为 &quot;username.github.com&quot;，&quot;username&quot; 是你的用户名。</p>
+<p>第二步，创建好之后，去 admin 页面选择 &quot;Automatic Page Generator&quot;。</p>
+<p>第三步，安装 Octopress：</p>
+<pre><code>git clone git://github.com/imathis/octopress.git octopress
+cd octopress <span class="comment"># 保证安装了 Ruby 和 rbenv/RVM，进入目录时会问你是否信任 .rvmrc，选是</span>
+gem install bundler
+<span class="comment"># rbenv 需要跑 `rbenv rehash`</span>
+bundle install
+rake install
+rake setup_github_pages <span class="comment"># 填入你的 repo 地址</span>
+rake generate
+</code></pre>
+
+<p>一些常用的操作如下：</p>
+<p><code>rake new_post[&quot;title&quot;]</code>：创建新的文章，<code>title</code> 尽量用英文吧，Mac Terminal 打中文会报错。创建的文章会用时间戳的方式，如 <code>2012-11-02-moved-from-tumblr.markdown</code> 保存到 <code>source/_post</code> 下，用任意编辑器打开即可。</p>
+<p><code>rake new_page[page-name]</code>：创建新的页面，比如个人简介什么的，会放在 <code>source/page-name</code> 下，默认主页是 <code>index.markdown</code>。</p>
+<p><code>rake generate</code>：把所有文件转换并复制到 <code>public/</code> 下面。<code>rake watch</code> 会监视文件并实时转换。</p>
+<p><code>rake preview</code>：启动一个 <code>localhost:4000</code> 服务器供预览。</p>
+<p><code>rake deploy</code>：如果没问题了，就用这个命令把文件提交到 GitHub。</p>
+<p>因为这个 repo（按照上面的例子是 <strong>octopress</strong>）和你的 GitHub pages 并不是同一个 repo，所以你可以再建一个 repo，把东西提交上去，这样也方便你写草稿，还可以用 <a href="http://bitbucket.org">Bitbucket</a> 的免费私有 repo。</p>
+<p>如果执行 <code>rake new_post</code> 或 <code>rake generate</code> 时碰到了类似 <code>invalid byte sequence in US-ASCII (ArgumentError)</code> 的问题，编辑一下这两个文件：</p>
+<pre><code><span class="comment"># rvm-path/gems/ruby-version/gems/jekyll-version/lib/jekyll/tags/include.rb</span>
+<span class="comment"># 把 source = File.read(<span class="yardoctag">@file</span>) 改成：</span>
+source = <span class="constant">File</span>.read(<span class="variable">@file</span>, <span class="symbol">:encoding</span> =&gt; <span class="string">"utf-8"</span>)
+
+<span class="comment"># rvm-path/gems/ruby-version/gems/jekyll-version/lib/jekyll/convertible.rb</span>
+<span class="comment"># 把 self.content = File.read(File.join(base, name)) 改成：</span>
+<span class="keyword">self</span>.content = <span class="constant">File</span>.read(<span class="constant">File</span>.join(base, name), <span class="symbol">:encoding</span> =&gt; <span class="string">"utf-8"</span>)
+</code></pre>
+<p>根据你的配置，把 <code>rvm-path</code>，<code>ruby-version</code> 和 <code>jekyll-version</code> 改成实际的路径。一般情况，<code>rvm-path</code> 是 <code>~/.rvm/</code>。</p>
+<p>或者在你的 <code>.bashrc</code>、<code>.zshrc</code> 等文件加入以下两个变量：</p>
+<pre><code><span class="keyword">export</span> LC_ALL=en_US<span class="variable">.UTF</span>-<span class="number">8</span>
+<span class="keyword">export</span> LANG=en_US<span class="variable">.UTF</span>-<span class="number">8</span>
+</code></pre>
+<p>这个问题是由于 Python 2.X 并没有把 Unicode 作为默认编码格式，Jekyll 也没有声明要用 Unicode 处理文件。</p>
+</div><footer class="entry-footer"><time datetime="2012-11-02T08:58:00.000Z">Nov 2nd, 2012</time><div class="categories"><a href="/categories/2012/">2012</a><a href="/categories/2012/11/">11</a></div><div class="tags"><a href="/tags/tumblr/">Tumblr</a><a href="/tags/octopress/">Octopress</a><a href="/tags/jekyll/">Jekyll</a><a href="/tags/github/">GitHub</a></div><section class="comments"><h2 class="title"><a name="comments">Comments</a></h2><div id="disqus_thread"><noscript>Please enable JavaScript to view the<a href="http://disqus.com/?ref_noscript">comments powered by Disqus</a></noscript></div></section><script>var disqus_shortname="chrisyipw";(function(){var a=document.createElement("script");a.type="text/javascript";a.async=!0;a.src="http://chrisyipw.disqus.com/embed.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)})();</script></footer></article></div><footer id="footer" class="inner page-footer"><Copyright>© 2013&nbsp;Chris Yip</Copyright></footer><script async src="/js/theme.js"></script>
