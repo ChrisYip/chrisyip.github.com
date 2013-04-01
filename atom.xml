@@ -3,7 +3,7 @@
   <title><![CDATA[I'm Chris]]></title>
   <link href="http://chrisyip.im/atom.xml" rel="self"/>
   <link href="http://chrisyip.im"/>
-  <updated>2013-04-01T01:26:39.209Z</updated>
+  <updated>2013-04-01T07:17:43.007Z</updated>
   <id>http://chrisyip.im/</id>
   <author>
     <name><![CDATA[Chris Yip]]></name>
@@ -11,11 +11,33 @@
   </author>
   <generator uri="http://zespia.tw/hexo">Hexo</generator>
   <entry>
+    <title type="html"><![CDATA[Nimble Quest：贪食蛇版 RPG 游戏]]></title>
+    <link href="http://chrisyip.im/post/nimble-quest/"/>
+    <id>http://chrisyip.im/post/nimble-quest/</id>
+    <published>2013-04-01T06:11:01.000Z</published>
+    <updated>2013-04-01T07:09:28.000Z</updated>
+    <content type="html"><![CDATA[<p>最近发现一款好玩的小游戏——Nimble Quest。</p>
+<p><img src="/bimg/nimble-quest.jpg" alt="Nimble Quest"></p>
+<p>玩的方式和 Nokia 手机经典游戏贪食蛇一样，通过滑动手指或方向键（OS X）来控制方向，规则也和贪食蛇一样，撞到障碍物人物会死亡，只不过由于融合了 RPG 要素，每个角色都有自己的血量，撞到障碍物或血量降到 0 就会死亡，而排头的队长死亡则 Game Over。</p>
+<p>Nimble Quest 采用 IAP 收费，但是玩起来可以一分钱也不花，没有广告。游戏内类货币的物件分为两个，一个是宝石，一个为 token。宝石通过游戏内收集，用于升级角色和辅助道具；token 则可 IAP 购买，游戏过程中有极低机率掉落，主要用于 Game Over 时继续游戏或者购买队伍人员上限。</p>
+<p>角色的解锁只要顺利推进进度即可，当然也可以 IAP 购买，而 Game Over 时如果不用 token 继续游戏就需要从头开始打，如果觉得进度不错，建议直接用 token 继续吧。</p>
+<p>角色的升级有两个途径，杀怪和使用宝石。</p>
+<p>作为一款悠闲小游，很适合无聊时玩玩；同时提供 iOS 和 Mac 版本：</p>
+<p>iOS：<a href="https://itunes.apple.com/cn/app/id583638819?mt=8"><a href="https://itunes.apple.com/cn/app/id583638819?mt=8">https://itunes.apple.com/cn/app/id583638819?mt=8</a></a></p>
+<p>Mac：<a href="https://itunes.apple.com/cn/app/id598685044?mt=12"><a href="https://itunes.apple.com/cn/app/id598685044?mt=12">https://itunes.apple.com/cn/app/id598685044?mt=12</a></a></p>
+]]></content>
+    <category scheme="http://chrisyip.im/tags/ios/" term="iOS"/>
+    <category scheme="http://chrisyip.im/tags/os-x/" term="OS X"/>
+    <category scheme="http://chrisyip.im/tags/game/" term="Game"/>
+    <category scheme="http://chrisyip.im/categories/2013/" term="2013"/>
+    <category scheme="http://chrisyip.im/categories/2013/04/" term="04"/>
+  </entry>
+  <entry>
     <title type="html"><![CDATA[HTML5 Storage APIs]]></title>
     <link href="http://chrisyip.im/post/html5-storage-apis/"/>
     <id>http://chrisyip.im/post/html5-storage-apis/</id>
     <published>2013-03-28T19:31:58.000Z</published>
-    <updated>2013-03-28T21:17:08.000Z</updated>
+    <updated>2013-04-01T06:52:18.000Z</updated>
     <content type="html"><![CDATA[<p>因为太久没用这些东西，之前被人问起时只能勉强答出两个，并且连事件也不记得，只好把常用的列出来强化记忆了。</p>
 <p><code>localStorage</code> 和 <code>sessionStorage</code> 的 APIs 在行为表现上是一致的，以下以 <code>localStorage</code> 为例，而 <code>globalStorage</code> 因为不是标准，所以略过。</p>
 <h3>函数和属性:</h3>

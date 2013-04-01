@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://chrisyip.im/post/nimble-quest/</loc>
+    <lastmod>2013-04-01T07:09:28.000Z</lastmod>
+  </url>
+  <url>
     <loc>http://chrisyip.im/post/html5-storage-apis/</loc>
-    <lastmod>2013-03-28T21:17:08.000Z</lastmod>
+    <lastmod>2013-04-01T06:52:18.000Z</lastmod>
   </url>
   <url>
     <loc>http://chrisyip.im/post/why-is-google-killing-google-reader/</loc>
@@ -11,10 +15,6 @@
   <url>
     <loc>http://chrisyip.im/post/animate-css-builder/</loc>
     <lastmod>2013-03-12T10:53:31.000Z</lastmod>
-  </url>
-  <url>
-    <loc>http://chrisyip.im/post/moved-from-tumblr/</loc>
-    <lastmod>2013-03-12T10:49:48.000Z</lastmod>
   </url>
   <url>
     <loc>http://chrisyip.im/post/regular-expression-for-cjk/</loc>
@@ -70,6 +70,10 @@
   </url>
   <url>
     <loc>http://chrisyip.im/post/announcing-data-uri-converter/</loc>
+    <lastmod>2013-03-12T10:49:48.000Z</lastmod>
+  </url>
+  <url>
+    <loc>http://chrisyip.im/post/moved-from-tumblr/</loc>
     <lastmod>2013-03-12T10:49:48.000Z</lastmod>
   </url>
   <url>
