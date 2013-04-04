@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://chrisyip.im/post/google-and-mozilla-working-on-new-browser-engines/</loc>
+    <lastmod>2013-04-04T07:10:23.000Z</lastmod>
+  </url>
+  <url>
     <loc>http://chrisyip.im/post/nimble-quest/</loc>
     <lastmod>2013-04-01T07:09:28.000Z</lastmod>
   </url>
@@ -15,10 +19,6 @@
   <url>
     <loc>http://chrisyip.im/post/animate-css-builder/</loc>
     <lastmod>2013-03-12T10:53:31.000Z</lastmod>
-  </url>
-  <url>
-    <loc>http://chrisyip.im/post/regular-expression-for-cjk/</loc>
-    <lastmod>2013-03-12T10:49:48.000Z</lastmod>
   </url>
   <url>
     <loc>http://chrisyip.im/post/remove-duplicate-items-in-contextual-menu-with-alfred/</loc>
@@ -45,11 +45,11 @@
     <lastmod>2013-03-12T10:49:48.000Z</lastmod>
   </url>
   <url>
-    <loc>http://chrisyip.im/post/alfred-extension-for-sublime-text-2/</loc>
+    <loc>http://chrisyip.im/post/why-i-loved-building-basecamp-for-iphone-in-rubymotion/</loc>
     <lastmod>2013-03-12T10:49:48.000Z</lastmod>
   </url>
   <url>
-    <loc>http://chrisyip.im/post/load-css-and-javascript-in-special-ways/</loc>
+    <loc>http://chrisyip.im/post/alfred-extension-for-sublime-text-2/</loc>
     <lastmod>2013-03-12T10:49:48.000Z</lastmod>
   </url>
   <url>
@@ -65,7 +65,7 @@
     <lastmod>2013-03-12T10:49:48.000Z</lastmod>
   </url>
   <url>
-    <loc>http://chrisyip.im/post/why-i-loved-building-basecamp-for-iphone-in-rubymotion/</loc>
+    <loc>http://chrisyip.im/post/load-css-and-javascript-in-special-ways/</loc>
     <lastmod>2013-03-12T10:49:48.000Z</lastmod>
   </url>
   <url>
@@ -74,6 +74,10 @@
   </url>
   <url>
     <loc>http://chrisyip.im/post/moved-from-tumblr/</loc>
+    <lastmod>2013-03-12T10:49:48.000Z</lastmod>
+  </url>
+  <url>
+    <loc>http://chrisyip.im/post/regular-expression-for-cjk/</loc>
     <lastmod>2013-03-12T10:49:48.000Z</lastmod>
   </url>
   <url>
