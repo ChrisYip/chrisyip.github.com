@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://chrisyip.im/post/akins-laws-of-spacecraft-design/</loc>
+    <lastmod>2013-04-15T12:25:23.000Z</lastmod>
+  </url>
+  <url>
     <loc>http://chrisyip.im/post/google-and-mozilla-working-on-new-browser-engines/</loc>
     <lastmod>2013-04-04T07:10:23.000Z</lastmod>
   </url>
@@ -19,10 +23,6 @@
   <url>
     <loc>http://chrisyip.im/post/animate-css-builder/</loc>
     <lastmod>2013-03-12T10:53:31.000Z</lastmod>
-  </url>
-  <url>
-    <loc>http://chrisyip.im/post/remove-duplicate-items-in-contextual-menu-with-alfred/</loc>
-    <lastmod>2013-03-12T10:49:48.000Z</lastmod>
   </url>
   <url>
     <loc>http://chrisyip.im/post/sly-design-for-web-programmer/</loc>
@@ -78,6 +78,10 @@
   </url>
   <url>
     <loc>http://chrisyip.im/post/regular-expression-for-cjk/</loc>
+    <lastmod>2013-03-12T10:49:48.000Z</lastmod>
+  </url>
+  <url>
+    <loc>http://chrisyip.im/post/remove-duplicate-items-in-contextual-menu-with-alfred/</loc>
     <lastmod>2013-03-12T10:49:48.000Z</lastmod>
   </url>
   <url>

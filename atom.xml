@@ -3,13 +3,53 @@
   <title><![CDATA[I'm Chris]]></title>
   <link href="http://chrisyip.im/atom.xml" rel="self"/>
   <link href="http://chrisyip.im"/>
-  <updated>2013-04-04T07:12:51.887Z</updated>
+  <updated>2013-04-15T12:27:46.418Z</updated>
   <id>http://chrisyip.im/</id>
   <author>
     <name><![CDATA[Chris Yip]]></name>
     <email><![CDATA[i@chrisyip.im]]></email>
   </author>
   <generator uri="http://zespia.tw/hexo">Hexo</generator>
+  <entry>
+    <title type="html"><![CDATA[《航天飞机设计定律》摘录]]></title>
+    <link href="http://chrisyip.im/post/akins-laws-of-spacecraft-design/"/>
+    <id>http://chrisyip.im/post/akins-laws-of-spacecraft-design/</id>
+    <published>2013-04-15T11:58:16.000Z</published>
+    <updated>2013-04-15T12:25:23.000Z</updated>
+    <content type="html"><![CDATA[<p>最近看了一篇文章，叫《<a href="http://www.aqee.net/akins-laws-of-spacecraft-design/">航天飞机设计定律</a>》，其中有些也适用于学习和工作，特摘录于此：</p>
+<ol>
+<li>工程设计的实现依赖数据。没有数据的分析只是一种观点。</li>
+<li>正确的设计出航天飞机需要你付出无限的努力。这就是为什么最好要考虑当遇到故障时的处理办法。</li>
+<li>设计是一种迭代的过程。必要的迭代次数是在你目前正在做的次数上加一。在任何时候都是这样。</li>
+<li>你付出最大努力做出的最好设计不可避免的会在最终的设计中变得毫无用处。要学会在失望中生存。</li>
+<li>自然界中，最好的通常会在中部。对那些出现在极端点的最好的东西持怀疑态度。</li>
+<li>没有足够的需要的信息永远不能成为令人信服的不开始分析的借口。</li>
+<li>有怀疑，进行判断。情况紧急，那就猜测。但一定要在真实数据出来后重新进行整理，清理错误。</li>
+<li>有时，最快的得到结果的方法是丢掉所有的东西，重新开始。</li>
+<li>问题永远不会只有一种解决方案。尽管有很多是错误的。</li>
+<li>设计要基于需求。不会有任何的理由可以让设计出的东西要比需求要求的“更好”。</li>
+<li>（Edison 定律）“更好”是”好”的敌人。</li>
+<li>（Shea 定律）改进一个设计切入点主要是体现在接口上。这也是主要的把事情搞砸的地方。</li>
+<li>之前做过相似分析的人并没有一个直接的途径将他的智慧穿越岁月传递。因此没有理由相信他们的分析而不相信你的。更没有理由把他们的分析用在你的分析中。</li>
+<li>出现在打印刊物中的分析事实上跟它们的正确性很可能没有关系。</li>
+<li>过往经历是一种极好的判断设计是否现实的能力。但过于现实同样会毁了一个在其它方面有价值的设计。</li>
+<li>机遇会严重的阻挡你成为比同领域里其它人聪明万倍的人。如果你的分析说你的最大速度是光速的两倍，你很可能发明了曲速引擎（warp drive），但更有可能的是你被怀疑有精神病。</li>
+<li>一个坏的设计但有好的表现形式，它最终会被判死刑。一个好的设计但表现形式糟糕，它会被判死刑立即执行。</li>
+<li>（Larrabee 定律）你在课堂里听到的东西有一半都是垃圾。教育的目的是来让你知道哪一半是垃圾。</li>
+<li>有疑问，写下来。</li>
+<li>给开发定计划总像是在虚构一个小说，直到当你的客户因为你没有按计划完成而炒了你时你才知道它的意义。</li>
+<li>（Bowden 定律）寻找测试失败的可能，永远可能改进你的分析设计，这显示了你真的进行了边界分析。</li>
+<li>（Montemerlo 定律）不要做哑巴。</li>
+<li>（Varsi 定律）日程表只会向一个方向进行。</li>
+<li>（Tiesenhausen 定律）为了能精确的估计出最终开发程序需要的投入，你需要把最初估计时间乘以 π，把估计出的成本上的小数点向右移一位。</li>
+<li>（Tiesenhausen 定律）如果你愿意往一个新设计的系统中投入最大的精力，那就学习绘画。工程师设计出的飞行器最终会看起来有些艺术概念。</li>
+<li>（Mo 定律）你不可能通过爬到更高的树上来到达月亮。</li>
+<li>太空是一个绝对无情的环境。如果你工程出了问题，有人会死（而且尽管你的分析大部分都是对的，也不会有任何的功劳…）</li>
+</ol>
+]]></content>
+    <category scheme="http://chrisyip.im/categories/2013/" term="2013"/>
+    <category scheme="http://chrisyip.im/categories/2013/04/" term="04"/>
+  </entry>
   <entry>
     <title type="html"><![CDATA[Google 和 Mozilla 宣布开发新的浏览器引擎，后 IE 时代来临？]]></title>
     <link href="http://chrisyip.im/post/google-and-mozilla-working-on-new-browser-engines/"/>
@@ -1170,62 +1210,6 @@ result = prog.match(<span class="string">u'𠀀'</span>)
     <category scheme="http://chrisyip.im/tags/python/" term="Python"/>
     <category scheme="http://chrisyip.im/tags/regular-expression/" term="Regular Expression"/>
     <category scheme="http://chrisyip.im/tags/ruby/" term="Ruby"/>
-    <category scheme="http://chrisyip.im/categories/2012/" term="2012"/>
-    <category scheme="http://chrisyip.im/categories/2012/11/" term="11"/>
-  </entry>
-  <entry>
-    <title type="html"><![CDATA[从 Tumblr 迁移到 Octopress]]></title>
-    <link href="http://chrisyip.im/post/moved-from-tumblr/"/>
-    <id>http://chrisyip.im/post/moved-from-tumblr/</id>
-    <published>2012-11-02T08:58:00.000Z</published>
-    <updated>2013-03-12T10:49:48.000Z</updated>
-    <content type="html"><![CDATA[<p>以前一直在用 Tumblr 作为 blog 托管，因为简单，还不用管流量、图片托管等问题，也支持自定义域名，不过最近开始满足不了我的一些需求：</p>
-<ul>
-<li>非 Photo 类型的文章难插入多张图片，通常都是用别的图床来放置图片，比如 Droplr；</li>
-<li>CSS/JS 的处理比较郁闷。</li>
-</ul>
-<p>所以就打算迁移到 GitHub + <a href="http://octopress.org/">Octopress</a> 上，虽然所有东西都是公开的。</p>
-<p>附 Octopress 简单教程：</p>
-<p>第一步，在 GitHub 创建一个新的 repo，将其命名为 &quot;username.github.com&quot;，&quot;username&quot; 是你的用户名。</p>
-<p>第二步，创建好之后，去 admin 页面选择 &quot;Automatic Page Generator&quot;。</p>
-<p>第三步，安装 Octopress：</p>
-<pre><code>git clone git://github.com/imathis/octopress.git octopress
-cd octopress <span class="comment"># 保证安装了 Ruby 和 rbenv/RVM，进入目录时会问你是否信任 .rvmrc，选是</span>
-gem install bundler
-<span class="comment"># rbenv 需要跑 `rbenv rehash`</span>
-bundle install
-rake install
-rake setup_github_pages <span class="comment"># 填入你的 repo 地址</span>
-rake generate
-</code></pre>
-
-<p>一些常用的操作如下：</p>
-<p><code>rake new_post[&quot;title&quot;]</code>：创建新的文章，<code>title</code> 尽量用英文吧，Mac Terminal 打中文会报错。创建的文章会用时间戳的方式，如 <code>2012-11-02-moved-from-tumblr.markdown</code> 保存到 <code>source/_post</code> 下，用任意编辑器打开即可。</p>
-<p><code>rake new_page[page-name]</code>：创建新的页面，比如个人简介什么的，会放在 <code>source/page-name</code> 下，默认主页是 <code>index.markdown</code>。</p>
-<p><code>rake generate</code>：把所有文件转换并复制到 <code>public/</code> 下面。<code>rake watch</code> 会监视文件并实时转换。</p>
-<p><code>rake preview</code>：启动一个 <code>localhost:4000</code> 服务器供预览。</p>
-<p><code>rake deploy</code>：如果没问题了，就用这个命令把文件提交到 GitHub。</p>
-<p>因为这个 repo（按照上面的例子是 <strong>octopress</strong>）和你的 GitHub pages 并不是同一个 repo，所以你可以再建一个 repo，把东西提交上去，这样也方便你写草稿，还可以用 <a href="http://bitbucket.org">Bitbucket</a> 的免费私有 repo。</p>
-<p>如果执行 <code>rake new_post</code> 或 <code>rake generate</code> 时碰到了类似 <code>invalid byte sequence in US-ASCII (ArgumentError)</code> 的问题，编辑一下这两个文件：</p>
-<pre><code><span class="comment"># rvm-path/gems/ruby-version/gems/jekyll-version/lib/jekyll/tags/include.rb</span>
-<span class="comment"># 把 source = File.read(<span class="yardoctag">@file</span>) 改成：</span>
-source = <span class="constant">File</span>.read(<span class="variable">@file</span>, <span class="symbol">:encoding</span> =&gt; <span class="string">"utf-8"</span>)
-
-<span class="comment"># rvm-path/gems/ruby-version/gems/jekyll-version/lib/jekyll/convertible.rb</span>
-<span class="comment"># 把 self.content = File.read(File.join(base, name)) 改成：</span>
-<span class="keyword">self</span>.content = <span class="constant">File</span>.read(<span class="constant">File</span>.join(base, name), <span class="symbol">:encoding</span> =&gt; <span class="string">"utf-8"</span>)
-</code></pre>
-<p>根据你的配置，把 <code>rvm-path</code>，<code>ruby-version</code> 和 <code>jekyll-version</code> 改成实际的路径。一般情况，<code>rvm-path</code> 是 <code>~/.rvm/</code>。</p>
-<p>或者在你的 <code>.bashrc</code>、<code>.zshrc</code> 等文件加入以下两个变量：</p>
-<pre><code><span class="keyword">export</span> LC_ALL=en_US<span class="variable">.UTF</span>-<span class="number">8</span>
-<span class="keyword">export</span> LANG=en_US<span class="variable">.UTF</span>-<span class="number">8</span>
-</code></pre>
-<p>这个问题是由于 Python 2.X 并没有把 Unicode 作为默认编码格式，Jekyll 也没有声明要用 Unicode 处理文件。</p>
-]]></content>
-    <category scheme="http://chrisyip.im/tags/tumblr/" term="Tumblr"/>
-    <category scheme="http://chrisyip.im/tags/octopress/" term="Octopress"/>
-    <category scheme="http://chrisyip.im/tags/jekyll/" term="Jekyll"/>
-    <category scheme="http://chrisyip.im/tags/github/" term="GitHub"/>
     <category scheme="http://chrisyip.im/categories/2012/" term="2012"/>
     <category scheme="http://chrisyip.im/categories/2012/11/" term="11"/>
   </entry>
