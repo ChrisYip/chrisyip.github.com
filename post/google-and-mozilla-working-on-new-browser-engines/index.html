@@ -1,1 +1,142 @@
-<undefined></undefined>
+<!DOCTYPE html><meta charset="utf-8"><title>Google 和 Mozilla 宣布开发新的浏览器引擎，后 IE 时代来临？</title><meta name="author" content="Chris Yip"><meta name="description" content="在昨天（2013 年 4 月 3 日），Google 和 Mozilla 分别宣布要开发新的浏览器引擎，分别命名为 Blink 和 Servo。
+Chromium 开发新引擎属于意料之中的事，毕竟 Google 的野心是称霸桌面（Chrome OS）和移动端（Android），不够强劲的引擎是不能满足他们的需求的。
+Mozilla 开发新引擎就属于被迫无奈，好不容易在 IE 6 时代成功推广了 CSS3 等概念，让市场份额慢慢赶了上来，却被 WebKit 系列渔翁得利，Apple 和 Google 都是要资源有资源、要平台有平台的主，乔大爷一说 iOS 只能有 WebKit，Mozilla 奈何得了么？接着又因 Chrome 的快速启动、安装插件无需重启、强制静默更新等等措施而使 Firefox 从藐视 IE 的地位变成被藐视的处境（joking :P）。Opera 也是处于这样的窘境，最后妥协换用 WebKit 引擎。
+Mozilla 顺利勾搭上三星这个有平台没资源的主也就顺理成章了。三星很明白跟着 Google 和微软混很难保证前景，比如 Android 阵营被 Apple 控告 Google 就爱莫能助，比如 Google 也大肆推广自有的 Android 品牌并收紧自由度，比如 Nokia 刚和微软合作没多久微软就宣布 WP 7 不能升 8，各种卖队友啊，所以三星一直没放弃拥有自主的平台。OS 虽然易做，但整个生态构建就很难，你必须保证开发者容易进入才能让这个生态健康成长——像 Android 使用 Java 作为开发语言就备受诟病，另一方面，由于 HTML5 的强势发展，三星很有可能希望有一套引擎来作为底层，就像 WebOS 那样——虽然不知道为什么不使用 WebKit 和 V8 而选择自主开发，可能担心会受限吧。总而言之，Mozilla 迫切地需要平台和资源，三星迫切地需要找到除 Android 和 WP 之外的出路。
+个人而言，我并不关心谁开发新引擎、为什么开发新引擎，就像我在 Twitter 上说的：
+
+其实哪个引擎我都不喜欢，搞一个强悍又标准的像 IE 6 那样垄断就好了（开发者心声
+
+这真的是心声，我真的烦透了这样的事情：
+div {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+
+var matches = (function(){
+  var m = document.body.webkitMatchesSelector ||
+          document.body.mozMatchesSelector ||
+          document.body.oMatchesSelector ||
+          document.body.msMatchesSelector ||
+          document.body.matchesSelector
+  return function ( elem, sel ) {
+    m.call( elem, sel )
+  };
+})()
+
+
+未来就可能这样：
+div {
+  -webkit-user-select: none;
+  -blink-user-select: none;
+  -whatever-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+
+var matches = (function(){
+  var m = document.body.webkitMatchesSelector ||
+          document.body.mozMatchesSelector ||
+          document.body.oMatchesSelector ||
+          document.body.msMatchesSelector ||
+          document.body.blinkMatchesSelector ||
+          document.body.whateverMatchesSelector ||
+          document.body.matchesSelector
+  return function ( elem, sel ) {
+    m.call( elem, sel )
+  };
+})()
+
+
+是不是想起了 IE 6 时代？
+function getXMLHttpRequestObject() {
+  var ref = null;
+  if (window.XMLHttpRequest) {
+      ref = new XMLHttpRequest();
+  } else if (window.ActiveXObject) { // Older IE.
+      ref = new ActiveXObject(&quot;MSXML2.XMLHTTP.3.0&quot;);
+  }
+  return ref;
+}
+
+
+此外，@ikarienator 提到：
+
+WebKit 虽然名义上是 Apple 的项目，实际上代码量上 Google 的人是 Apple 的两倍多。所以如果 Google 的人离开 WebKit，那么 WebKit 的更新就必须依赖 Apple 投入更多人力了。总不能永远让他坐享其成。
+
+我不认为 Apple 会把 Safari 迁移到新的引擎，至少会继续使用 WebKit 很长一段时间，那，缺少了 Google 的贡献，本来就比 Chrome 更新慢的 Safari 会变成怎样呢，也是一个未知问题。"><meta name="keywords" content="iOS, JavaScript, HTML, CSS, Objective-C, Freelancer, Web Development, Mobile Development, Mac, OS X, Mac Development, Development, 前端开发, 移动开发, Ruby"><meta property="og:title" content="Google 和 Mozilla 宣布开发新的浏览器引擎，后 IE 时代来临？"><meta property="og:site_name" content="I'm Chris"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"><link rel="shortcut icon" href="/favicon.ico"><link rel="alternate" href="/atom.xml" title="I'm Chris" type="application/atom+xml"><link rel="stylesheet" href="/css/style.css" media="screen"><script async src="/js/theme.js"></script><script>var _gaq=_gaq||[];_gaq.push(["_setAccount","UA-15420910-3"]);_gaq.push(["_trackPageview"]);(function(){var a=document.createElement("script");a.type="text/javascript";a.async=!0;a.src=("https:"==document.location.protocol?"https://ssl":"http://www")+".google-analytics.com/ga.js";var b=document.getElementsByTagName("script")[0];b.parentNode.insertBefore(a,b)})();</script><!--[if IE]><div style="width:100%;position:fixed;top:0;left:0;background:#f00;color:#fff;text-align:center">Internet Explorer series are not supported.</div><![endif]--><header id="header" class="inner page-header"><h1><a href="/">I'm Chris</a></h1><div class="menubar"><nav id="header-menu" class="header-menu"><a class="toggle-menu">Menu</a><ul><li><a href="/about" class="menu-item">About</a></li><li><a href="/archives" class="menu-item">Archives</a></li><li><a href="/works" class="menu-item">Works</a></li></ul></nav><form action="http://google.com/search" method="get" class="search"><input name="q" autocomplete="off" class="search-field"><input type="hidden" name="q" value="site:chrisyip.im"><a class="button"></a></form><div class="follow_me"><a href="https://github.com/chrisyip" title="GitHub" class="github">GitHub</a><a href="https://twitter.com/chrisyipw" title="Twitter" class="twitter">Twitter</a><a href="/atom.xml" title="RSS" class="rss">RSS</a></div></div></header><div id="content" class="inner content"><article class=""><header class="entry-header"><h2 class="title"><a href="/post/google-and-mozilla-working-on-new-browser-engines/">Google 和 Mozilla 宣布开发新的浏览器引擎，后 IE 时代来临？</a></h2></header><div class="entry-content"><p>在昨天（2013 年 4 月 3 日），Google 和 Mozilla 分别宣布要开发新的浏览器引擎，分别命名为 <a href="http://blog.chromium.org/2013/04/blink-rendering-engine-for-chromium.html">Blink</a> 和 <a href="https://blog.mozilla.org/blog/2013/04/03/mozilla-and-samsung-collaborate-on-next-generation-web-browser-engine/">Servo</a>。</p>
+<p>Chromium 开发新引擎属于意料之中的事，毕竟 Google 的野心是称霸桌面（Chrome OS）和移动端（Android），不够强劲的引擎是不能满足他们的需求的。</p>
+<p>Mozilla 开发新引擎就属于被迫无奈，好不容易在 IE 6 时代成功推广了 CSS3 等概念，让市场份额慢慢赶了上来，却被 WebKit 系列渔翁得利，Apple 和 Google 都是要资源有资源、要平台有平台的主，乔大爷一说 iOS 只能有 WebKit，Mozilla 奈何得了么？接着又因 Chrome 的快速启动、安装插件无需重启、强制静默更新等等措施而使 Firefox 从藐视 IE 的地位变成被藐视的处境（joking :P）。Opera 也是处于这样的窘境，最后妥协<a href="http://my.opera.com/ODIN/blog/300-million-users-and-move-to-webkit">换用 WebKit 引擎</a>。</p>
+<p>Mozilla 顺利勾搭上三星这个有平台没资源的主也就顺理成章了。三星很明白跟着 Google 和微软混很难保证前景，比如 Android 阵营被 Apple 控告 Google 就爱莫能助，比如 Google 也大肆推广自有的 Android 品牌并收紧自由度，比如 Nokia 刚和微软合作没多久微软就宣布 WP 7 不能升 8，各种卖队友啊，所以三星一直没放弃拥有自主的平台。OS 虽然易做，但整个生态构建就很难，你必须保证开发者容易进入才能让这个生态健康成长——像 Android 使用 Java 作为开发语言就备受诟病，另一方面，由于 HTML5 的强势发展，三星很有可能希望有一套引擎来作为底层，就像 WebOS 那样——虽然不知道为什么不使用 WebKit 和 V8 而选择自主开发，可能担心会受限吧。总而言之，Mozilla 迫切地需要平台和资源，三星迫切地需要找到除 Android 和 WP 之外的出路。</p>
+<p>个人而言，我并不关心谁开发新引擎、为什么开发新引擎，就像我在 Twitter 上<a href="https://twitter.com/chrisyipw/status/319697287263707136">说的</a>：</p>
+<blockquote>
+<p>其实哪个引擎我都不喜欢，搞一个强悍又标准的像 IE 6 那样垄断就好了（开发者心声</p>
+</blockquote>
+<p>这真的是心声，我真的烦透了这样的事情：</p>
+<pre><code><span class="tag">div</span> <span class="rules">{
+  <span class="rule"><span class="attribute">-webkit-user-select</span>:<span class="value"> none;</span></span>
+  <span class="rule"><span class="attribute">-moz-user-select</span>:<span class="value"> none;</span></span>
+  <span class="rule"><span class="attribute">-ms-user-select</span>:<span class="value"> none;</span></span>
+  <span class="rule"><span class="attribute">user-select</span>:<span class="value"> none;</span></span>
+<span class="rule">}</span></span>
+</code></pre>
+
+<pre><code><span class="keyword">var</span> matches = (<span class="keyword">function</span>(){
+  <span class="keyword">var</span> m = document.body.webkitMatchesSelector ||
+          document.body.mozMatchesSelector ||
+          document.body.oMatchesSelector ||
+          document.body.msMatchesSelector ||
+          document.body.matchesSelector
+  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> <span class="params">( elem, sel )</span> {</span>
+    m.call( elem, sel )
+  };
+})()
+</code></pre>
+
+<p>未来就可能这样：</p>
+<pre><code><span class="tag">div</span> <span class="rules">{
+  <span class="rule"><span class="attribute">-webkit-user-select</span>:<span class="value"> none;</span></span>
+  <span class="rule"><span class="attribute">-blink-user-select</span>:<span class="value"> none;</span></span>
+  <span class="rule"><span class="attribute">-whatever-user-select</span>:<span class="value"> none;</span></span>
+  <span class="rule"><span class="attribute">-moz-user-select</span>:<span class="value"> none;</span></span>
+  <span class="rule"><span class="attribute">-ms-user-select</span>:<span class="value"> none;</span></span>
+  <span class="rule"><span class="attribute">user-select</span>:<span class="value"> none;</span></span>
+<span class="rule">}</span></span>
+</code></pre>
+
+<pre><code><span class="keyword">var</span> matches = (<span class="keyword">function</span>(){
+  <span class="keyword">var</span> m = document.body.webkitMatchesSelector ||
+          document.body.mozMatchesSelector ||
+          document.body.oMatchesSelector ||
+          document.body.msMatchesSelector ||
+          document.body.blinkMatchesSelector ||
+          document.body.whateverMatchesSelector ||
+          document.body.matchesSelector
+  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> <span class="params">( elem, sel )</span> {</span>
+    m.call( elem, sel )
+  };
+})()
+</code></pre>
+
+<p>是不是想起了 IE 6 时代？</p>
+<pre><code><span class="function"><span class="keyword">function</span> <span class="title">getXMLHttpRequestObject</span><span class="params">()</span> {</span>
+  <span class="keyword">var</span> ref = <span class="literal">null</span>;
+  <span class="keyword">if</span> (window.XMLHttpRequest) {
+      ref = <span class="keyword">new</span> XMLHttpRequest();
+  } <span class="keyword">else</span> <span class="keyword">if</span> (window.ActiveXObject) { <span class="comment">// Older IE.</span>
+      ref = <span class="keyword">new</span> ActiveXObject(<span class="string">"MSXML2.XMLHTTP.3.0"</span>);
+  }
+  <span class="keyword">return</span> ref;
+}
+</code></pre>
+
+<p>此外，@<a href="https://twitter.com/ikarienator">ikarienator</a> <a href="https://twitter.com/ikarienator/status/319690212441731073">提到</a>：</p>
+<blockquote>
+<p>WebKit 虽然名义上是 Apple 的项目，实际上代码量上 Google 的人是 Apple 的两倍多。所以如果 Google 的人离开 WebKit，那么 WebKit 的更新就必须依赖 Apple 投入更多人力了。总不能永远让他坐享其成。</p>
+</blockquote>
+<p>我不认为 Apple 会把 Safari 迁移到新的引擎，至少会继续使用 WebKit 很长一段时间，那，缺少了 Google 的贡献，本来就比 Chrome 更新慢的 Safari 会变成怎样呢，也是一个未知问题。</p>
+</div><footer class="entry-footer"><time datetime="2013-04-04T06:10:22.000Z">Apr 4th, 2013</time><div class="tags"><a href="/tags/browser/">Browser</a><a href="/tags/browser-engine/">Browser Engine</a><a href="/tags/chromium/">Chromium</a></div><section class="comments"><h2 class="title"><a name="comments">Comments</a></h2><div id="disqus_thread"><noscript>Please enable JavaScript to view the<a href="http://disqus.com/?ref_noscript">comments powered by Disqus</a></noscript></div></section><script>var disqus_shortname="chrisyipw";(function(){var a=document.createElement("script");a.type="text/javascript";a.async=!0;a.src="http://chrisyipw.disqus.com/embed.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)})();</script></footer></article></div><footer id="footer" class="inner page-footer"><Copyright>© 2013&nbsp;Chris Yip</Copyright></footer>

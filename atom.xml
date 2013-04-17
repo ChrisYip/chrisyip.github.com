@@ -3,7 +3,7 @@
   <title><![CDATA[I'm Chris]]></title>
   <link href="http://chrisyip.im/atom.xml" rel="self"/>
   <link href="http://chrisyip.im"/>
-  <updated>2013-04-15T12:27:46.418Z</updated>
+  <updated>2013-04-17T14:05:47.754Z</updated>
   <id>http://chrisyip.im/</id>
   <author>
     <name><![CDATA[Chris Yip]]></name>
@@ -47,8 +47,6 @@
 <li>太空是一个绝对无情的环境。如果你工程出了问题，有人会死（而且尽管你的分析大部分都是对的，也不会有任何的功劳…）</li>
 </ol>
 ]]></content>
-    <category scheme="http://chrisyip.im/categories/2013/" term="2013"/>
-    <category scheme="http://chrisyip.im/categories/2013/04/" term="04"/>
   </entry>
   <entry>
     <title type="html"><![CDATA[Google 和 Mozilla 宣布开发新的浏览器引擎，后 IE 时代来临？]]></title>
@@ -131,8 +129,6 @@
     <category scheme="http://chrisyip.im/tags/browser/" term="Browser"/>
     <category scheme="http://chrisyip.im/tags/browser-engine/" term="Browser Engine"/>
     <category scheme="http://chrisyip.im/tags/chromium/" term="Chromium"/>
-    <category scheme="http://chrisyip.im/categories/2013/" term="2013"/>
-    <category scheme="http://chrisyip.im/categories/2013/04/" term="04"/>
   </entry>
   <entry>
     <title type="html"><![CDATA[Nimble Quest：贪食蛇版 RPG 游戏]]></title>
@@ -153,8 +149,6 @@
     <category scheme="http://chrisyip.im/tags/ios/" term="iOS"/>
     <category scheme="http://chrisyip.im/tags/os-x/" term="OS X"/>
     <category scheme="http://chrisyip.im/tags/game/" term="Game"/>
-    <category scheme="http://chrisyip.im/categories/2013/" term="2013"/>
-    <category scheme="http://chrisyip.im/categories/2013/04/" term="04"/>
   </entry>
   <entry>
     <title type="html"><![CDATA[HTML5 Storage APIs]]></title>
@@ -247,8 +241,6 @@ localStorage.clear() <span class="comment">// will not fire</span>
     <category scheme="http://chrisyip.im/tags/storage/" term="Storage"/>
     <category scheme="http://chrisyip.im/tags/localstorage/" term="localStorage"/>
     <category scheme="http://chrisyip.im/tags/sessionstorage/" term="sessionStorage"/>
-    <category scheme="http://chrisyip.im/categories/2013/" term="2013"/>
-    <category scheme="http://chrisyip.im/categories/2013/03/" term="03"/>
   </entry>
   <entry>
     <title type="html"><![CDATA[&rarr;&nbsp;为什么 Google 要砍掉 Google Reader？]]></title>
@@ -272,8 +264,6 @@ localStorage.clear() <span class="comment">// will not fire</span>
     <category scheme="http://chrisyip.im/tags/google/" term="Google"/>
     <category scheme="http://chrisyip.im/tags/google-reader/" term="Google Reader"/>
     <category scheme="http://chrisyip.im/tags/rss/" term="RSS"/>
-    <category scheme="http://chrisyip.im/categories/2013/" term="2013"/>
-    <category scheme="http://chrisyip.im/categories/2013/03/" term="03"/>
   </entry>
   <entry>
     <title type="html"><![CDATA[&rarr;&nbsp;Animate.css: CSS 动画懒人包]]></title>
@@ -285,8 +275,6 @@ localStorage.clear() <span class="comment">// will not fire</span>
 <p><a href="http://daneden.me/animate/build/">&infin; Permalink</a>]]></content>
     <category scheme="http://chrisyip.im/tags/css/" term="CSS"/>
     <category scheme="http://chrisyip.im/tags/animation/" term="Animation"/>
-    <category scheme="http://chrisyip.im/categories/2013/" term="2013"/>
-    <category scheme="http://chrisyip.im/categories/2013/03/" term="03"/>
   </entry>
   <entry>
     <title type="html"><![CDATA[&rarr;&nbsp;Why I loved building Basecamp for iPhone in RubyMotion]]></title>
@@ -326,9 +314,7 @@ localStorage.clear() <span class="comment">// will not fire</span>
     <category scheme="http://chrisyip.im/tags/dev/" term="Dev"/>
     <category scheme="http://chrisyip.im/tags/ios/" term="iOS"/>
     <category scheme="http://chrisyip.im/tags/rubymotion/" term="RubyMotion"/>
-    <category scheme="http://chrisyip.im/categories/2013/" term="2013"/>
-    <category scheme="http://chrisyip.im/categories/2013/02/" term="02"/>
-    <category scheme="http://chrisyip.im/categories/2013/02/ruby/" term="Ruby"/>
+    <category scheme="http://chrisyip.im/categories/ruby/" term="Ruby"/>
   </entry>
   <entry>
     <title type="html"><![CDATA[迁移到 Hexo]]></title>
@@ -342,8 +328,6 @@ localStorage.clear() <span class="comment">// will not fire</span>
 ]]></content>
     <category scheme="http://chrisyip.im/tags/hexo/" term="Hexo"/>
     <category scheme="http://chrisyip.im/tags/jekyll/" term="Jekyll"/>
-    <category scheme="http://chrisyip.im/categories/2013/" term="2013"/>
-    <category scheme="http://chrisyip.im/categories/2013/02/" term="02"/>
   </entry>
   <entry>
     <title type="html"><![CDATA[&rarr;&nbsp;The Good Man Project]]></title>
@@ -361,8 +345,6 @@ localStorage.clear() <span class="comment">// will not fire</span>
 </ul>
 <p><a href="http://thegoodman.cc/">&infin; Permalink</a>]]></content>
     <category scheme="http://chrisyip.im/tags/css/" term="CSS"/>
-    <category scheme="http://chrisyip.im/categories/2013/" term="2013"/>
-    <category scheme="http://chrisyip.im/categories/2013/02/" term="02"/>
   </entry>
   <entry>
     <title type="html"><![CDATA[优化 CSS 和 JavaScript 请求数的另类方法]]></title>
@@ -461,8 +443,6 @@ load( [<span class="string">'//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquer
     <category scheme="http://chrisyip.im/tags/javascript/" term="JavaScript"/>
     <category scheme="http://chrisyip.im/tags/performance/" term="Performance"/>
     <category scheme="http://chrisyip.im/tags/web-development/" term="Web Development"/>
-    <category scheme="http://chrisyip.im/categories/2013/" term="2013"/>
-    <category scheme="http://chrisyip.im/categories/2013/01/" term="01"/>
   </entry>
   <entry>
     <title type="html"><![CDATA[Mutation 事件和 MutationObserver]]></title>
@@ -604,8 +584,6 @@ $.ajax({
 ]]></content>
     <category scheme="http://chrisyip.im/tags/css/" term="CSS"/>
     <category scheme="http://chrisyip.im/tags/javascript/" term="JavaScript"/>
-    <category scheme="http://chrisyip.im/categories/2013/" term="2013"/>
-    <category scheme="http://chrisyip.im/categories/2013/01/" term="01"/>
   </entry>
   <entry>
     <title type="html"><![CDATA[Objective-C 的消息转发机制]]></title>
@@ -761,8 +739,6 @@ NSLog(@<span class="string">"%@ and %@, count %li"</span>, [(NSArray *)arr lastO
 <p>我对上面三种消息转发的主要用法是扩展无法通过 <code>category</code> 实现的功能，比如为 <code>NSMutableArray</code> 添加可操作自身的方法，Objective-C 不允许操作自身，所以像 <code>while(obj = arr.unshift())</code> 之类的技巧就无法使用。</p>
 ]]></content>
     <category scheme="http://chrisyip.im/tags/objective-c/" term="Objective-C"/>
-    <category scheme="http://chrisyip.im/categories/2013/" term="2013"/>
-    <category scheme="http://chrisyip.im/categories/2013/01/" term="01"/>
   </entry>
   <entry>
     <title type="html"><![CDATA[使用 Pow 和 Privoxy 绕开 OS X 的沙盒限制和 SOCKS5 兼容问题]]></title>
@@ -845,8 +821,6 @@ ssh         = +forward-override{forward-socks5 <span class="number">127.0</span>
     <category scheme="http://chrisyip.im/tags/pow/" term="Pow"/>
     <category scheme="http://chrisyip.im/tags/privoxy/" term="Privoxy"/>
     <category scheme="http://chrisyip.im/tags/proxy/" term="Proxy"/>
-    <category scheme="http://chrisyip.im/categories/2013/" term="2013"/>
-    <category scheme="http://chrisyip.im/categories/2013/01/" term="01"/>
   </entry>
   <entry>
     <title type="html"><![CDATA[使用 Pow 和 Anvil 管理本地网站]]></title>
@@ -869,8 +843,6 @@ ssh         = +forward-override{forward-socks5 <span class="number">127.0</span>
     <category scheme="http://chrisyip.im/tags/os-x/" term="OS X"/>
     <category scheme="http://chrisyip.im/tags/pow/" term="Pow"/>
     <category scheme="http://chrisyip.im/tags/web/" term="Web"/>
-    <category scheme="http://chrisyip.im/categories/2012/" term="2012"/>
-    <category scheme="http://chrisyip.im/categories/2012/12/" term="12"/>
   </entry>
   <entry>
     <title type="html"><![CDATA[发布 Data URI Converter 1.0]]></title>
@@ -887,8 +859,6 @@ ssh         = +forward-override{forward-socks5 <span class="number">127.0</span>
     <category scheme="http://chrisyip.im/tags/base64/" term="Base64"/>
     <category scheme="http://chrisyip.im/tags/data-uri/" term="Data URI"/>
     <category scheme="http://chrisyip.im/tags/os-x/" term="OS X"/>
-    <category scheme="http://chrisyip.im/categories/2012/" term="2012"/>
-    <category scheme="http://chrisyip.im/categories/2012/11/" term="11"/>
   </entry>
   <entry>
     <title type="html"><![CDATA[Alfred 扩展：Open in Sublime Text 2]]></title>
@@ -906,8 +876,6 @@ ssh         = +forward-override{forward-socks5 <span class="number">127.0</span>
     <category scheme="http://chrisyip.im/tags/alfred/" term="Alfred"/>
     <category scheme="http://chrisyip.im/tags/extension/" term="Extension"/>
     <category scheme="http://chrisyip.im/tags/sublime-text/" term="Sublime Text"/>
-    <category scheme="http://chrisyip.im/categories/2012/" term="2012"/>
-    <category scheme="http://chrisyip.im/categories/2012/11/" term="11"/>
   </entry>
   <entry>
     <title type="html"><![CDATA[一些很有用但不常见的 JavaScript APIs]]></title>
@@ -1086,8 +1054,6 @@ console.log(title(music_post)) <span class="comment">// 'HEY JADE'</span>
     <category scheme="http://chrisyip.im/tags/css/" term="CSS"/>
     <category scheme="http://chrisyip.im/tags/javascript/" term="JavaScript"/>
     <category scheme="http://chrisyip.im/tags/html/" term="HTML"/>
-    <category scheme="http://chrisyip.im/categories/2012/" term="2012"/>
-    <category scheme="http://chrisyip.im/categories/2012/11/" term="11"/>
   </entry>
   <entry>
     <title type="html"><![CDATA[Alfred 扩展：移除 OS X 右键菜单的重复项]]></title>
@@ -1110,8 +1076,6 @@ console.log(title(music_post)) <span class="comment">// 'HEY JADE'</span>
     <category scheme="http://chrisyip.im/tags/alfred/" term="Alfred"/>
     <category scheme="http://chrisyip.im/tags/extension/" term="Extension"/>
     <category scheme="http://chrisyip.im/tags/os-x/" term="OS X"/>
-    <category scheme="http://chrisyip.im/categories/2012/" term="2012"/>
-    <category scheme="http://chrisyip.im/categories/2012/11/" term="11"/>
   </entry>
   <entry>
     <title type="html"><![CDATA[Zurui Design]]></title>
@@ -1151,8 +1115,6 @@ console.log(title(music_post)) <span class="comment">// 'HEY JADE'</span>
 ]]></content>
     <category scheme="http://chrisyip.im/tags/design/" term="Design"/>
     <category scheme="http://chrisyip.im/tags/web/" term="Web"/>
-    <category scheme="http://chrisyip.im/categories/2012/" term="2012"/>
-    <category scheme="http://chrisyip.im/categories/2012/11/" term="11"/>
   </entry>
   <entry>
     <title type="html"><![CDATA[适用于中日韩的正则表达式]]></title>
@@ -1210,7 +1172,5 @@ result = prog.match(<span class="string">u'𠀀'</span>)
     <category scheme="http://chrisyip.im/tags/python/" term="Python"/>
     <category scheme="http://chrisyip.im/tags/regular-expression/" term="Regular Expression"/>
     <category scheme="http://chrisyip.im/tags/ruby/" term="Ruby"/>
-    <category scheme="http://chrisyip.im/categories/2012/" term="2012"/>
-    <category scheme="http://chrisyip.im/categories/2012/11/" term="11"/>
   </entry>
 </feed>
