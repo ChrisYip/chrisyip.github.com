@@ -3,13 +3,35 @@
   <title><![CDATA[I'm Chris]]></title>
   <link href="http://chrisyip.im/atom.xml" rel="self"/>
   <link href="http://chrisyip.im"/>
-  <updated>2013-04-18T18:47:28.695Z</updated>
+  <updated>2013-04-18T19:31:28.089Z</updated>
   <id>http://chrisyip.im/</id>
   <author>
     <name><![CDATA[Chris Yip]]></name>
     <email><![CDATA[i@chrisyip.im]]></email>
   </author>
   <generator uri="http://zespia.tw/hexo">Hexo</generator>
+  <entry>
+    <title type="html"><![CDATA[为什么耐克会被评为 2013 年最具创新力公司？]]></title>
+    <link href="http://chrisyip.im/post/why-nike-is-the-no1-most-innovative-company-of-2013/"/>
+    <id>http://chrisyip.im/post/why-nike-is-the-no1-most-innovative-company-of-2013/</id>
+    <published>2013-04-18T19:13:35.000Z</published>
+    <updated>2013-04-18T19:31:01.000Z</updated>
+    <content type="html"><![CDATA[<p>知乎上有人提了一个问题：「<a href="http://www.zhihu.com/question/20778000">为什么耐克能够排在 Fast Company 最具创新力公司榜的第一位？</a>」。</p>
+<p><a href="http://www.zhihu.com/question/20778000/answer/16271850">杨半仙的回答</a>简单明了，归纳起来就是 Nike 敢于</p>
+<ol>
+<li>重塑生产流程来满足产品的需求；</li>
+<li>独立推广数字化非鞋类运动产品。</li>
+</ol>
+<p>杨半仙结尾的两段话点出了这种行为在大型企业里是有多难得：</p>
+<blockquote>
+<p>创业公司经常是光脚不怕穿鞋的，所以能够出其不意地做出一些创新，但是大公司所面临的确实另一种情况。对于耐克这样一家身处传统行业，一年营收 230 亿美元，员工超过 4 万的公司来说，任何伤筋动骨的改革都是不容易的。但是耐克做到了，Flyknit 是对上游供应链的一次革命，Fuelband 则是对耐克最擅长的鞋服业务的一次颠覆。耐克这家老牌的运动巨头正在跳脱出曾经所属的服装行业，转型为一家运动概念的科技公司。</p>
+<p>相对于众多互联网创业者的白手起家，能够以革自己命的激进方式完成的创新不是更值得敬佩吗？不是每家大公司都有这样的勇气和魄力的。</p>
+</blockquote>
+<p>PS：Nike 数字化过程可以看看「<a href="http://content.businessvalue.com.cn/post/9080.html">数字耐克重生记</a>」。</p>
+]]></content>
+    <category scheme="http://chrisyip.im/tags/nike/" term="Nike"/>
+    <category scheme="http://chrisyip.im/tags/innovation/" term="Innovation"/>
+  </entry>
   <entry>
     <title type="html"><![CDATA[《航天飞机设计定律》摘录]]></title>
     <link href="http://chrisyip.im/post/akins-laws-of-spacecraft-design/"/>
@@ -1114,62 +1136,5 @@ console.log(title(music_post)) <span class="comment">// 'HEY JADE'</span>
 ]]></content>
     <category scheme="http://chrisyip.im/tags/design/" term="Design"/>
     <category scheme="http://chrisyip.im/tags/web/" term="Web"/>
-  </entry>
-  <entry>
-    <title type="html"><![CDATA[适用于中日韩的正则表达式]]></title>
-    <link href="http://chrisyip.im/post/regular-expression-for-cjk/"/>
-    <id>http://chrisyip.im/post/regular-expression-for-cjk/</id>
-    <published>2012-11-03T11:02:00.000Z</published>
-    <updated>2013-04-17T14:33:12.000Z</updated>
-    <content type="html"><![CDATA[<p>之前我在 Twitter 发过用于匹配中文的正则表达式，但是发的表达式并不是很严谨，只是一个粗略的匹配，今天就进行补完吧。</p>
-<p>FYI，如果是用 Ruby，用内置的集合吧，如 <code>/\p{Han}/</code>，最省事，详情看<a href="http://www.ruby-doc.org/core-1.9.3/Regexp.html">文档</a>。</p>
-<h3>汉字匹配</h3>
-<p><code>[一 -鿌]</code> 是 <code>4E00–9FCC</code> 段。这个是最常用的汉字集。</p>
-<p><code>[㐀-䶵]</code> 是 <code>3400–4DBF</code> 段。</p>
-<p><code>[𠀀-𪛖]</code> 是 <code>20000–2A6D6</code> 段。</p>
-<p><code>[𪜀-𫠝]</code> 是 <code>2A700–2B81F</code> 段。</p>
-<p><code>[⺀-⿕]</code> 是 <code>2E80–2FDF</code> 段。</p>
-<p><code>[豈-舘]</code> 是 <code>F900-FA6D</code> 段。</p>
-<p><code>[你-鼖]</code> 是 <code>2F800-2FA1B</code> 段。</p>
-<p>在 Objective-C 里可以任意用上面的集合进行组合。</p>
-<p>Python 不会用，简单的测试发现 <code>u&quot;[𠀀-𪛖]&quot;</code> 会导致报错，不加 <code>u</code> 匹配出来的会是别的字符，<code></code>。</p>
-<pre><code><span class="comment"># -*- coding:utf-8 -*-</span>
-<span class="keyword">import</span> re
-prog = re.compile(<span class="string">u'[𠀀-𫠚]'</span>)
-result = prog.match(<span class="string">u'𠀀'</span>)
-<span class="keyword">print</span> result
-</code></pre>
-
-<h4>For JavaScript</h4>
-<p>JS 对五位的 Unicode 编码支持有问题，比如 <code>𠀀</code> 不管是以单字还是 <code>\uD840\uDC00</code> 方式是可以匹配，但是作为范围，如 <code>[𠀀-𪛖]</code> 会抛出 <code>Range out of order in character class</code> 异常。</p>
-<p>如有需要，建议使用 <code>[一 -鿋]</code> 和 <code>[㐀-𫠚]</code>。</p>
-<h3>日文五十音匹配</h3>
-<p>相对于汉字，这个难度就大降：</p>
-<pre><code>[ぁ - ヶ゛゜ー]
-</code></pre>
-<p>JavaScript、Objective-C、Python 和 Ruby 测试通过。</p>
-<h3>韩文匹配</h3>
-<pre><code>[가-힝]
-</code></pre>
-<p>不懂韩文，大致就是这样吧？</p>
-<p>JavaScript、Objective-C、Python 和 Ruby 测试通过。</p>
-<h3>备注</h3>
-<ol>
-<li>为什么我会选择用「字」而不是 Unicode 编码来匹配呢？因为五位 Unicode 编码的支持实在不能统一，用字的话，我常用的语言都可以兼容，省事。</li>
-<li>如果看到的是方块字，那是正常的，虽然显示不出来，但仍旧是那个编码。</li>
-</ol>
-<hr>
-<p><em>参考资料：</em></p>
-<ul>
-<li><em><a href="http://en.wikipedia.org/wiki/List_of_Unicode_characters"><a href="http://en.wikipedia.org/wiki/List_of_Unicode_characters">http://en.wikipedia.org/wiki/List_of_Unicode_characters</a></a></em></li>
-<li><em><a href="http://lcweb2.loc.gov/diglib/codetables/9.2.html"><a href="http://lcweb2.loc.gov/diglib/codetables/9.2.html">http://lcweb2.loc.gov/diglib/codetables/9.2.html</a></a></em></li>
-<li><em><a href="http://lcweb2.loc.gov/diglib/codetables/9.3.html"><a href="http://lcweb2.loc.gov/diglib/codetables/9.3.html">http://lcweb2.loc.gov/diglib/codetables/9.3.html</a></a></em></li>
-</ul>
-]]></content>
-    <category scheme="http://chrisyip.im/tags/javascript/" term="JavaScript"/>
-    <category scheme="http://chrisyip.im/tags/objective-c/" term="Objective-C"/>
-    <category scheme="http://chrisyip.im/tags/python/" term="Python"/>
-    <category scheme="http://chrisyip.im/tags/regular-expression/" term="Regular Expression"/>
-    <category scheme="http://chrisyip.im/tags/ruby/" term="Ruby"/>
   </entry>
 </feed>
