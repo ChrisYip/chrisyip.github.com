@@ -3,7 +3,7 @@
   <title><![CDATA[I'm Chris]]></title>
   <link href="http://chrisyip.im/atom.xml" rel="self"/>
   <link href="http://chrisyip.im"/>
-  <updated>2013-04-17T14:05:47.754Z</updated>
+  <updated>2013-04-18T18:47:28.695Z</updated>
   <id>http://chrisyip.im/</id>
   <author>
     <name><![CDATA[Chris Yip]]></name>
@@ -53,7 +53,7 @@
     <link href="http://chrisyip.im/post/google-and-mozilla-working-on-new-browser-engines/"/>
     <id>http://chrisyip.im/post/google-and-mozilla-working-on-new-browser-engines/</id>
     <published>2013-04-04T06:10:22.000Z</published>
-    <updated>2013-04-04T07:10:23.000Z</updated>
+    <updated>2013-04-17T14:30:52.000Z</updated>
     <content type="html"><![CDATA[<p>在昨天（2013 年 4 月 3 日），Google 和 Mozilla 分别宣布要开发新的浏览器引擎，分别命名为 <a href="http://blog.chromium.org/2013/04/blink-rendering-engine-for-chromium.html">Blink</a> 和 <a href="https://blog.mozilla.org/blog/2013/04/03/mozilla-and-samsung-collaborate-on-next-generation-web-browser-engine/">Servo</a>。</p>
 <p>Chromium 开发新引擎属于意料之中的事，毕竟 Google 的野心是称霸桌面（Chrome OS）和移动端（Android），不够强劲的引擎是不能满足他们的需求的。</p>
 <p>Mozilla 开发新引擎就属于被迫无奈，好不容易在 IE 6 时代成功推广了 CSS3 等概念，让市场份额慢慢赶了上来，却被 WebKit 系列渔翁得利，Apple 和 Google 都是要资源有资源、要平台有平台的主，乔大爷一说 iOS 只能有 WebKit，Mozilla 奈何得了么？接着又因 Chrome 的快速启动、安装插件无需重启、强制静默更新等等措施而使 Firefox 从藐视 IE 的地位变成被藐视的处境（joking :P）。Opera 也是处于这样的窘境，最后妥协<a href="http://my.opera.com/ODIN/blog/300-million-users-and-move-to-webkit">换用 WebKit 引擎</a>。</p>
@@ -281,7 +281,7 @@ localStorage.clear() <span class="comment">// will not fire</span>
     <link href="http://37signals.com/svn/posts/3432-why-i-loved-building-basecamp-for-iphone-in-rubymotion"/>
     <id>http://chrisyip.im/post/why-i-loved-building-basecamp-for-iphone-in-rubymotion/</id>
     <published>2013-02-19T08:43:35.000Z</published>
-    <updated>2013-03-12T10:49:48.000Z</updated>
+    <updated>2013-04-17T14:32:24.000Z</updated>
     <content type="html"><![CDATA[<p>37signals 在最近发布 <a href="https://itunes.apple.com/us/app/basecamp-official-app/id599139477?mt=8">Basecamp for iPhone</a>，由于 37signals 是 Ruby 的坚定支持者，所以该 app 是由 <a href="http://www.rubymotion.com/">RubyMotion</a> 打造的，甚至开发工具也跳过了 Xcode。</p>
 <p>在上架不久后，<a href="http://twitter.com/qrush">Nick</a> 发了<a href="http://37signals.com/svn/posts/3432-why-i-loved-building-basecamp-for-iphone-in-rubymotion">一篇文章</a>来说明他们是为什么选择和怎样使用 RubyMotion 打造这款应用。</p>
 <h3>学习成本和 IDE 的缺陷</h3>
@@ -314,14 +314,13 @@ localStorage.clear() <span class="comment">// will not fire</span>
     <category scheme="http://chrisyip.im/tags/dev/" term="Dev"/>
     <category scheme="http://chrisyip.im/tags/ios/" term="iOS"/>
     <category scheme="http://chrisyip.im/tags/rubymotion/" term="RubyMotion"/>
-    <category scheme="http://chrisyip.im/categories/ruby/" term="Ruby"/>
   </entry>
   <entry>
     <title type="html"><![CDATA[迁移到 Hexo]]></title>
     <link href="http://chrisyip.im/post/hexo-rocks/"/>
     <id>http://chrisyip.im/post/hexo-rocks/</id>
     <published>2013-02-04T11:08:08.000Z</published>
-    <updated>2013-03-12T10:49:48.000Z</updated>
+    <updated>2013-04-17T14:33:50.000Z</updated>
     <content type="html"><![CDATA[<p>忙了两天，终于从 <a href="http://octopress.org">Octopress</a> 迁移到 <a href="http://zespia.tw/hexo/">Hexo</a> 了，订阅的朋友，如果收到了重复的更新请见谅。</p>
 <p>迁移的过程中，最困难的是想要尽可能兼容原本在 <a href="">Octopress</a> 能用的东西，比如 linklog 的自定义样式。除此之外，真的深刻地感受到 Hexo 的优点，V8 引擎的快就不必说了，使用的 Stylus 和 EJS 都让人觉得舒服。Jekyll 抱着 Liquid 不放真是一大败笔。</p>
 <p>接下来就是要为 Hexo 写一些插件，比如压缩 HTML，来达到最大的自定义。</p>
@@ -334,7 +333,7 @@ localStorage.clear() <span class="comment">// will not fire</span>
     <link href="http://thegoodman.cc/"/>
     <id>http://chrisyip.im/post/the-good-man-project/</id>
     <published>2013-02-01T08:20:00.000Z</published>
-    <updated>2013-03-12T10:49:48.000Z</updated>
+    <updated>2013-04-17T14:33:46.000Z</updated>
     <content type="html"><![CDATA[<p><a href="http://thegoodman.cc/">The Good Man</a> is a project shows the capacity of CSS3 animations as <strong>an animation tool</strong>.</p>
 <p>This project is built only by HTML, CSS3, web fonts and shapes, without images.</p>
 <p>Although it&#39;s pretty amazing, but there are still some things that need to be concerned:</p>
@@ -745,7 +744,7 @@ NSLog(@<span class="string">"%@ and %@, count %li"</span>, [(NSArray *)arr lastO
     <link href="http://chrisyip.im/post/use-pow-and-privoxy-bypass-mac-sandbox-and-socks5-issue/"/>
     <id>http://chrisyip.im/post/use-pow-and-privoxy-bypass-mac-sandbox-and-socks5-issue/</id>
     <published>2013-01-07T16:42:00.000Z</published>
-    <updated>2013-03-12T10:49:48.000Z</updated>
+    <updated>2013-04-17T14:34:01.000Z</updated>
     <content type="html"><![CDATA[<p>Apple 在 OS X 上推行沙盒之后，发现原来能用 PAC 代理配置不能用于所有程序了，原因是因为<strong>启用沙盒的程序无法访问 PAC 文件</strong>。除此之外，也发现了 SOCKS5 的兼容问题（如 Safari、Tweetbot），也就意味着在日益严峻的天朝网络环境里某些提高生产力的工具，如 <a href="https://github.com/clowwindy/shadowsocks">shadowsocks</a> ，就半残废了，只能走全局的 SOCKS 代理，而想要访问大陆站点的时候，比如优酷，这明显不科学，只能想办法解决。</p>
 <h3>沙盒的权限问题</h3>
 <p>虽然沙盒政策不让程序访问未授权的文件，不过对于「远程」文件倒没限制，所以我们可以把 PAC 文件部署在本地的服务器上。</p>
@@ -849,7 +848,7 @@ ssh         = +forward-override{forward-socks5 <span class="number">127.0</span>
     <link href="http://chrisyip.im/post/announcing-data-uri-converter/"/>
     <id>http://chrisyip.im/post/announcing-data-uri-converter/</id>
     <published>2012-11-25T09:37:00.000Z</published>
-    <updated>2013-03-12T10:49:48.000Z</updated>
+    <updated>2013-04-17T14:32:53.000Z</updated>
     <content type="html"><![CDATA[<p><a href="/data-uri-converter">Data URI Converter</a> 是我写的第一个 正式对外发布的 Mac App，写这货的动机是因为有段时间常用的拖曳式生成 DataURI 网站不是挂了就是被墙，剩下的都是不理想的，比如是传统 <code>&lt;input type=file&gt;</code>，所以萌生了写一个本地软件的想法。</p>
 <p>只是完成了原先计划的基础功能，如<strong>拖曳</strong>、<strong>自动识别 mime 类型</strong>、<strong>历史记录</strong>等，还有一些暂时没时间，先搁置，历史记录也做得相对简单了，预览图：</p>
 <p><img src="/data-uri-converter/screenshot2.png" alt="Data URI Converter Preview"></p>
@@ -865,7 +864,7 @@ ssh         = +forward-override{forward-socks5 <span class="number">127.0</span>
     <link href="http://chrisyip.im/post/alfred-extension-for-sublime-text-2/"/>
     <id>http://chrisyip.im/post/alfred-extension-for-sublime-text-2/</id>
     <published>2012-11-17T11:02:00.000Z</published>
-    <updated>2013-03-12T10:49:48.000Z</updated>
+    <updated>2013-04-17T14:32:56.000Z</updated>
     <content type="html"><![CDATA[<p>做了两枚用 Sublime Text 2 打开目录或文件的 Alfred 扩展：</p>
 <ul>
 <li>打开 Finder 当前目录：<a href="http://d.pr/f/KLMR"><a href="http://d.pr/f/KLMR">http://d.pr/f/KLMR</a></a>，修改自 <a href="https://twitter.com/pwc">@pwc</a> 的 Terminal+Here；</li>
@@ -1060,7 +1059,7 @@ console.log(title(music_post)) <span class="comment">// 'HEY JADE'</span>
     <link href="http://chrisyip.im/post/remove-duplicate-items-in-contextual-menu-with-alfred/"/>
     <id>http://chrisyip.im/post/remove-duplicate-items-in-contextual-menu-with-alfred/</id>
     <published>2012-11-07T10:14:00.000Z</published>
-    <updated>2013-03-12T10:49:48.000Z</updated>
+    <updated>2013-04-17T14:33:18.000Z</updated>
     <content type="html"><![CDATA[<p>升级到 Mountain Lion 之后，最恼人的是这个 bug：</p>
 <p><img src="http://d.pr/i/P0FH+" alt="Duplicate items in contextual menu"></p>
 <p>只要安装、升级程序都有可能造成重复项，实在烦人，但是并不是没有办法，可以用以下命名去重建右键菜单:</p>
@@ -1121,7 +1120,7 @@ console.log(title(music_post)) <span class="comment">// 'HEY JADE'</span>
     <link href="http://chrisyip.im/post/regular-expression-for-cjk/"/>
     <id>http://chrisyip.im/post/regular-expression-for-cjk/</id>
     <published>2012-11-03T11:02:00.000Z</published>
-    <updated>2013-03-12T10:49:48.000Z</updated>
+    <updated>2013-04-17T14:33:12.000Z</updated>
     <content type="html"><![CDATA[<p>之前我在 Twitter 发过用于匹配中文的正则表达式，但是发的表达式并不是很严谨，只是一个粗略的匹配，今天就进行补完吧。</p>
 <p>FYI，如果是用 Ruby，用内置的集合吧，如 <code>/\p{Han}/</code>，最省事，详情看<a href="http://www.ruby-doc.org/core-1.9.3/Regexp.html">文档</a>。</p>
 <h3>汉字匹配</h3>

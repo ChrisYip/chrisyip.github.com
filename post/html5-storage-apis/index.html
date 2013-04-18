@@ -1,1 +1,158 @@
-<undefined></undefined>
+<!DOCTYPE html><meta charset="utf-8"><title>HTML5 Storage APIs</title><meta name="author" content="Chris Yip"><meta name="description" content="因为太久没用这些东西，之前被人问起时只能勉强答出两个，并且连事件也不记得，只好把常用的列出来强化记忆了。
+localStorage 和 sessionStorage 的 APIs 在行为表现上是一致的，以下以 localStorage 为例，而 globalStorage 因为不是标准，所以略过。
+函数和属性:
+setItem(key, value)
+将 value 以 key 为名存入 localStorage。
+key 和 value 理论上可接受任何类型，但实际会通过 String(value) 转换为字符串，所以需慎用，比如 Object 会转换成 &#39;[object Object]&#39;，null 会转换成 &#39;null&#39;。
+localStorage.setItem('hello', 'Chris')
+localStorage.key(0) + ' ' + localStorage.getItem('hello') // 'hello Chris'
+
+localStorage.clear()
+var obj = { str: 'an object' }
+localStorage.setItem(obj, { posts: [{}, {}] })
+localStorage.key(0) // '[object Object]'
+localStorage.getItem(obj) // '[object Object]'
+var otherObj = { str: 'another object' }
+localStorage.setItem(otherObj, true)
+localStorage.getItem(obj) // 'true'
+
+localStorage.clear()
+localStorage.setItem(null, null)
+localStorage.getItem(null) // 'null'
+
+
+getItem(key)
+要注意 String() 的问题。
+若 key 不存在，getItem() 会返回 null，如果在 setItem() 时并没有进行严格验证的话，建议同时判断是否为 &#39;null&#39; 来确定是否存在。
+访问 key/value 的其他方法
+localStorage 可以像数组一样操作，而 key 也会作为普通对象的属性一样被访问。
+localStorage['hello'] = 'world'
+localStorage.hello // 'world'
+localStorage.hello = 'Chris'
+localStorage['hello'] // 'Chris'
+
+
+removeItem() 和 clear()
+一个删除单个，一个删除全部，不返回任何值，key 不存在时也不会报错。
+key(keyID)
+返回指定 ID 的 key 名字。
+keyID 只接受整数，因为会通过 Math.floor(keyID) 来转换，所以支持非整数，如 &#39;1.1&#39;、&#39;1a&#39; 和 true 等等，只是结果为 NaN 时取 0；若不存在，返回 null。
+已知问题：
+
+Chrome v25 和 Firefox v19 的行为不一样：Chrome 会将 keys 按照字符串大小进行正排序，而 Firefox 则几乎是乱序，不可预测 key 的位置。
+
+localStorage.setItem('google', 'what the hell?')
+localStorage.setItem('miscrosoft', 'not bad')
+localStorage.setItem('apple', 'great')
+
+localStorage.key(0) // Chrome: apple
+localStorage.key(1) // Chrome: google
+
+
+length
+返回 key 的总数。
+事件
+目前只支持一个事件：storage。
+if (window.addEventListener) {
+  window.addEventListener(&quot;storage&quot;, handle_storage, false);
+} else {
+  window.attachEvent(&quot;onstorage&quot;, handle_storage);
+};
+
+
+这段代码我偷懒从 Dive Into HTML5 搬过来的，专有的事件属性如下：
+
+key：不解释
+oldValue：旧值
+newValue：新值
+url：页面的 URL
+
+url 有点特殊，原来是叫 uri 的，所以要兼容某些浏览器的话，最好两个都判断，较新的标准浏览器应该没有这个问题。
+此事件不可终止，并且只有在 setItem()、removeItem() 和 clear() 确实影响了值才会触发：
+localStorage.setItem('hello', 'world') // will fire
+localStorage.clear() // will fire
+localStorage.clear() // will not fire
+
+
+另外，对触发页面的要求也很特别：会触发事件的页面并不是执行修改操作的页面，而是已打开的、共享同一个储存区的其他页面。
+最后，事件绑定只能绑定在 window 上。
+以上仅在 Chrome v25 和 Firefox v19 上测试过。"><meta name="keywords" content="iOS, JavaScript, HTML, CSS, Objective-C, Freelancer, Web Development, Mobile Development, Mac, OS X, Mac Development, Development, 前端开发, 移动开发, Ruby"><meta property="og:title" content="HTML5 Storage APIs"><meta property="og:site_name" content="I'm Chris"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"><link rel="shortcut icon" href="/favicon.ico"><link rel="alternate" href="/atom.xml" title="I'm Chris" type="application/atom+xml"><link rel="stylesheet" href="/css/style.css" media="screen"><script async src="/js/theme.js"></script><script>var _gaq=_gaq||[];_gaq.push(["_setAccount","UA-15420910-3"]);_gaq.push(["_trackPageview"]);(function(){var a=document.createElement("script");a.type="text/javascript";a.async=!0;a.src=("https:"==document.location.protocol?"https://ssl":"http://www")+".google-analytics.com/ga.js";var b=document.getElementsByTagName("script")[0];b.parentNode.insertBefore(a,b)})();</script><!--[if IE]><div style="width:100%;position:fixed;top:0;left:0;background:#f00;color:#fff;text-align:center">Internet Explorer series are not supported.</div><![endif]--><header id="header" class="inner page-header"><h1><a href="/">I'm Chris</a></h1><div class="menubar"><nav id="header-menu" class="header-menu"><a class="toggle-menu">Menu</a><ul><li><a href="/about" class="menu-item">About</a></li><li><a href="/archives" class="menu-item">Archives</a></li><li><a href="/works" class="menu-item">Works</a></li></ul></nav><form action="http://google.com/search" method="get" class="search"><input name="q" autocomplete="off" class="search-field"><input type="hidden" name="q" value="site:chrisyip.im"><a class="button"></a></form><div class="follow_me"><a href="https://github.com/chrisyip" title="GitHub" class="github">GitHub</a><a href="https://twitter.com/chrisyipw" title="Twitter" class="twitter">Twitter</a><a href="/atom.xml" title="RSS" class="rss">RSS</a></div></div></header><div id="content" class="inner content"><article class=""><header class="entry-header"><h2 class="title"><a href="/post/html5-storage-apis/">HTML5 Storage APIs</a></h2></header><div class="entry-content"><p>因为太久没用这些东西，之前被人问起时只能勉强答出两个，并且连事件也不记得，只好把常用的列出来强化记忆了。</p>
+<p><code>localStorage</code> 和 <code>sessionStorage</code> 的 APIs 在行为表现上是一致的，以下以 <code>localStorage</code> 为例，而 <code>globalStorage</code> 因为不是标准，所以略过。</p>
+<h3>函数和属性:</h3>
+<h4><code>setItem(key, value)</code></h4>
+<p>将 <code>value</code> 以 <code>key</code> 为名存入 <code>localStorage</code>。</p>
+<p><code>key</code> 和 <code>value</code> 理论上可接受任何类型，但实际会通过 <code>String(value)</code> 转换为字符串，所以需慎用，比如 <code>Object</code> 会转换成 <code>&#39;[object Object]&#39;</code>，<code>null</code> 会转换成 <code>&#39;null&#39;</code>。</p>
+<pre><code>localStorage.setItem(<span class="string">'hello'</span>, <span class="string">'Chris'</span>)
+localStorage.key(<span class="number">0</span>) + <span class="string">' '</span> + localStorage.getItem(<span class="string">'hello'</span>) <span class="comment">// 'hello Chris'</span>
+
+localStorage.clear()
+<span class="keyword">var</span> obj = { str: <span class="string">'an object'</span> }
+localStorage.setItem(obj, { posts: [{}, {}] })
+localStorage.key(<span class="number">0</span>) <span class="comment">// '[object Object]'</span>
+localStorage.getItem(obj) <span class="comment">// '[object Object]'</span>
+<span class="keyword">var</span> otherObj = { str: <span class="string">'another object'</span> }
+localStorage.setItem(otherObj, <span class="literal">true</span>)
+localStorage.getItem(obj) <span class="comment">// 'true'</span>
+
+localStorage.clear()
+localStorage.setItem(<span class="literal">null</span>, <span class="literal">null</span>)
+localStorage.getItem(<span class="literal">null</span>) <span class="comment">// 'null'</span>
+</code></pre>
+
+<h4><code>getItem(key)</code></h4>
+<p>要注意 <code>String()</code> 的问题。</p>
+<p>若 <code>key</code> 不存在，<code>getItem()</code> 会返回 <code>null</code>，如果在 <code>setItem()</code> 时并没有进行严格验证的话，建议同时判断是否为 <code>&#39;null&#39;</code> 来确定是否存在。</p>
+<h4>访问 key/value 的其他方法</h4>
+<p><code>localStorage</code> 可以像数组一样操作，而 <code>key</code> 也会作为普通对象的属性一样被访问。</p>
+<pre><code>localStorage[<span class="string">'hello'</span>] = <span class="string">'world'</span>
+localStorage.hello <span class="comment">// 'world'</span>
+localStorage.hello = <span class="string">'Chris'</span>
+localStorage[<span class="string">'hello'</span>] <span class="comment">// 'Chris'</span>
+</code></pre>
+
+<h4><code>removeItem()</code> 和 <code>clear()</code></h4>
+<p>一个删除单个，一个删除全部，不返回任何值，<code>key</code> 不存在时也不会报错。</p>
+<h4><code>key(keyID)</code></h4>
+<p>返回指定 ID 的 <code>key</code> 名字。</p>
+<p><code>keyID</code> 只接受整数，因为会通过 <code>Math.floor(keyID)</code> 来转换，所以支持非整数，如 <code>&#39;1.1&#39;</code>、<code>&#39;1a&#39;</code> 和 <code>true</code> 等等，只是结果为 <code>NaN</code> 时取 <code>0</code>；若不存在，返回 <code>null</code>。</p>
+<p>已知问题：</p>
+<ul>
+<li>Chrome v25 和 Firefox v19 的行为不一样：Chrome 会将 keys 按照字符串大小进行正排序，而 Firefox 则几乎是乱序，不可预测 <code>key</code> 的位置。</li>
+</ul>
+<pre><code>localStorage.setItem(<span class="string">'google'</span>, <span class="string">'what the hell?'</span>)
+localStorage.setItem(<span class="string">'miscrosoft'</span>, <span class="string">'not bad'</span>)
+localStorage.setItem(<span class="string">'apple'</span>, <span class="string">'great'</span>)
+
+localStorage.key(<span class="number">0</span>) <span class="comment">// Chrome: apple</span>
+localStorage.key(<span class="number">1</span>) <span class="comment">// Chrome: google</span>
+</code></pre>
+
+<h4><code>length</code></h4>
+<p>返回 <code>key</code> 的总数。</p>
+<h3>事件</h3>
+<p>目前只支持一个事件：<code>storage</code>。</p>
+<pre><code><span class="keyword">if</span> (window.addEventListener) {
+  window.addEventListener(<span class="string">"storage"</span>, handle_storage, <span class="literal">false</span>);
+} <span class="keyword">else</span> {
+  window.attachEvent(<span class="string">"onstorage"</span>, handle_storage);
+};
+</code></pre>
+
+<p>这段代码我偷懒从 <a href="http://diveintohtml5.info/storage.html">Dive Into HTML5</a> 搬过来的，专有的事件属性如下：</p>
+<ul>
+<li>key：不解释</li>
+<li>oldValue：旧值</li>
+<li>newValue：新值</li>
+<li>url：页面的 URL</li>
+</ul>
+<p><code>url</code> 有点特殊，原来是叫 <code>uri</code> 的，所以要兼容某些浏览器的话，最好两个都判断，较新的标准浏览器应该没有这个问题。</p>
+<p>此事件不可终止，并且只有在 <code>setItem()</code>、<code>removeItem()</code> 和 <code>clear()</code> 确实影响了值才会触发：</p>
+<pre><code>localStorage.setItem(<span class="string">'hello'</span>, <span class="string">'world'</span>) <span class="comment">// will fire</span>
+localStorage.clear() <span class="comment">// will fire</span>
+localStorage.clear() <span class="comment">// will not fire</span>
+</code></pre>
+
+<p>另外，对触发页面的要求也很特别：<strong>会触发事件的页面并不是执行修改操作的页面，而是已打开的、共享同一个储存区的其他页面</strong>。</p>
+<p>最后，事件绑定只能绑定在 <code>window</code> 上。</p>
+<p><em>以上仅在 Chrome v25 和 Firefox v19 上测试过。</em></p>
+</div><footer class="entry-footer"><time datetime="2013-03-28T19:31:58.000Z">Mar 29th, 2013</time><div class="tags"><a href="/tags/html5/">HTML5</a><a href="/tags/javascript/">JavaScript</a><a href="/tags/storage/">Storage</a><a href="/tags/localstorage/">localStorage</a><a href="/tags/sessionstorage/">sessionStorage</a></div><section class="comments"><h2 class="title"><a name="comments">Comments</a></h2><div id="disqus_thread"><noscript>Please enable JavaScript to view the<a href="http://disqus.com/?ref_noscript">comments powered by Disqus</a></noscript></div></section><script>var disqus_shortname="chrisyipw";(function(){var a=document.createElement("script");a.type="text/javascript";a.async=!0;a.src="http://chrisyipw.disqus.com/embed.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)})();</script></footer></article></div><footer id="footer" class="inner page-footer"><Copyright>© 2013&nbsp;Chris Yip</Copyright></footer>

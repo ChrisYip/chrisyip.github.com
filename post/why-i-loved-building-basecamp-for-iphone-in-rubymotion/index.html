@@ -1,1 +1,52 @@
-<undefined></undefined>
+<!DOCTYPE html><meta charset="utf-8"><title>Why I loved building Basecamp for iPhone in RubyMotion</title><meta name="author" content="Chris Yip"><meta name="description" content="37signals 在最近发布 Basecamp for iPhone，由于 37signals 是 Ruby 的坚定支持者，所以该 app 是由 RubyMotion 打造的，甚至开发工具也跳过了 Xcode。
+在上架不久后，Nick 发了一篇文章来说明他们是为什么选择和怎样使用 RubyMotion 打造这款应用。
+学习成本和 IDE 的缺陷
+Nick 对使用 Objective-C 开发应用的看法时：「如果使用 Objective-C，就意味着我需要抛弃我现有的工具和工作流，然后学习新的 API、框架和更多的东西（如 IDE）」，并且提到他早年使用 Visual Basic 控件和 Visual Studio 时的不好经验，因此非常抗拒使用 Xcode 和 Interface Builder。
+我相当同意 Nick 的观点，就像 CoffeeScript 和 Brython 和 JavaScript 的关系，对于 Ruby 或 Python 程序员来说，直接用前两者会少很多学习成本。
+而 Xcode，说实话，稳定性还没 Visual Studio 好，在代码补全、文档、Interface Builder、应用发布等方面虽然会比一般编辑器要好，所以还能忍受缺陷，但如果有代替方案呢？
+Auto Layout
+Auto Layout 是 iOS 6 新加的 API，为马脸 iPhone 5 准备的：
+# horizontal
+&quot;|-10-[switchButton]-10-|&quot; 
+&quot;|-10-[helpButton]-10-|&quot; 
+
+# vertical
+&quot;|-15-[switchButton]-10-[helpButton(==switchButton)]-15-|&quot;
+
+
+第三方框架和类库
+Nick 吐槽了 Objective-C 第三方框架和类库令人不满的现状：
+
+（相对于 Ruby）没有令人满意的依赖管理工具，CocoaPods 做得很好，可是还不够
+大部分不在 CocoaPods 的框架或类库的 README 只是简单地使用「拖曳 .xcodeproj 文件到 Xcode」或「拖曳 .h 和 .m 文件到你的项目」等等让人头痛的说明（谁叫你不用 Xcode :P）
+
+CocoaPods 我也有在用，虽然它让使用第三方框架和类库变得简单了一些，但并不是很完美，如果能像 RubyGems 或 Node Packaged Modules 那样的话，就真的真的 save my ass 了。
+调试
+37signals 是使用 rake 和 TestFlight 来进行调试，而 RubyMotion 官方也提供了如何调试的指南。
+因为最近多了一些 iOS 的调试器，都很逆天的感觉，比如 SuperDB，所以在调试方面，可能脱离 Xcode 也不会造成很大的问题。"><meta name="keywords" content="iOS, JavaScript, HTML, CSS, Objective-C, Freelancer, Web Development, Mobile Development, Mac, OS X, Mac Development, Development, 前端开发, 移动开发, Ruby"><meta property="og:title" content="Why I loved building Basecamp for iPhone in RubyMotion"><meta property="og:site_name" content="I'm Chris"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"><link rel="shortcut icon" href="/favicon.ico"><link rel="alternate" href="/atom.xml" title="I'm Chris" type="application/atom+xml"><link rel="stylesheet" href="/css/style.css" media="screen"><script async src="/js/theme.js"></script><script>var _gaq=_gaq||[];_gaq.push(["_setAccount","UA-15420910-3"]);_gaq.push(["_trackPageview"]);(function(){var a=document.createElement("script");a.type="text/javascript";a.async=!0;a.src=("https:"==document.location.protocol?"https://ssl":"http://www")+".google-analytics.com/ga.js";var b=document.getElementsByTagName("script")[0];b.parentNode.insertBefore(a,b)})();</script><!--[if IE]><div style="width:100%;position:fixed;top:0;left:0;background:#f00;color:#fff;text-align:center">Internet Explorer series are not supported.</div><![endif]--><header id="header" class="inner page-header"><h1><a href="/">I'm Chris</a></h1><div class="menubar"><nav id="header-menu" class="header-menu"><a class="toggle-menu">Menu</a><ul><li><a href="/about" class="menu-item">About</a></li><li><a href="/archives" class="menu-item">Archives</a></li><li><a href="/works" class="menu-item">Works</a></li></ul></nav><form action="http://google.com/search" method="get" class="search"><input name="q" autocomplete="off" class="search-field"><input type="hidden" name="q" value="site:chrisyip.im"><a class="button"></a></form><div class="follow_me"><a href="https://github.com/chrisyip" title="GitHub" class="github">GitHub</a><a href="https://twitter.com/chrisyipw" title="Twitter" class="twitter">Twitter</a><a href="/atom.xml" title="RSS" class="rss">RSS</a></div></div></header><div id="content" class="inner content"><article class=""><header class="entry-header"><h2 class="title"><a href="http://37signals.com/svn/posts/3432-why-i-loved-building-basecamp-for-iphone-in-rubymotion">&rarr;&nbsp;Why I loved building Basecamp for iPhone in RubyMotion</a></h2></header><div class="entry-content"><p>37signals 在最近发布 <a href="https://itunes.apple.com/us/app/basecamp-official-app/id599139477?mt=8">Basecamp for iPhone</a>，由于 37signals 是 Ruby 的坚定支持者，所以该 app 是由 <a href="http://www.rubymotion.com/">RubyMotion</a> 打造的，甚至开发工具也跳过了 Xcode。</p>
+<p>在上架不久后，<a href="http://twitter.com/qrush">Nick</a> 发了<a href="http://37signals.com/svn/posts/3432-why-i-loved-building-basecamp-for-iphone-in-rubymotion">一篇文章</a>来说明他们是为什么选择和怎样使用 RubyMotion 打造这款应用。</p>
+<h3>学习成本和 IDE 的缺陷</h3>
+<p>Nick 对使用 Objective-C 开发应用的看法时：「如果使用 Objective-C，就意味着我需要抛弃我现有的工具和工作流，然后学习新的 API、框架和更多的东西（如 IDE）」，并且提到他早年使用 Visual Basic 控件和 Visual Studio 时的<strong>不好</strong>经验，因此非常抗拒使用 Xcode 和 Interface Builder。</p>
+<p>我相当同意 Nick 的观点，就像 <a href="http://coffeescript.org/">CoffeeScript</a> 和 <a href="http://code.google.com/p/brython/">Brython</a> 和 JavaScript 的关系，对于 Ruby 或 Python 程序员来说，直接用前两者会少很多学习成本。</p>
+<p>而 Xcode，说实话，稳定性还没 Visual Studio 好，在代码补全、文档、Interface Builder、应用发布等方面虽然会比一般编辑器要好，所以还能忍受缺陷，但如果有代替方案呢？</p>
+<h3><a href="https://developer.apple.com/library/ios/#documentation/UserExperience/Conceptual/AutolayoutPG/Articles/Introduction.html">Auto Layout</a></h3>
+<p>Auto Layout 是 iOS 6 新加的 API，为<del>马脸</del> iPhone 5 准备的：</p>
+<pre><code><span class="comment">#</span> <span class="comment">horizontal</span>
+<span class="comment">"|</span>-<span class="comment">10</span>-<span class="title">[</span><span class="comment">switchButton</span>]<span class="literal">-</span><span class="comment">10</span>-<span class="comment">|"</span> 
+<span class="comment">"|</span>-<span class="comment">10</span>-<span class="title">[</span><span class="comment">helpButton</span>]<span class="literal">-</span><span class="comment">10</span>-<span class="comment">|"</span> 
+
+<span class="comment">#</span> <span class="comment">vertical</span>
+<span class="comment">"|</span>-<span class="comment">15</span>-<span class="title">[</span><span class="comment">switchButton</span>]<span class="literal">-</span><span class="comment">10</span>-<span class="title">[</span><span class="comment">helpButton(==switchButton)</span>]<span class="literal">-</span><span class="comment">15</span>-<span class="comment">|"
+</code></pre>
+
+<h3>第三方框架和类库</h3>
+<p>Nick 吐槽了 Objective-C 第三方框架和类库令人不满的现状：</p>
+<ul>
+<li>（相对于 Ruby）没有令人满意的依赖管理工具，<a href="http://cocoapods.org/">CocoaPods</a> 做得很好，可是还不够</li>
+<li>大部分不在 CocoaPods 的框架或类库的 README 只是简单地使用「拖曳 <code>.xcodeproj</code> 文件到 Xcode」或「拖曳 <code>.h</code> 和 <code>.m</code> 文件到你的项目」等等让人头痛的说明（谁叫你不用 Xcode :P）</li>
+</ul>
+<p>CocoaPods 我也有在用，虽然它让使用第三方框架和类库变得简单了一些，但并不是很完美，如果能像 RubyGems 或 Node Packaged Modules 那样的话，就真的真的 save my ass 了。</p>
+<h3>调试</h3>
+<p>37signals 是使用 <code>rake</code> 和 <a href="http://www.rubymotion.com/developer-center/articles/testflight/">TestFlight</a> 来进行调试，而 RubyMotion 官方也提供了<a href="http://www.rubymotion.com/developer-center/articles/debugging/">如何调试的指南</a>。</p>
+<p>因为最近多了一些 iOS 的调试器，都很逆天的感觉，比如 <a href="http://shopify.github.com/superdb/">SuperDB</a>，所以在调试方面，可能脱离 Xcode 也不会造成很大的问题。</p>
+<a href="/post/why-i-loved-building-basecamp-for-iphone-in-rubymotion/" class="permalink">&infin;</a></div><footer class="entry-footer"><time datetime="2013-02-19T08:43:35.000Z">Feb 19th, 2013</time><div class="tags"><a href="/tags/ruby/">Ruby</a><a href="/tags/objective-c/">Objective-C</a><a href="/tags/dev/">Dev</a><a href="/tags/ios/">iOS</a><a href="/tags/rubymotion/">RubyMotion</a></div><section class="comments"><h2 class="title"><a name="comments">Comments</a></h2><div id="disqus_thread"><noscript>Please enable JavaScript to view the<a href="http://disqus.com/?ref_noscript">comments powered by Disqus</a></noscript></div></section><script>var disqus_shortname="chrisyipw";(function(){var a=document.createElement("script");a.type="text/javascript";a.async=!0;a.src="http://chrisyipw.disqus.com/embed.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)})();</script></footer></article></div><footer id="footer" class="inner page-footer"><Copyright>© 2013&nbsp;Chris Yip</Copyright></footer>

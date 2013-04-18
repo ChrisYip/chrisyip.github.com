@@ -1,1 +1,58 @@
-<undefined></undefined>
+<!DOCTYPE html><meta charset="utf-8"><title>Zurui Design</title><meta name="author" content="Chris Yip"><meta name="description" content="TAE 在日本「第一回 プログラマ向けデザイン勉強会」（面向程序员的设计学习班）上做了「Zurui Design」的演讲，TAE 称之为「Zurui Design」。「Zurui」在日文的意思是「狡猾的」，大概是因为大部分情况下都可以用，很少出问题的缘故吧。
+演示内的例子使用了高阶的 CSS 属性，大部分在 IE8 或以下会有支持问题，如 rgba()，这里就不多说明怎么处理，请善用 Google。
+以下整理一些实用的：
+背景
+
+使用接近纯白或纯黑的颜色；
+Pattern 的选择上尽量接近自然或构图简单的；
+避免选择大图案的 pattern；
+避免选择色度很浓或亮度差异很大的 pattern。
+
+渐变
+
+起始色和结束色之间尽量不要有太大差距，如 #434343 和 #222；
+起始色和结束色之间尽量不要混合多种不同的颜色，如红黄蓝搭配。
+
+圆角
+
+非圆形设计，尽量限制 border-radius 在 6px 内；
+
+阴影
+box-shadow 需避免：
+
+太浓的颜色
+较大的淡化值（blur）
+彩色的阴影
+
+彩色的阴影指非黑白的其他颜色，使用上尽量使用黑色，如果背景色为黑色系，可以把阴影的颜色设置为比背景还要黑一些，别因为要凸显而采用其他颜色。
+按钮
+如果想要做有立体感的按钮，可以配合渐变，但光源是上到下为佳，即上部浅色，底部深色。使用渐变时配合 border 会有较好的效果，但注意避免彩色的 border。"><meta name="keywords" content="iOS, JavaScript, HTML, CSS, Objective-C, Freelancer, Web Development, Mobile Development, Mac, OS X, Mac Development, Development, 前端开发, 移动开发, Ruby"><meta property="og:title" content="Zurui Design"><meta property="og:site_name" content="I'm Chris"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"><link rel="shortcut icon" href="/favicon.ico"><link rel="alternate" href="/atom.xml" title="I'm Chris" type="application/atom+xml"><link rel="stylesheet" href="/css/style.css" media="screen"><script async src="/js/theme.js"></script><script>var _gaq=_gaq||[];_gaq.push(["_setAccount","UA-15420910-3"]);_gaq.push(["_trackPageview"]);(function(){var a=document.createElement("script");a.type="text/javascript";a.async=!0;a.src=("https:"==document.location.protocol?"https://ssl":"http://www")+".google-analytics.com/ga.js";var b=document.getElementsByTagName("script")[0];b.parentNode.insertBefore(a,b)})();</script><!--[if IE]><div style="width:100%;position:fixed;top:0;left:0;background:#f00;color:#fff;text-align:center">Internet Explorer series are not supported.</div><![endif]--><header id="header" class="inner page-header"><h1><a href="/">I'm Chris</a></h1><div class="menubar"><nav id="header-menu" class="header-menu"><a class="toggle-menu">Menu</a><ul><li><a href="/about" class="menu-item">About</a></li><li><a href="/archives" class="menu-item">Archives</a></li><li><a href="/works" class="menu-item">Works</a></li></ul></nav><form action="http://google.com/search" method="get" class="search"><input name="q" autocomplete="off" class="search-field"><input type="hidden" name="q" value="site:chrisyip.im"><a class="button"></a></form><div class="follow_me"><a href="https://github.com/chrisyip" title="GitHub" class="github">GitHub</a><a href="https://twitter.com/chrisyipw" title="Twitter" class="twitter">Twitter</a><a href="/atom.xml" title="RSS" class="rss">RSS</a></div></div></header><div id="content" class="inner content"><article class=""><header class="entry-header"><h2 class="title"><a href="/post/sly-design-for-web-programmer/">Zurui Design</a></h2></header><div class="entry-content"><p><a href="https://twitter.com/ken_c_lo">TAE</a> 在日本「<a href="http://connpass.com/event/1185/">第一回 プログラマ向けデザイン勉強会</a>」（面向程序员的设计学习班）上做了「Zurui Design」的<a href="https://speakerdeck.com/ken_c_lo/zurui-design-technique-english-version">演讲</a>，TAE 称之为「Zurui Design」。「Zurui」在日文的意思是「狡猾的」，大概是因为大部分情况下都可以用，很少出问题的缘故吧。</p>
+<p>演示内的例子使用了高阶的 CSS 属性，大部分在 IE8 或以下会有支持问题，如 <code>rgba()</code>，这里就不多说明怎么处理，请善用 Google。</p>
+<p>以下整理一些实用的：</p>
+<h3>背景</h3>
+<ul>
+<li>使用接近纯白或纯黑的颜色；</li>
+<li>Pattern 的选择上尽量接近自然或构图简单的；</li>
+<li>避免选择大图案的 pattern；</li>
+<li>避免选择色度很浓或亮度差异很大的 pattern。</li>
+</ul>
+<h3>渐变</h3>
+<ul>
+<li>起始色和结束色之间尽量不要有太大差距，如 <code>#434343</code> 和 <code>#222</code>；</li>
+<li>起始色和结束色之间尽量不要混合多种不同的颜色，如红黄蓝搭配。</li>
+</ul>
+<h3>圆角</h3>
+<ul>
+<li>非圆形设计，尽量限制 <code>border-radius</code> 在 <code>6px</code> 内；</li>
+</ul>
+<h3>阴影</h3>
+<p><code>box-shadow</code> 需避免：</p>
+<ul>
+<li>太浓的颜色</li>
+<li>较大的淡化值（blur）</li>
+<li>彩色的阴影</li>
+</ul>
+<p>彩色的阴影指非黑白的其他颜色，使用上尽量使用黑色，如果背景色为黑色系，可以把阴影的颜色设置为比背景还要黑一些，别因为要凸显而采用其他颜色。</p>
+<h3>按钮</h3>
+<p>如果想要做有立体感的按钮，可以配合渐变，但光源是上到下为佳，即上部浅色，底部深色。使用渐变时配合 <code>border</code> 会有较好的效果，但注意避免彩色的 <code>border</code>。</p>
+</div><footer class="entry-footer"><time datetime="2012-11-05T07:27:00.000Z">Nov 5th, 2012</time><div class="tags"><a href="/tags/design/">Design</a><a href="/tags/web/">Web</a></div><section class="comments"><h2 class="title"><a name="comments">Comments</a></h2><div id="disqus_thread"><noscript>Please enable JavaScript to view the<a href="http://disqus.com/?ref_noscript">comments powered by Disqus</a></noscript></div></section><script>var disqus_shortname="chrisyipw";(function(){var a=document.createElement("script");a.type="text/javascript";a.async=!0;a.src="http://chrisyipw.disqus.com/embed.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)})();</script></footer></article></div><footer id="footer" class="inner page-footer"><Copyright>© 2013&nbsp;Chris Yip</Copyright></footer>
