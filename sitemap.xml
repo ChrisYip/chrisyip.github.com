@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://chrisyip.im/about/index.html</loc>
+    <lastmod>2013-04-25T17:30:28.000Z</lastmod>
+  </url>
+  <url>
     <loc>http://chrisyip.im/post/why-nike-is-the-no1-most-innovative-company-of-2013/</loc>
     <lastmod>2013-04-18T19:31:01.000Z</lastmod>
   </url>
@@ -45,10 +49,6 @@
     <lastmod>2013-04-17T14:30:52.000Z</lastmod>
   </url>
   <url>
-    <loc>http://chrisyip.im/about/index.html</loc>
-    <lastmod>2013-04-17T13:57:53.000Z</lastmod>
-  </url>
-  <url>
     <loc>http://chrisyip.im/post/akins-laws-of-spacecraft-design/</loc>
     <lastmod>2013-04-15T12:25:23.000Z</lastmod>
   </url>
@@ -69,7 +69,7 @@
     <lastmod>2013-03-12T10:53:31.000Z</lastmod>
   </url>
   <url>
-    <loc>http://chrisyip.im/post/mutation-events-and-mutationobserver/</loc>
+    <loc>http://chrisyip.im/post/objective-c-message-forwarding/</loc>
     <lastmod>2013-03-12T10:49:48.000Z</lastmod>
   </url>
   <url>
@@ -77,19 +77,19 @@
     <lastmod>2013-03-12T10:49:48.000Z</lastmod>
   </url>
   <url>
-    <loc>http://chrisyip.im/post/objective-c-message-forwarding/</loc>
-    <lastmod>2013-03-12T10:49:48.000Z</lastmod>
-  </url>
-  <url>
     <loc>http://chrisyip.im/post/simplify-local-sites-management-with-pow-and-anvil/</loc>
     <lastmod>2013-03-12T10:49:48.000Z</lastmod>
   </url>
   <url>
-    <loc>http://chrisyip.im/post/sly-design-for-web-programmer/</loc>
+    <loc>http://chrisyip.im/post/mutation-events-and-mutationobserver/</loc>
     <lastmod>2013-03-12T10:49:48.000Z</lastmod>
   </url>
   <url>
     <loc>http://chrisyip.im/post/some-useful-javascript-apis/</loc>
+    <lastmod>2013-03-12T10:49:48.000Z</lastmod>
+  </url>
+  <url>
+    <loc>http://chrisyip.im/post/sly-design-for-web-programmer/</loc>
     <lastmod>2013-03-12T10:49:48.000Z</lastmod>
   </url>
   <url>
