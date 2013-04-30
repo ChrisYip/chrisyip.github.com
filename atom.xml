@@ -3,13 +3,36 @@
   <title><![CDATA[I'm Chris]]></title>
   <link href="http://chrisyip.im/atom.xml" rel="self"/>
   <link href="http://chrisyip.im"/>
-  <updated>2013-04-25T17:31:04.508Z</updated>
+  <updated>2013-04-30T08:06:02.434Z</updated>
   <id>http://chrisyip.im/</id>
   <author>
     <name><![CDATA[Chris Yip]]></name>
     <email><![CDATA[i@chrisyip.im]]></email>
   </author>
   <generator uri="http://zespia.tw/hexo">Hexo</generator>
+  <entry>
+    <title type="html"><![CDATA[雷柏 RATV 体验]]></title>
+    <link href="http://chrisyip.im/post/rapoo-ratv/"/>
+    <id>http://chrisyip.im/post/rapoo-ratv/</id>
+    <published>2013-04-30T04:20:39.000Z</published>
+    <updated>2013-04-30T08:04:48.000Z</updated>
+    <content type="html"><![CDATA[<p><strong>TL;DR</strong></p>
+<p>鉴于 <a href="http://ratv.rapoo.com/">RATV</a> 糟糕的播放能力，强烈建议不要购买：<strong>在线视频不管是标清还是高清都一直会出现失帧、跳帧现象，播放本地 4.3GB 1080P Eva 新剧场版 Q 虽然比在线视频情况要好很多，但仍有声画不同步的情况</strong>。</p>
+<hr>
+<p><a href="http://ratv.rapoo.com/">RATV</a> 是雷柏在 2012 年 9 月 4 日<a href="http://www.rapoo.cn/newsdetails.aspx?id=839">公布</a>的家庭影音娱乐产品，目的是「山寨」和成为中国的 Apple TV。</p>
+<p>设计上非常简洁有爱，和 Apple TV 风格非常相近，其他内容可以看<a href="https://google.com/search?aq=f&amp;oq=ratv+%E8%AF%84%E6%B5%8B&amp;sourceid=chrome&amp;ie=UTF-8&amp;q=ratv+%E8%AF%84%E6%B5%8B">评测</a>，我就不复述了，只是说说它的致命缺点。</p>
+<p>RATV 使用了 1GHz 的单核心 <a href="http://www.arm.com/products/processors/cortex-a/cortex-a8.php">Cortex-A8</a>，虽然这颗心能满足 Android 4.0 和 RA.UI 的使用需求，操作流畅度也不错，但是在播放视频上，却非常的糟糕。</p>
+<p>播放在线视频（优酷、迅雷等官方 app）会出现失帧、跳帧的情况，并且不是短暂，而是每几秒就一次，标清和高清都一样，即使把输出设置为最高 720P 也没有改善。</p>
+<p>而本地视频，我使用了之前流出的 4.3GB 1080P mkv 格式的 Eva 新剧场版 Q 作为测试。播放时整体效果比在线视频要好不少，失帧、跳帧现象并不明显，但仍会有声画不同步的情况，并且内置字幕显示有问题，漏了部分字幕，显示的字幕会不停闪烁，外置的 srt 字幕无法识别编码，出来是乱码的。</p>
+<p>卖点之一的触控遥控器操作起来灵敏度有问题，经常会误操作，比如滑动会识别成点击等等；右侧和下方的滚动条灵敏度不足，很难用。此外，因为可以兼容 Android apps，所以在一些 apps 界面上是和 RATV 不一样的，比如启动后的功能简介，用遥控器跳过实在麻烦，估计还是外接键鼠比较省事。</p>
+<p>BTW，RATV 遥控器接收器是独立的，并不是内置在机子里，所以预设的两个 USB 口实际只有一个能用在外部存储。如果要接键鼠，呵呵。</p>
+<p>RATV 在各大搜索引擎里，几乎清一色是是发布新闻、评测软文，有提到不足之处的文章极少，真是一款宣传做得很好的产品。</p>
+<p>结论：论播放能力，RATV 还不如 ￥399 的 GIEC HD-330（不推荐购买），实在不值得买，￥500 以下价位的网络播放器，目前就只有 <a href="http://item.jd.com/867397.html">TP-LINK TPmini</a> 比较值得买吧。</p>
+]]></content>
+    <category scheme="http://chrisyip.im/tags/rapoo/" term="Rapoo"/>
+    <category scheme="http://chrisyip.im/tags/雷柏/" term="雷柏"/>
+    <category scheme="http://chrisyip.im/tags/ratv/" term="RATV"/>
+  </entry>
   <entry>
     <title type="html"><![CDATA[为什么耐克会被评为 2013 年最具创新力公司？]]></title>
     <link href="http://chrisyip.im/post/why-nike-is-the-no1-most-innovative-company-of-2013/"/>
@@ -1097,44 +1120,5 @@ console.log(title(music_post)) <span class="comment">// 'HEY JADE'</span>
     <category scheme="http://chrisyip.im/tags/alfred/" term="Alfred"/>
     <category scheme="http://chrisyip.im/tags/extension/" term="Extension"/>
     <category scheme="http://chrisyip.im/tags/os-x/" term="OS X"/>
-  </entry>
-  <entry>
-    <title type="html"><![CDATA[Zurui Design]]></title>
-    <link href="http://chrisyip.im/post/sly-design-for-web-programmer/"/>
-    <id>http://chrisyip.im/post/sly-design-for-web-programmer/</id>
-    <published>2012-11-05T07:27:00.000Z</published>
-    <updated>2013-03-12T10:49:48.000Z</updated>
-    <content type="html"><![CDATA[<p><a href="https://twitter.com/ken_c_lo">TAE</a> 在日本「<a href="http://connpass.com/event/1185/">第一回 プログラマ向けデザイン勉強会</a>」（面向程序员的设计学习班）上做了「Zurui Design」的<a href="https://speakerdeck.com/ken_c_lo/zurui-design-technique-english-version">演讲</a>，TAE 称之为「Zurui Design」。「Zurui」在日文的意思是「狡猾的」，大概是因为大部分情况下都可以用，很少出问题的缘故吧。</p>
-<p>演示内的例子使用了高阶的 CSS 属性，大部分在 IE8 或以下会有支持问题，如 <code>rgba()</code>，这里就不多说明怎么处理，请善用 Google。</p>
-<p>以下整理一些实用的：</p>
-<h3>背景</h3>
-<ul>
-<li>使用接近纯白或纯黑的颜色；</li>
-<li>Pattern 的选择上尽量接近自然或构图简单的；</li>
-<li>避免选择大图案的 pattern；</li>
-<li>避免选择色度很浓或亮度差异很大的 pattern。</li>
-</ul>
-<h3>渐变</h3>
-<ul>
-<li>起始色和结束色之间尽量不要有太大差距，如 <code>#434343</code> 和 <code>#222</code>；</li>
-<li>起始色和结束色之间尽量不要混合多种不同的颜色，如红黄蓝搭配。</li>
-</ul>
-<h3>圆角</h3>
-<ul>
-<li>非圆形设计，尽量限制 <code>border-radius</code> 在 <code>6px</code> 内；</li>
-</ul>
-<h3>阴影</h3>
-<p><code>box-shadow</code> 需避免：</p>
-<ul>
-<li>太浓的颜色</li>
-<li>较大的淡化值（blur）</li>
-<li>彩色的阴影</li>
-</ul>
-<p>彩色的阴影指非黑白的其他颜色，使用上尽量使用黑色，如果背景色为黑色系，可以把阴影的颜色设置为比背景还要黑一些，别因为要凸显而采用其他颜色。</p>
-<h3>按钮</h3>
-<p>如果想要做有立体感的按钮，可以配合渐变，但光源是上到下为佳，即上部浅色，底部深色。使用渐变时配合 <code>border</code> 会有较好的效果，但注意避免彩色的 <code>border</code>。</p>
-]]></content>
-    <category scheme="http://chrisyip.im/tags/design/" term="Design"/>
-    <category scheme="http://chrisyip.im/tags/web/" term="Web"/>
   </entry>
 </feed>

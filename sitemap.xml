@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://chrisyip.im/post/rapoo-ratv/</loc>
+    <lastmod>2013-04-30T08:04:48.000Z</lastmod>
+  </url>
+  <url>
     <loc>http://chrisyip.im/about/index.html</loc>
     <lastmod>2013-04-25T17:30:28.000Z</lastmod>
   </url>
@@ -69,7 +73,7 @@
     <lastmod>2013-03-12T10:53:31.000Z</lastmod>
   </url>
   <url>
-    <loc>http://chrisyip.im/post/objective-c-message-forwarding/</loc>
+    <loc>http://chrisyip.im/post/mutation-events-and-mutationobserver/</loc>
     <lastmod>2013-03-12T10:49:48.000Z</lastmod>
   </url>
   <url>
@@ -77,11 +81,11 @@
     <lastmod>2013-03-12T10:49:48.000Z</lastmod>
   </url>
   <url>
-    <loc>http://chrisyip.im/post/simplify-local-sites-management-with-pow-and-anvil/</loc>
+    <loc>http://chrisyip.im/post/objective-c-message-forwarding/</loc>
     <lastmod>2013-03-12T10:49:48.000Z</lastmod>
   </url>
   <url>
-    <loc>http://chrisyip.im/post/mutation-events-and-mutationobserver/</loc>
+    <loc>http://chrisyip.im/post/simplify-local-sites-management-with-pow-and-anvil/</loc>
     <lastmod>2013-03-12T10:49:48.000Z</lastmod>
   </url>
   <url>
