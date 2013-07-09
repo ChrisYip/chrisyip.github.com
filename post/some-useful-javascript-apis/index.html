@@ -1,1 +1,333 @@
-<undefined></undefined>
+<!DOCTYPE html><meta charset="utf-8"><title>一些很有用但不常见的 JavaScript APIs</title><meta name="author" content="Chris Yip"><meta name="description" content="Nicholas Zakas 发布了一个幻灯片，讲的是一些知名度低的 JavaScript API，我把它们都整理出来，并适当加了一些个人见解。
+这篇文章里介绍的 API 大部分都是被普遍支持的（大部分 IE6~7 也能用），但是像是被我当成速查手册的 javascriptkit.com 也没完全包含进去，这就有点怪异了，我是认为像这类入门网站，是该好好完善兼容性高的基础 API，这样新人入行时才不至于漏掉一些实用知识。
+下面的例子如无特殊说明，都是基于这个 HTML 结构：
+&lt;nav id=&quot;nav&quot;&gt;
+  &lt;!-- comment --&gt;
+  &lt;a&gt;Home&lt;/a&gt;
+  &lt;a&gt;Blog&lt;/a&gt;
+&lt;/nav&gt;
+&lt;script&gt;
+  var nav = document.getElementById('nav')
+&lt;/script&gt;
+
+
+元素遍历
+Element.children[]：这个 API 比起 Element.childNodes[] 的优点就是只包含 1 === nodeType 亦即 ELEMENT_NODE 的子节点，对于元素遍历来说方便很多，和 jQuery.children() 是一样效果的。注：IE8- 会包含 8 === nodeType 即 COMMENT_NODE，需要手动判断。
+nav.childNodes[0] // '#text'
+nav.children[0]   // &lt;a&gt;
+
+
+Element.firstElementChild、Element.lastElementChild、Element.nextElementSibling 和 Element.previousElementSibling：和 children[] 一样，都会跳过非 ELEMENT_NODE 的子节点。注：IE8- 不支持。
+nav.firstChild                              // '#text'
+nav.lastChild                               // '#text'
+nav.firstElementChild                       // &lt;a&gt;Home&lt;/a&gt;
+nav.lastElementChild                        // &lt;a&gt;Blog&lt;/a&gt;
+nav.firstElementChild.nextSibling           // '#text'
+nav.lastElementChild.previousSibling        // '#text'
+nav.firstElementChild.nextElementSibling    // &lt;a&gt;Blog&gt;
+nav.lastElementChild.previousElementSibling // &lt;a&gt;Home&lt;/a&gt;
+
+
+Element.contains()：判断一个元素是否包含另一个元素。相比之下，jQuery.contains() 实现得很别扭，只能对比原生 DOM 元素，自己的 jQuery 对象无法对比。
+document.body.contains(nav)         // true
+jQuery.contains(document.body, nav) // true
+jQuery.contains($('body'), nav)     // false
+
+
+元素修改
+Element.insertAdjacentHTML(location, html_string)：把 html_string 插入到指定的地方，html_string 必须是合法的 HTML 片段，location 有四个值，分别是 beforebegin、beforeend、afterbegin 和 afterend，假设往 nav 插入 HTML，对应的位置如下：
+&lt;!-- beforebegin --&gt;&lt;nav&gt;&lt;!-- afterbegin --&gt;
+  &lt;a&gt;Home&lt;/a&gt;
+  &lt;a&gt;Blog&lt;/a&gt;
+&lt;!-- beforeend --&gt;&lt;/nav&gt;&lt;!-- afterend --&gt;
+
+
+需要注意的是 beforebegin 和 afterend 是只有元素拥有父元素且在 DOM 树中时才有效，用在特定元素上也有可能出现非预期结果：
+// 用在 body 上会产生两个 &lt;head&gt; 和 &lt;body&gt;（仅在 Chrome 上测试过）
+document.body.insertAdjacentHTML('beforebegin', '&lt;p&gt;hello')
+document.body.insertAdjacentHTML('afterend', '&lt;p&gt;hello')
+
+// &lt;p&gt; 会消失
+var d = document.createElement('div')
+d.insertAdjacentHTML('afterend', '&lt;p&gt;hello')
+nav.appendChild(d)
+
+// &lt;p&gt; 会出现在 &lt;nav&gt; 里，和 &lt;div&gt; 同级
+var d2 = document.createElement('div')
+nav.appendChild(d2)
+d2.insertAdjacentHTML('afterend', '&lt;p&gt;hello')
+
+
+在性能上 insertAdjacentHTML 和 innerHTML 相近，选择用谁要看需求，如果插入的位置依赖于某个元素，insertAdjacentHTML 通常会便利一些。
+Element.outerHTML：innerHTML 的变种，也就不必过多说明了。应用起来和上两者一样，某些情况下会很便利。
+document.implementation.createHTMLDocument(): 创建一个新的 DOCUMENT_NODE，也就是 document。虽然似乎没什么用，不过可以做的东西有很多，比如：
+var new_doc = document.implementation.createHTMLDocument()
+new_doc.body.innerHTML = html_string
+// 删除特定标签
+[].forEach.call(new_doc.body.querySelectorAll('script,link,object'), function(el){
+  el.parentNode.removeChild(el)
+})
+// 将处理过、干净安全的 HTML 代码添加到真正的 DOM
+document.body.innerHTML = new_doc.body.innerHTML
+
+
+需要注意的是，创建出来文档里的元素用 getComputedStyle() 不一定能得到样式值的，所以要用于计算的话，请谨慎（仅在 Chrome 测试过）：
+var new_doc = document.implementation.createHTMLDocument()
+  , p = new_doc.createElement('p')
+p.innerHTML = 'hello world'
+p.style.cssText = 'color: red;'
+new_doc.body.appendChild(p)
+console.log(p.style.color)                                 // 'red'
+console.log(getComputedStyle(new_doc.querySelector('p')))  // all empty
+
+
+文本选择
+Element.select()：选择文本框内的文本。
+Element.setSelectionRange(position, length)：选择指定范围内的文本，position 从 0 开始算，小于 0 的也算 0；length 如果小于或等于 position 则不会选择任何字符。
+Element.selectionStart、Element.selectionEnd：标识文本选择的起始位置。
+document.activeElement：选择文档内获得焦点的元素。
+XMLHttpRequest
+XMLHttpRequest 很多人都会选择使用已经封装好的库吧，毕竟有兼容的问题，不过我喜欢从简，一般会挑个轻量的，之前也写了一个 jQuery 风格的 ajax 函数。如果你也想自己写，可以试试以下几个能加强 XHR 的玩意。
+new FormData()：实际就是模拟一个 &lt;form&gt; 提交时封装的数据包，不过是用类似 key: value 方式来处理，同时也能直接接受 &lt;input&gt; 的值，相当便利。
+xhr.upload.onprogress：通常请求时都是用动态 GIF 来表示进行中，不过我曾经遇过一个客户，想要显示进度，又不希望用 Flash，当时因为难度问题，说服了他放弃，不过现在倒是有了这东西可以用。注：IE9- 不支持。
+xhr.timeout、xhr.ontimeout：控制超时。注：IE9- 不支持。
+xhr.responseType：目前支持四种，text、document、blob 和 arraybuffer，配合 xhr.response 使用。原来是只有 responseText 和 responseXML 的，不过由于是字符串，下载后的处理比较麻烦，通过这些扩展类型，会方便很多，比如 document、blob 就能直接处理了：
+var xhr = new XMLHttpRequest()
+  , data = new FormData() // or FormData(document.form[index])
+data.append('key', 'value')
+data.append('key2', fileInput.file[0]) // 获取 &lt;input&gt; 元素的值
+
+xhr.open('get', url, true)
+xhr.timeout = 5000
+xhr.ontimeout = function(event){
+  console.log(arguments)
+}
+xhr.responseType = 'document'
+xhr.upload.onprogress = function(event){
+  console.log(arguments)
+}
+xhr.onload = function(event){
+  var doc = event.currentTarget.response
+  // do something like
+  doc.querySelector('body')
+}
+xhr.send()
+
+
+CSS 相关的
+Element.matchesSelector()：jQuery.is() 的原生实现。注：IE8- 不支持，其他的都要前缀，如 webkitMatchesSelector。
+Element.getBoundingClientRect()：获取指定元素的矩形区域信息，简单地说，就是这个元素在文档里的座标、长高分别是多少，比起 getComputedStyle() 更方便，因为值是纯数字。注：IE7- 会给每个座标加 2，就像是被一个 padding: 2px 的容器包裹。
+Element.document.elementFromPoint(x, y)：获取指定座标的元素，如有多个，取 z-index 最大的。用在游戏或互动界面上应该不错，比如说球是不是进入了球门的座标里，或者结合 window.innerWidth 和 window.innerHeight 来判断一个元素是否进入了可视范围，不过我更喜欢用 getBoundingClientRect()。
+下面是「加载更多」的不完整实现：
+var footer = document.querySelector('footer')
+window.addEventListener('scroll', function(){
+  var rect = footer.getBoundingClientRect()
+  if (rect.top &lt;= window.innerHeight) {
+    // do something...
+  }
+}, false)
+
+
+window.matchMedia()：判断 window 符不符合 CSS Media Query 的条件，比如 window.matchMedia(&quot;(max-width: 320px)&quot;)。主要用途是为移动设备启用不同的 JS 效果
+完
+JavaScript 原生的 API 是越来越强大、好用，很多时候都可以不需要库的加持，不过如果仍然要苦逼地支持 IE7-（其实我想说 IE8-……）的话，库还是最好的选择，毕竟解决了很多兼容性的问题。
+BTW，最近看《松本行弘的程序世界》，Matz 对动态类型语言的一个观点觉得很实用：「无论如何都想检查（参数类型）的时候，也不要检查对象是否属于某个类，而是要检查对象是否有某个方法」，也就是这样：
+var respond_to = function (o, f) {
+  return !!(o != null &amp;&amp; o[f]);
+}
+// 假设需转换标题为大写字母，但是传入参数不一定是 string
+function title (o) {
+  if (respond_to(o, 'toUpperCase')) {
+    return o.toUpperCase()
+  }
+  // 传统做法
+  if (typeof o === 'string') {
+    return o.toUpperCase()
+  }
+}
+
+
+这种做法原本是针对支持继承和多态的语言，比如父类和子类就有可能拥有同名的方法，如果单纯判断是不是某个类，就不能应对所有情况，而直接判断是否有这个方法的话，就可以适应各种情况，在 JavaScript 里也可以实现类似的效果：
+var text_post = { title: &quot;Hello World&quot;, toUpperCase: function(){
+      return this.title.toUpperCase()
+    }
+  }
+  , music_post = { name: &quot;Hey Jade&quot;, toUpperCase: function(){
+      return this.name.toUpperCase()
+    }
+  }
+console.log(title(text_post)) // 'HELLO WORLD'
+console.log(title(music_post)) // 'HEY JADE'
+
+
+
+参考资料：
+
+JavaScript APIs you’ve never heard of (and some you have)"><meta name="keywords" content="iOS, JavaScript, AngularJS, Angular, HTML, CSS, Objective-C, Freelancer, Web Development, Mobile Development, Mac, OS X, Mac Development, Development, 前端开发, 移动开发, Ruby"><meta property="og:title" content="一些很有用但不常见的 JavaScript APIs"><meta property="og:site_name" content="I'm Chris"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"><link rel="shortcut icon" href="/favicon.ico"><link rel="alternate" href="/atom.xml" title="I'm Chris" type="application/atom+xml"><link rel="stylesheet" href="/css/style.css" media="screen"><script async src="/js/theme.js"></script><script>var _gaq=_gaq||[];_gaq.push(["_setAccount","UA-15420910-3"]);_gaq.push(["_trackPageview"]);(function(){var a=document.createElement("script");a.type="text/javascript";a.async=!0;a.src=("https:"==document.location.protocol?"https://ssl":"http://www")+".google-analytics.com/ga.js";var b=document.getElementsByTagName("script")[0];b.parentNode.insertBefore(a,b)})();</script><!--[if IE]><div style="width:100%;position:fixed;top:0;left:0;background:#f00;color:#fff;text-align:center">Internet Explorer series are not supported.</div><![endif]--><header id="header" class="inner page-header"><h1><a href="/">I'm Chris</a></h1><div class="menubar"><nav id="header-menu" class="header-menu"><a class="toggle-menu">Menu</a><ul><li><a href="/about" class="menu-item">About</a></li><li><a href="/archives" class="menu-item">Archives</a></li><li><a href="/works" class="menu-item">Works</a></li></ul></nav><form action="http://google.com/search" method="get" class="search"><input name="q" autocomplete="off" class="search-field"><input type="hidden" name="q" value="site:chrisyip.im"><a class="button"></a></form><div class="follow_me"><a href="https://github.com/chrisyip" title="GitHub" class="github">GitHub</a><a href="https://twitter.com/chrisyipw" title="Twitter" class="twitter">Twitter</a><a href="/atom.xml" title="RSS" class="rss">RSS</a></div></div></header><div id="content" class="inner content"><article class=""><header class="entry-header"><h2 class="title"><a href="/post/some-useful-javascript-apis/">一些很有用但不常见的 JavaScript APIs</a></h2></header><div class="entry-content"><p><a href="http://www.nczonline.net/">Nicholas Zakas</a> 发布了一个<a href="http://www.slideshare.net/nzakas/javascript-apis-youve-never-heard-of-and-some-you-have">幻灯片</a>，讲的是一些知名度低的 JavaScript API，我把它们都整理出来，并适当加了一些个人见解。</p>
+<p>这篇文章里介绍的 API 大部分都是被普遍支持的（大部分 IE6~7 也能用），但是像是被我当成速查手册的 <a href="javascriptkit.com">javascriptkit.com</a> 也没完全包含进去，这就有点怪异了，我是认为像这类入门网站，是该好好完善兼容性高的基础 API，这样新人入行时才不至于漏掉一些实用知识。</p>
+<p>下面的例子如无特殊说明，都是基于这个 HTML 结构：</p>
+<pre><code>&lt;nav id="nav"&gt;
+  &lt;!-- comment --&gt;
+  &lt;a&gt;Home&lt;/a&gt;
+  &lt;a&gt;Blog&lt;/a&gt;
+&lt;/nav&gt;
+&lt;script&gt;
+  var nav = document.getElementById('nav')
+&lt;/script&gt;
+</code></pre>
+
+<h3>元素遍历</h3>
+<p><code>Element.children[]</code>：这个 API 比起 <code>Element.childNodes[]</code> 的优点就是只包含 <code>1 === nodeType</code> 亦即 <code>ELEMENT_NODE</code> 的子节点，对于元素遍历来说方便很多，和 <code>jQuery.children()</code> 是一样效果的。注：IE8- 会包含 <code>8 === nodeType</code> 即 <code>COMMENT_NODE</code>，需要手动判断。</p>
+<pre><code>nav.childNodes[<span class="number">0</span>] <span class="comment">// '#text'</span>
+nav.children[<span class="number">0</span>]   <span class="comment">// &lt;a&gt;</span>
+</code></pre>
+
+<p><code>Element.firstElementChild</code>、<code>Element.lastElementChild</code>、<code>Element.nextElementSibling</code> 和 <code>Element.previousElementSibling</code>：和 <code>children[]</code> 一样，都会跳过非 <code>ELEMENT_NODE</code> 的子节点。注：IE8- 不支持。</p>
+<pre><code>nav.firstChild                              <span class="comment">// '#text'</span>
+nav.lastChild                               <span class="comment">// '#text'</span>
+nav.firstElementChild                       <span class="comment">// &lt;a&gt;Home&lt;/a&gt;</span>
+nav.lastElementChild                        <span class="comment">// &lt;a&gt;Blog&lt;/a&gt;</span>
+nav.firstElementChild.nextSibling           <span class="comment">// '#text'</span>
+nav.lastElementChild.previousSibling        <span class="comment">// '#text'</span>
+nav.firstElementChild.nextElementSibling    <span class="comment">// &lt;a&gt;Blog&gt;</span>
+nav.lastElementChild.previousElementSibling <span class="comment">// &lt;a&gt;Home&lt;/a&gt;</span>
+</code></pre>
+
+<p><code>Element.contains()</code>：判断一个元素是否包含另一个元素。相比之下，<code>jQuery.contains()</code> 实现得很别扭，只能对比原生 DOM 元素，自己的 jQuery 对象无法对比。</p>
+<pre><code>document.body.contains(nav)         <span class="comment">// true</span>
+jQuery.contains(document.body, nav) <span class="comment">// true</span>
+jQuery.contains($(<span class="string">'body'</span>), nav)     <span class="comment">// false</span>
+</code></pre>
+
+<h3>元素修改</h3>
+<p><code>Element.insertAdjacentHTML(location, html_string)</code>：把 <code>html_string</code> 插入到指定的地方，<code>html_string</code> 必须是合法的 HTML 片段，<code>location</code> 有四个值，分别是 <code>beforebegin</code>、<code>beforeend</code>、<code>afterbegin</code> 和 <code>afterend</code>，假设往 <code>nav</code> 插入 HTML，对应的位置如下：</p>
+<pre><code>&lt;!-- beforebegin --&gt;&lt;nav&gt;&lt;!-- afterbegin --&gt;
+  &lt;a&gt;Home&lt;/a&gt;
+  &lt;a&gt;Blog&lt;/a&gt;
+&lt;!-- beforeend --&gt;&lt;/nav&gt;&lt;!-- afterend --&gt;
+</code></pre>
+
+<p>需要注意的是 <code>beforebegin</code> 和 <code>afterend</code> 是只有元素<strong>拥有父元素且在 DOM 树中</strong>时才有效，用在特定元素上也有可能出现非预期结果：</p>
+<pre><code><span class="comment">// 用在 body 上会产生两个 &lt;head&gt; 和 &lt;body&gt;（仅在 Chrome 上测试过）</span>
+document.body.insertAdjacentHTML(<span class="string">'beforebegin'</span>, <span class="string">'&lt;p&gt;hello'</span>)
+document.body.insertAdjacentHTML(<span class="string">'afterend'</span>, <span class="string">'&lt;p&gt;hello'</span>)
+
+<span class="comment">// &lt;p&gt; 会消失</span>
+<span class="keyword">var</span> d = document.createElement(<span class="string">'div'</span>)
+d.insertAdjacentHTML(<span class="string">'afterend'</span>, <span class="string">'&lt;p&gt;hello'</span>)
+nav.appendChild(d)
+
+<span class="comment">// &lt;p&gt; 会出现在 &lt;nav&gt; 里，和 &lt;div&gt; 同级</span>
+<span class="keyword">var</span> d2 = document.createElement(<span class="string">'div'</span>)
+nav.appendChild(d2)
+d2.insertAdjacentHTML(<span class="string">'afterend'</span>, <span class="string">'&lt;p&gt;hello'</span>)
+</code></pre>
+
+<p>在<a href="http://jsperf.com/innerhtml-vs-insertadjacenthtml-vs-dom/2">性能</a>上 <code>insertAdjacentHTML</code> 和 <code>innerHTML</code> 相近，选择用谁要看需求，如果插入的位置依赖于某个元素，<code>insertAdjacentHTML</code> 通常会便利一些。</p>
+<p><code>Element.outerHTML</code>：<code>innerHTML</code> 的变种，也就不必过多说明了。应用起来和上两者一样，某些情况下会很便利。</p>
+<p><code>document.implementation.createHTMLDocument()</code>: 创建一个新的 <code>DOCUMENT_NODE</code>，也就是 <code>document</code>。虽然似乎没什么用，不过可以做的东西有很多，比如：</p>
+<pre><code><span class="keyword">var</span> new_doc = document.implementation.createHTMLDocument()
+new_doc.body.innerHTML = html_string
+<span class="comment">// 删除特定标签</span>
+[].forEach.call(new_doc.body.querySelectorAll(<span class="string">'script,link,object'</span>), <span class="keyword">function</span>(el){
+  el.parentNode.removeChild(el)
+})
+<span class="comment">// 将处理过、干净安全的 HTML 代码添加到真正的 DOM</span>
+document.body.innerHTML = new_doc.body.innerHTML
+</code></pre>
+
+<p>需要注意的是，创建出来文档里的元素用 <code>getComputedStyle()</code> 不一定能得到样式值的，所以要用于计算的话，请谨慎（仅在 Chrome 测试过）：</p>
+<pre><code><span class="keyword">var</span> new_doc = document.implementation.createHTMLDocument()
+  , p = new_doc.createElement(<span class="string">'p'</span>)
+p.innerHTML = <span class="string">'hello world'</span>
+p.style.cssText = <span class="string">'color: red;'</span>
+new_doc.body.appendChild(p)
+console.log(p.style.color)                                 <span class="comment">// 'red'</span>
+console.log(getComputedStyle(new_doc.querySelector(<span class="string">'p'</span>)))  <span class="comment">// all empty</span>
+</code></pre>
+
+<h3>文本选择</h3>
+<p><code>Element.select()</code>：选择文本框内的文本。</p>
+<p><code>Element.setSelectionRange(position, length)</code>：选择指定范围内的文本，<code>position</code> 从 <code>0</code> 开始算，小于 <code>0</code> 的也算 <code>0</code>；<code>length</code> 如果小于或等于 <code>position</code> 则不会选择任何字符。</p>
+<p><code>Element.selectionStart</code>、<code>Element.selectionEnd</code>：标识文本选择的起始位置。</p>
+<p><code>document.activeElement</code>：选择文档内获得焦点的元素。</p>
+<h3>XMLHttpRequest</h3>
+<p>XMLHttpRequest 很多人都会选择使用已经封装好的库吧，毕竟有兼容的问题，不过我喜欢从简，一般会挑个轻量的，之前也写了一个 jQuery 风格的 ajax <a href="https://gist.github.com/4054658">函数</a>。如果你也想自己写，可以试试以下几个能加强 XHR 的玩意。</p>
+<p><code>new FormData()</code>：实际就是模拟一个 <code>&lt;form&gt;</code> 提交时封装的数据包，不过是用类似 <code>key: value</code> 方式来处理，同时也能直接接受 <code>&lt;input&gt;</code> 的值，相当便利。</p>
+<p><code>xhr.upload.onprogress</code>：通常请求时都是用动态 GIF 来表示进行中，不过我曾经遇过一个客户，想要显示进度，又不希望用 Flash，当时因为难度问题，说服了他放弃，不过现在倒是有了这东西可以用。注：IE9- 不支持。</p>
+<p><code>xhr.timeout</code>、<code>xhr.ontimeout</code>：控制超时。注：IE9- 不支持。</p>
+<p><code>xhr.responseType</code>：目前支持四种，<code>text</code>、<code>document</code>、<code>blob</code> 和 <code>arraybuffer</code>，配合 <code>xhr.response</code> 使用。原来是只有 <code>responseText</code> 和 <code>responseXML</code> 的，不过由于是字符串，下载后的处理比较麻烦，通过这些扩展类型，会方便很多，比如 <code>document</code>、<code>blob</code> 就能直接处理了：</p>
+<pre><code><span class="keyword">var</span> xhr = <span class="keyword">new</span> XMLHttpRequest()
+  , data = <span class="keyword">new</span> FormData() <span class="comment">// or FormData(document.form[index])</span>
+data.append(<span class="string">'key'</span>, <span class="string">'value'</span>)
+data.append(<span class="string">'key2'</span>, fileInput.file[<span class="number">0</span>]) <span class="comment">// 获取 &lt;input&gt; 元素的值</span>
+
+xhr.open(<span class="string">'get'</span>, url, <span class="literal">true</span>)
+xhr.timeout = <span class="number">5000</span>
+xhr.ontimeout = <span class="keyword">function</span>(event){
+  console.log(arguments)
+}
+xhr.responseType = <span class="string">'document'</span>
+xhr.upload.onprogress = <span class="keyword">function</span>(event){
+  console.log(arguments)
+}
+xhr.onload = <span class="keyword">function</span>(event){
+  <span class="keyword">var</span> doc = event.currentTarget.response
+  <span class="comment">// do something like</span>
+  doc.querySelector(<span class="string">'body'</span>)
+}
+xhr.send()
+</code></pre>
+
+<h3>CSS 相关的</h3>
+<p><code>Element.matchesSelector()</code>：<code>jQuery.is()</code> 的原生实现。注：IE8- 不支持，其他的都要前缀，如 <code>webkitMatchesSelector</code>。</p>
+<p><code>Element.getBoundingClientRect()</code>：获取指定元素的矩形区域信息，简单地说，就是这个元素在文档里的座标、长高分别是多少，比起 <code>getComputedStyle()</code> 更方便，因为值是纯数字。注：IE7- 会给每个座标加 2，就像是被一个 <code>padding: 2px</code> 的容器包裹。</p>
+<p><code>Element.document.elementFromPoint(x, y)</code>：获取指定座标的元素，如有多个，取 <code>z-index</code> 最大的。用在游戏或互动界面上应该不错，比如说球是不是进入了球门的座标里，或者结合 <code>window.innerWidth</code> 和 <code>window.innerHeight</code> 来判断一个元素是否进入了可视范围，不过我更喜欢用 <code>getBoundingClientRect()</code>。</p>
+<p>下面是「加载更多」的不完整实现：</p>
+<pre><code><span class="keyword">var</span> footer = document.querySelector(<span class="string">'footer'</span>)
+window.addEventListener(<span class="string">'scroll'</span>, <span class="keyword">function</span>(){
+  <span class="keyword">var</span> rect = footer.getBoundingClientRect()
+  <span class="keyword">if</span> (rect.top &lt;= window.innerHeight) {
+    <span class="comment">// do something...</span>
+  }
+}, <span class="literal">false</span>)
+</code></pre>
+
+<p><code>window.matchMedia()</code>：判断 <code>window</code> 符不符合 CSS Media Query 的条件，比如 <code>window.matchMedia(&quot;(max-width: 320px)&quot;)</code>。主要用途是为移动设备启用不同的 JS 效果</p>
+<h3>完</h3>
+<p>JavaScript 原生的 API 是越来越强大、好用，很多时候都可以不需要库的加持，不过如果仍然要苦逼地支持 IE7-（其实我想说 IE8-……）的话，库还是最好的选择，毕竟解决了很多兼容性的问题。</p>
+<p>BTW，最近看《松本行弘的程序世界》，Matz 对动态类型语言的一个观点觉得很实用：「无论如何都想检查（参数类型）的时候，也不要检查对象是否属于某个类，而是要检查对象是否有某个方法」，也就是这样：</p>
+<pre><code><span class="keyword">var</span> respond_to = <span class="function"><span class="keyword">function</span> <span class="params">(o, f)</span> {</span>
+  <span class="keyword">return</span> !!(o != <span class="literal">null</span> && o[f]);
+}
+<span class="comment">// 假设需转换标题为大写字母，但是传入参数不一定是 string</span>
+<span class="function"><span class="keyword">function</span> <span class="title">title</span> <span class="params">(o)</span> {</span>
+  <span class="keyword">if</span> (respond_to(o, <span class="string">'toUpperCase'</span>)) {
+    <span class="keyword">return</span> o.toUpperCase()
+  }
+  <span class="comment">// 传统做法</span>
+  <span class="keyword">if</span> (<span class="keyword">typeof</span> o === <span class="string">'string'</span>) {
+    <span class="keyword">return</span> o.toUpperCase()
+  }
+}
+</code></pre>
+
+<p>这种做法原本是针对支持继承和多态的语言，比如父类和子类就有可能拥有同名的方法，如果单纯判断是不是某个类，就不能应对所有情况，而直接判断是否有这个方法的话，就可以适应各种情况，在 JavaScript 里也可以实现类似的效果：</p>
+<pre><code><span class="keyword">var</span> text_post = { title: <span class="string">"Hello World"</span>, toUpperCase: <span class="keyword">function</span>(){
+      <span class="keyword">return</span> <span class="keyword">this</span>.title.toUpperCase()
+    }
+  }
+  , music_post = { name: <span class="string">"Hey Jade"</span>, toUpperCase: <span class="keyword">function</span>(){
+      <span class="keyword">return</span> <span class="keyword">this</span>.name.toUpperCase()
+    }
+  }
+console.log(title(text_post)) <span class="comment">// 'HELLO WORLD'</span>
+console.log(title(music_post)) <span class="comment">// 'HEY JADE'</span>
+</code></pre>
+
+<hr>
+<p><em>参考资料：</em></p>
+<ul>
+<li><em><a href="http://www.slideshare.net/nzakas/javascript-apis-youve-never-heard-of-and-some-you-have">JavaScript APIs you’ve never heard of (and some you have)</a></em></li>
+</ul>
+</div><footer class="entry-footer"><time datetime="2012-11-15T12:12:00.000Z">Nov 15th, 2012</time><div class="tags"><a href="/tags/css/">CSS</a><a href="/tags/javascript/">JavaScript</a><a href="/tags/html/">HTML</a></div><section class="comments"><h2 class="title"><a name="comments">Comments</a></h2><div id="disqus_thread"><noscript>Please enable JavaScript to view the<a href="http://disqus.com/?ref_noscript">comments powered by Disqus</a></noscript></div></section><script>var disqus_shortname="chrisyipw";(function(){var a=document.createElement("script");a.type="text/javascript";a.async=!0;a.src="http://chrisyipw.disqus.com/embed.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)})();</script></footer></article></div><footer id="footer" class="inner page-footer"><Copyright>© 2013&nbsp;Chris Yip</Copyright></footer>

@@ -1,1 +1,138 @@
-<undefined></undefined>
+<!DOCTYPE html><meta charset="utf-8"><title>使用 Pow 和 Privoxy 绕开 OS X 的沙盒限制和 SOCKS5 兼容问题</title><meta name="author" content="Chris Yip"><meta name="description" content="Apple 在 OS X 上推行沙盒之后，发现原来能用 PAC 代理配置不能用于所有程序了，原因是因为启用沙盒的程序无法访问 PAC 文件。除此之外，也发现了 SOCKS5 的兼容问题（如 Safari、Tweetbot），也就意味着在日益严峻的天朝网络环境里某些提高生产力的工具，如 shadowsocks ，就半残废了，只能走全局的 SOCKS 代理，而想要访问大陆站点的时候，比如优酷，这明显不科学，只能想办法解决。
+沙盒的权限问题
+虽然沙盒政策不让程序访问未授权的文件，不过对于「远程」文件倒没限制，所以我们可以把 PAC 文件部署在本地的服务器上。
+安装 Pow 或 Anvil（参考），使用 Apache/nginx 也可以，总之可以通过类似 http://localhost/proxy.pac 的方式访问本地的 PAC 文件即可。
+以 Anvil 为例，安装并启动后，将 PAC 文件所在目录拖曳到状态栏的图标即可，得到如 http://pac.dev/ 的地址。将加上文件名后的完整地址，如 http://pac.dev/proxy.pac，复制到 Network Proxies 设置里 Automatic Proxy Configuration 的文本框里：
+
+SOCKS5 的问题
+虽然绕过了沙盒的限制，但是 Safari 和 Tweetbot 是不支持 SOCKS5 的，而 Chrome/Firefox 却只支持 SOCKS5，这里就有两种方法。
+第一种，PAC 里这样写：
+    'SOCKS5 127.0.0.1:8080;SOCKS 127.0.0.1:8080'
+
+第二种，把 SOCSK5 转换成都支持的 HTTP 代理，这就需要使用 Privoxy。Privoxy 非常强大，但是比 PAC 复杂，如非需要，建议还是用第一种方法处理。
+注意：本文是通过 homebrew 来安装 Privoxy，配置方式和通过官方安装指南安装的有所区别。
+打开命令行依次执行以下命令：
+brew install privoxy
+cd /usr/local/etc/privoxy/
+echo 'listen-address 0.0.0.0:8118\nforward-socks5 / localhost:8080 .' &gt;&gt; config
+
+0.0.0.0 可以让别的设备用，如果不需要，可以用 127.0.0.1；8118 是默认端口；localhost:8080 是我的 SOCKS5 地址，根据需要自行修改。
+需要注意的是，Privoxy 读取配置文件只会在当前目录读取，所以运行时建议用这个命令：privoxy /usr/local/etc/privoxy/config，没看到任何信息就代表成功了。
+把 PAC 文件里的 SOCKS5 地址改成 HTTP 地址：
+function FindProxyForURL(url, host) {
+  proxy = 'PROXY 127.0.0.1:8118'
+  if (shExpMatch(url, &quot;*.twitter.com/*&quot;)) {
+    return proxy;
+  }
+  return 'DIRECT'
+}
+
+好了，配合之前解决的沙盒问题，PAC 又可以正常工作了。
+如果需要自启动，在命令行执行如下命令：
+cd ~
+touch org.privoxy.plist | echo '&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&lt;!DOCTYPE plist PUBLIC &quot;-//Apple//DTD PLIST 1.0//EN&quot; &quot;http://www.apple.com/DTDs/PropertyList-1.0.dtd&quot;&gt;&lt;plist version=&quot;1.0&quot;&gt;&lt;dict&gt;&lt;key&gt;Label&lt;/key&gt;&lt;string&gt;org.privoxy.launchd.privoxy&lt;/string&gt;&lt;key&gt;ProgramArguments&lt;/key&gt;&lt;array&gt;&lt;string&gt;/usr/local/sbin/privoxy&lt;/string&gt;&lt;string&gt;/usr/local/etc/privoxy/config&lt;/string&gt;&lt;/array&gt;&lt;key&gt;RunAtLoad&lt;/key&gt;&lt;true/&gt;&lt;/dict&gt;&lt;/plist&gt;' &gt;&gt; org.privoxy.plist
+sudo chown root:wheel org.privoxy.plist
+sudo cp org.privoxy.plist /Library/LaunchDaemons/org.privoxy.plist
+launchctl load /Library/LaunchDaemons/org.privoxy.plist
+launchctl start org.privoxy.launchd.privoxy
+
+Privoxy 的进阶内容
+其实 Privoxy 并不只是把 SOCKS5 转换成 HTTP 代理，她本身还有很强大的功能，比如 action 和 filter，在这仅仅简单介绍一下，具体用途看官方文档。
+Action 可以起到 PAC 文件的作用，也可以当成 AdBlock、user script 和 Stylebot 来使用。
+默认的文件分别是 /usr/local/etc/privoxy/user.action 和 /usr/local/etc/privoxy/user.filter。
+大概的语法如下：
+direct      = +forward-override{forward .}
+ssh         = +forward-override{forward-socks5 127.0.0.1:8080 .}
+default     = direct
+{default}
+/
+{direct} 
+.youku.com
+.twitter.com
+{ssh}
+.twitter.com
+# 后面的规则优先级比前面的高
+{+block}
+.weibo.com # 屏蔽微博
+{-block}
+.weibo.com/chrisyipw # 但是不屏蔽自己
+{+block-as-image}
+.weibo.com # 屏蔽微博下所有合法图片，即使扩展名不是图片扩展名也会被屏蔽
+
+可以通过不同的 alias 配置不同的代理程序，如果是用 SSH 而不是 shadowsocks，可以考虑链接多个服务器进行分流，毕竟 SSH 并发性能不高。
+还有更高级的，比如结合 filter 修改页面内容，比如重定向 URL 什么的：
+{+filter{filter_name}}
+.weibo.com
+{+fast-redirects{check-decoded-url}}
+news.google.com/news/url.*&amp;url=http.*&amp;
+
+具体看 user.action 里的注释吧，而 filter 是需要结合 user.filter 来用的，如果想要使用多个 action 文件，在 config 加入 actionsfile name.action 就行。"><meta name="keywords" content="iOS, JavaScript, AngularJS, Angular, HTML, CSS, Objective-C, Freelancer, Web Development, Mobile Development, Mac, OS X, Mac Development, Development, 前端开发, 移动开发, Ruby"><meta property="og:title" content="使用 Pow 和 Privoxy 绕开 OS X 的沙盒限制和 SOCKS5 兼容问题"><meta property="og:site_name" content="I'm Chris"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"><link rel="shortcut icon" href="/favicon.ico"><link rel="alternate" href="/atom.xml" title="I'm Chris" type="application/atom+xml"><link rel="stylesheet" href="/css/style.css" media="screen"><script async src="/js/theme.js"></script><script>var _gaq=_gaq||[];_gaq.push(["_setAccount","UA-15420910-3"]);_gaq.push(["_trackPageview"]);(function(){var a=document.createElement("script");a.type="text/javascript";a.async=!0;a.src=("https:"==document.location.protocol?"https://ssl":"http://www")+".google-analytics.com/ga.js";var b=document.getElementsByTagName("script")[0];b.parentNode.insertBefore(a,b)})();</script><!--[if IE]><div style="width:100%;position:fixed;top:0;left:0;background:#f00;color:#fff;text-align:center">Internet Explorer series are not supported.</div><![endif]--><header id="header" class="inner page-header"><h1><a href="/">I'm Chris</a></h1><div class="menubar"><nav id="header-menu" class="header-menu"><a class="toggle-menu">Menu</a><ul><li><a href="/about" class="menu-item">About</a></li><li><a href="/archives" class="menu-item">Archives</a></li><li><a href="/works" class="menu-item">Works</a></li></ul></nav><form action="http://google.com/search" method="get" class="search"><input name="q" autocomplete="off" class="search-field"><input type="hidden" name="q" value="site:chrisyip.im"><a class="button"></a></form><div class="follow_me"><a href="https://github.com/chrisyip" title="GitHub" class="github">GitHub</a><a href="https://twitter.com/chrisyipw" title="Twitter" class="twitter">Twitter</a><a href="/atom.xml" title="RSS" class="rss">RSS</a></div></div></header><div id="content" class="inner content"><article class=""><header class="entry-header"><h2 class="title"><a href="/post/use-pow-and-privoxy-bypass-mac-sandbox-and-socks5-issue/">使用 Pow 和 Privoxy 绕开 OS X 的沙盒限制和 SOCKS5 兼容问题</a></h2></header><div class="entry-content"><p>Apple 在 OS X 上推行沙盒之后，发现原来能用 PAC 代理配置不能用于所有程序了，原因是因为<strong>启用沙盒的程序无法访问 PAC 文件</strong>。除此之外，也发现了 SOCKS5 的兼容问题（如 Safari、Tweetbot），也就意味着在日益严峻的天朝网络环境里某些提高生产力的工具，如 <a href="https://github.com/clowwindy/shadowsocks">shadowsocks</a> ，就半残废了，只能走全局的 SOCKS 代理，而想要访问大陆站点的时候，比如优酷，这明显不科学，只能想办法解决。</p>
+<h3>沙盒的权限问题</h3>
+<p>虽然沙盒政策不让程序访问未授权的文件，不过对于「远程」文件倒没限制，所以我们可以把 PAC 文件部署在本地的服务器上。</p>
+<p>安装 Pow 或 Anvil<em>（<a href="/blog/simplify-local-sites-management-with-pow-and-anvil/">参考</a>）</em>，使用 Apache/nginx 也可以，总之可以通过类似 <code>http://localhost/proxy.pac</code> 的方式访问本地的 PAC 文件即可。</p>
+<p>以 Anvil 为例，安装并启动后，将 PAC 文件所在目录拖曳到状态栏的图标即可，得到如 <code>http://pac.dev/</code> 的地址。将加上文件名后的完整地址，如 <code>http://pac.dev/proxy.pac</code>，复制到 Network Proxies 设置里 Automatic Proxy Configuration 的文本框里：</p>
+<p><img src="/bimg/configure-pac-with-anvil.png" alt="Automatic Proxy Conguration with Anvil"></p>
+<h3>SOCKS5 的问题</h3>
+<p>虽然绕过了沙盒的限制，但是 Safari 和 Tweetbot 是不支持 SOCKS5 的，而 Chrome/Firefox 却只支持 SOCKS5，这里就有两种方法。</p>
+<p>第一种，PAC 里这样写：</p>
+<pre><code>    <span class="attribute">'SOCKS5</span> <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">8080</span>;SOCKS <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">8080</span>'
+</code></pre>
+<p>第二种，把 SOCSK5 转换成都支持的 HTTP 代理，这就需要使用 <a href="http://www.privoxy.org/">Privoxy</a>。Privoxy 非常强大，但是比 PAC 复杂，如非需要，建议还是用第一种方法处理。</p>
+<p>注意：本文是通过 <a href="http://mxcl.github.com/homebrew/">homebrew</a> 来安装 Privoxy，配置方式和通过官方<a href="http://www.privoxy.org/user-manual/installation.html#INSTALLATION-MAC">安装指南</a>安装的有所区别。</p>
+<p>打开命令行依次执行以下命令：</p>
+<pre><code><span class="title">brew</span> install privoxy
+<span class="title">cd</span> /usr/local/etc/privoxy/
+<span class="title">echo</span><span class="string"> 'listen-address 0.0.0.0:8118\nforward-socks5 / localhost:8080 .'</span> &gt;&gt; config
+</code></pre>
+<p><code>0.0.0.0</code> 可以让别的设备用，如果不需要，可以用 <code>127.0.0.1</code>；<code>8118</code> 是默认端口；<code>localhost:8080</code> 是我的 SOCKS5 地址，根据需要自行修改。</p>
+<p>需要注意的是，Privoxy 读取配置文件只会在当前目录读取，所以运行时建议用这个命令：<code>privoxy /usr/local/etc/privoxy/config</code>，没看到任何信息就代表成功了。</p>
+<p>把 PAC 文件里的 SOCKS5 地址改成 HTTP 地址：</p>
+<pre><code><span class="title">function</span> FindProxyForURL(url, host) {
+  <span class="title">proxy</span> = <span class="string">'PROXY 127.0.0.1:8118'</span>
+  if (shExpMatch(url, <span class="string">"*.twitter.com/*"</span>)) {
+    <span class="title">return</span> proxy;
+  }
+  <span class="title">return</span> <span class="string">'DIRECT'</span>
+}
+</code></pre>
+<p>好了，配合之前解决的沙盒问题，PAC 又可以正常工作了。</p>
+<p>如果需要自启动，在命令行执行如下命令：</p>
+<pre><code>cd ~
+touch org.privoxy.plist | echo '<span class="pi">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span><span class="doctype">&lt;!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd"&gt;</span><span class="tag">&lt;<span class="title">plist</span> <span class="attribute">version</span>=<span class="value">"1.0"</span>&gt;</span><span class="tag">&lt;<span class="title">dict</span>&gt;</span><span class="tag">&lt;<span class="title">key</span>&gt;</span>Label<span class="tag">&lt;/<span class="title">key</span>&gt;</span><span class="tag">&lt;<span class="title">string</span>&gt;</span>org.privoxy.launchd.privoxy<span class="tag">&lt;/<span class="title">string</span>&gt;</span><span class="tag">&lt;<span class="title">key</span>&gt;</span>ProgramArguments<span class="tag">&lt;/<span class="title">key</span>&gt;</span><span class="tag">&lt;<span class="title">array</span>&gt;</span><span class="tag">&lt;<span class="title">string</span>&gt;</span>/usr/local/sbin/privoxy<span class="tag">&lt;/<span class="title">string</span>&gt;</span><span class="tag">&lt;<span class="title">string</span>&gt;</span>/usr/local/etc/privoxy/config<span class="tag">&lt;/<span class="title">string</span>&gt;</span><span class="tag">&lt;/<span class="title">array</span>&gt;</span><span class="tag">&lt;<span class="title">key</span>&gt;</span>RunAtLoad<span class="tag">&lt;/<span class="title">key</span>&gt;</span><span class="tag">&lt;<span class="title">true</span>/&gt;</span><span class="tag">&lt;/<span class="title">dict</span>&gt;</span><span class="tag">&lt;/<span class="title">plist</span>&gt;</span>' &gt;&gt; org.privoxy.plist
+sudo chown root:wheel org.privoxy.plist
+sudo cp org.privoxy.plist /Library/LaunchDaemons/org.privoxy.plist
+launchctl load /Library/LaunchDaemons/org.privoxy.plist
+launchctl start org.privoxy.launchd.privoxy
+</code></pre>
+<h3>Privoxy 的进阶内容</h3>
+<p>其实 Privoxy 并不只是把 SOCKS5 转换成 HTTP 代理，她本身还有很强大的功能，比如 <code>action</code> 和 <code>filter</code>，在这仅仅简单介绍一下，具体用途看官方<a href="http://www.privoxy.org/user-manual/configuration.html#CONFOVERVIEW">文档</a>。</p>
+<p><code>Action</code> 可以起到 PAC 文件的作用，也可以当成 AdBlock、user script 和 Stylebot 来使用。</p>
+<p>默认的文件分别是 <code>/usr/local/etc/privoxy/user.action</code> 和 <code>/usr/local/etc/privoxy/user.filter</code>。</p>
+<p>大概的语法如下：</p>
+<pre><code>direct      = +forward-override{forward .}
+ssh         = +forward-override{forward-socks5 <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">8080</span> .}
+<span class="keyword">default</span>     = direct
+{<span class="keyword">default</span>}
+/
+{direct} 
+<span class="variable">.youku</span><span class="variable">.com</span>
+<span class="variable">.twitter</span><span class="variable">.com</span>
+{ssh}
+<span class="variable">.twitter</span><span class="variable">.com</span>
+<span class="preprocessor"># 后面的规则优先级比前面的高</span>
+{+block}
+<span class="variable">.weibo</span><span class="variable">.com</span> <span class="preprocessor"># 屏蔽微博</span>
+{-block}
+<span class="variable">.weibo</span><span class="variable">.com</span>/chrisyipw <span class="preprocessor"># 但是不屏蔽自己</span>
+{+block-as-image}
+<span class="variable">.weibo</span><span class="variable">.com</span> <span class="preprocessor"># 屏蔽微博下所有合法图片，即使扩展名不是图片扩展名也会被屏蔽</span>
+</code></pre>
+<p>可以通过不同的 <code>alias</code> 配置不同的代理程序，如果是用 SSH 而不是 shadowsocks，可以考虑链接多个服务器进行分流，毕竟 SSH 并发性能不高。</p>
+<p>还有更高级的，比如结合 <code>filter</code> 修改页面内容，比如重定向 URL 什么的：</p>
+<pre><code><span class="cell">{+filter{filter_name}</span>}
+.<span class="transposed_variable">weibo.</span>com
+<span class="cell">{+fast-redirects{check-decoded-url}</span>}
+<span class="transposed_variable">news.</span><span class="transposed_variable">google.</span>com/news/<span class="transposed_variable">url.</span>*&amp;url=<span class="transposed_variable">http.</span>*&amp;
+</code></pre>
+<p>具体看 <code>user.action</code> 里的注释吧，而 <code>filter</code> 是需要结合 <code>user.filter</code> 来用的，如果想要使用多个 <code>action</code> 文件，在 <code>config</code> 加入 <code>actionsfile name.action</code> 就行。</p>
+</div><footer class="entry-footer"><time datetime="2013-01-07T16:42:00.000Z">Jan 8th, 2013</time><div class="tags"><a href="/tags/anvil/">Anvil</a><a href="/tags/os-x/">OS X</a><a href="/tags/pow/">Pow</a><a href="/tags/privoxy/">Privoxy</a><a href="/tags/proxy/">Proxy</a></div><section class="comments"><h2 class="title"><a name="comments">Comments</a></h2><div id="disqus_thread"><noscript>Please enable JavaScript to view the<a href="http://disqus.com/?ref_noscript">comments powered by Disqus</a></noscript></div></section><script>var disqus_shortname="chrisyipw";(function(){var a=document.createElement("script");a.type="text/javascript";a.async=!0;a.src="http://chrisyipw.disqus.com/embed.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)})();</script></footer></article></div><footer id="footer" class="inner page-footer"><Copyright>© 2013&nbsp;Chris Yip</Copyright></footer>

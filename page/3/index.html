@@ -1,1 +1,127 @@
-<undefined></undefined>
+<!DOCTYPE html><meta charset="utf-8"><title>Page 3</title><meta name="author" content="Chris Yip"><meta name="description" content="undefined"><meta name="keywords" content="iOS, JavaScript, AngularJS, Angular, HTML, CSS, Objective-C, Freelancer, Web Development, Mobile Development, Mac, OS X, Mac Development, Development, 前端开发, 移动开发, Ruby"><meta property="og:site_name" content="I'm Chris"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"><link rel="shortcut icon" href="/favicon.ico"><link rel="alternate" href="/atom.xml" title="I'm Chris" type="application/atom+xml"><link rel="stylesheet" href="/css/style.css" media="screen"><script async src="/js/theme.js"></script><script>var _gaq=_gaq||[];_gaq.push(["_setAccount","UA-15420910-3"]);_gaq.push(["_trackPageview"]);(function(){var a=document.createElement("script");a.type="text/javascript";a.async=!0;a.src=("https:"==document.location.protocol?"https://ssl":"http://www")+".google-analytics.com/ga.js";var b=document.getElementsByTagName("script")[0];b.parentNode.insertBefore(a,b)})();</script><!--[if IE]><div style="width:100%;position:fixed;top:0;left:0;background:#f00;color:#fff;text-align:center">Internet Explorer series are not supported.</div><![endif]--><header id="header" class="inner page-header"><h1><a href="/">I'm Chris</a></h1><div class="menubar"><nav id="header-menu" class="header-menu"><a class="toggle-menu">Menu</a><ul><li><a href="/about" class="menu-item">About</a></li><li><a href="/archives" class="menu-item">Archives</a></li><li><a href="/works" class="menu-item">Works</a></li></ul></nav><form action="http://google.com/search" method="get" class="search"><input name="q" autocomplete="off" class="search-field"><input type="hidden" name="q" value="site:chrisyip.im"><a class="button"></a></form><div class="follow_me"><a href="https://github.com/chrisyip" title="GitHub" class="github">GitHub</a><a href="https://twitter.com/chrisyipw" title="Twitter" class="twitter">Twitter</a><a href="/atom.xml" title="RSS" class="rss">RSS</a></div></div></header><div id="content" class="inner content"><article class=""><header class="entry-header"><h2 class="title"><a href="/post/remove-duplicate-items-in-contextual-menu-with-alfred/">Alfred 扩展：移除 OS X 右键菜单的重复项</a></h2></header><div class="entry-content"><p>升级到 Mountain Lion 之后，最恼人的是这个 bug：</p>
+<p><img src="http://d.pr/i/P0FH+" alt="Duplicate items in contextual menu"></p>
+<p>只要安装、升级程序都有可能造成重复项，实在烦人，但是并不是没有办法，可以用以下命名去重建右键菜单:</p>
+<pre><code>/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister -kill -domain local -domain system -domain user
+</code></pre>
+
+<p>复制到 Terminal 回车然后重启 Finder 就可以了。</p>
+<p>如果你是 Alfred 的 powerpack 用户，可以用我做的扩展，注意里面有重启 Finder 的命令，<code>killall Finder</code>，<strong>Finder 的工作还没做好之前，不要执行这个扩展，如有任何问题，本人不负责</strong>，你也可以在安装后删除那行命令：</p>
+<p><a href="http://d.pr/f/VsSF"><a href="http://d.pr/f/VsSF">http://d.pr/f/VsSF</a></a></p>
+<p><em>Image via <a href="http://forums.macrumors.com/showthread.php?t=1409978">MacRumors</a></em></p>
+<p><em>这是一篇老文，从旧 blog 里搬过来的，因为有点用。</em></p>
+</div><footer class="entry-footer"><time datetime="2012-11-07T10:14:00.000Z">Nov 7th, 2012</time><div class="tags"><a href="/tags/alfred/">Alfred</a><a href="/tags/extension/">Extension</a><a href="/tags/os-x/">OS X</a></div></footer></article><article class=""><header class="entry-header"><h2 class="title"><a href="/post/sly-design-for-web-programmer/">Zurui Design</a></h2></header><div class="entry-content"><p><a href="https://twitter.com/ken_c_lo">TAE</a> 在日本「<a href="http://connpass.com/event/1185/">第一回 プログラマ向けデザイン勉強会</a>」（面向程序员的设计学习班）上做了「Zurui Design」的<a href="https://speakerdeck.com/ken_c_lo/zurui-design-technique-english-version">演讲</a>，TAE 称之为「Zurui Design」。「Zurui」在日文的意思是「狡猾的」，大概是因为大部分情况下都可以用，很少出问题的缘故吧。</p>
+<p>演示内的例子使用了高阶的 CSS 属性，大部分在 IE8 或以下会有支持问题，如 <code>rgba()</code>，这里就不多说明怎么处理，请善用 Google。</p>
+<p>以下整理一些实用的：</p>
+<h3>背景</h3>
+<ul>
+<li>使用接近纯白或纯黑的颜色；</li>
+<li>Pattern 的选择上尽量接近自然或构图简单的；</li>
+<li>避免选择大图案的 pattern；</li>
+<li>避免选择色度很浓或亮度差异很大的 pattern。</li>
+</ul>
+<h3>渐变</h3>
+<ul>
+<li>起始色和结束色之间尽量不要有太大差距，如 <code>#434343</code> 和 <code>#222</code>；</li>
+<li>起始色和结束色之间尽量不要混合多种不同的颜色，如红黄蓝搭配。</li>
+</ul>
+<h3>圆角</h3>
+<ul>
+<li>非圆形设计，尽量限制 <code>border-radius</code> 在 <code>6px</code> 内；</li>
+</ul>
+<h3>阴影</h3>
+<p><code>box-shadow</code> 需避免：</p>
+<ul>
+<li>太浓的颜色</li>
+<li>较大的淡化值（blur）</li>
+<li>彩色的阴影</li>
+</ul>
+<p>彩色的阴影指非黑白的其他颜色，使用上尽量使用黑色，如果背景色为黑色系，可以把阴影的颜色设置为比背景还要黑一些，别因为要凸显而采用其他颜色。</p>
+<h3>按钮</h3>
+<p>如果想要做有立体感的按钮，可以配合渐变，但光源是上到下为佳，即上部浅色，底部深色。使用渐变时配合 <code>border</code> 会有较好的效果，但注意避免彩色的 <code>border</code>。</p>
+</div><footer class="entry-footer"><time datetime="2012-11-05T07:27:00.000Z">Nov 5th, 2012</time><div class="tags"><a href="/tags/design/">Design</a><a href="/tags/web/">Web</a></div></footer></article><article class=""><header class="entry-header"><h2 class="title"><a href="/post/regular-expression-for-cjk/">适用于中日韩的正则表达式</a></h2></header><div class="entry-content"><p>之前我在 Twitter 发过用于匹配中文的正则表达式，但是发的表达式并不是很严谨，只是一个粗略的匹配，今天就进行补完吧。</p>
+<p>FYI，如果是用 Ruby，用内置的集合吧，如 <code>/\p{Han}/</code>，最省事，详情看<a href="http://www.ruby-doc.org/core-1.9.3/Regexp.html">文档</a>。</p>
+<h3>汉字匹配</h3>
+<p><code>[一 -鿌]</code> 是 <code>4E00–9FCC</code> 段。这个是最常用的汉字集。</p>
+<p><code>[㐀-䶵]</code> 是 <code>3400–4DBF</code> 段。</p>
+<p><code>[𠀀-𪛖]</code> 是 <code>20000–2A6D6</code> 段。</p>
+<p><code>[𪜀-𫠝]</code> 是 <code>2A700–2B81F</code> 段。</p>
+<p><code>[⺀-⿕]</code> 是 <code>2E80–2FDF</code> 段。</p>
+<p><code>[豈-舘]</code> 是 <code>F900-FA6D</code> 段。</p>
+<p><code>[你-鼖]</code> 是 <code>2F800-2FA1B</code> 段。</p>
+<p>在 Objective-C 里可以任意用上面的集合进行组合。</p>
+<p>Python 不会用，简单的测试发现 <code>u&quot;[𠀀-𪛖]&quot;</code> 会导致报错，不加 <code>u</code> 匹配出来的会是别的字符，<code></code>。</p>
+<pre><code><span class="comment"># -*- coding:utf-8 -*-</span>
+<span class="keyword">import</span> re
+prog = re.compile(<span class="string">u'[𠀀-𫠚]'</span>)
+result = prog.match(<span class="string">u'𠀀'</span>)
+<span class="keyword">print</span> result
+</code></pre>
+
+<h4>For JavaScript</h4>
+<p>JS 对五位的 Unicode 编码支持有问题，比如 <code>𠀀</code> 不管是以单字还是 <code>\uD840\uDC00</code> 方式是可以匹配，但是作为范围，如 <code>[𠀀-𪛖]</code> 会抛出 <code>Range out of order in character class</code> 异常。</p>
+<p>如有需要，建议使用 <code>[一 -鿋]</code> 和 <code>[㐀-𫠚]</code>。</p>
+<h3>日文五十音匹配</h3>
+<p>相对于汉字，这个难度就大降：</p>
+<pre><code>[ぁ - ヶ゛゜ー]
+</code></pre>
+<p>JavaScript、Objective-C、Python 和 Ruby 测试通过。</p>
+<h3>韩文匹配</h3>
+<pre><code>[가-힝]
+</code></pre>
+<p>不懂韩文，大致就是这样吧？</p>
+<p>JavaScript、Objective-C、Python 和 Ruby 测试通过。</p>
+<h3>备注</h3>
+<ol>
+<li>为什么我会选择用「字」而不是 Unicode 编码来匹配呢？因为五位 Unicode 编码的支持实在不能统一，用字的话，我常用的语言都可以兼容，省事。</li>
+<li>如果看到的是方块字，那是正常的，虽然显示不出来，但仍旧是那个编码。</li>
+</ol>
+<hr>
+<p><em>参考资料：</em></p>
+<ul>
+<li><em><a href="http://en.wikipedia.org/wiki/List_of_Unicode_characters"><a href="http://en.wikipedia.org/wiki/List_of_Unicode_characters">http://en.wikipedia.org/wiki/List_of_Unicode_characters</a></a></em></li>
+<li><em><a href="http://lcweb2.loc.gov/diglib/codetables/9.2.html"><a href="http://lcweb2.loc.gov/diglib/codetables/9.2.html">http://lcweb2.loc.gov/diglib/codetables/9.2.html</a></a></em></li>
+<li><em><a href="http://lcweb2.loc.gov/diglib/codetables/9.3.html"><a href="http://lcweb2.loc.gov/diglib/codetables/9.3.html">http://lcweb2.loc.gov/diglib/codetables/9.3.html</a></a></em></li>
+</ul>
+</div><footer class="entry-footer"><time datetime="2012-11-03T11:02:00.000Z">Nov 3rd, 2012</time><div class="tags"><a href="/tags/javascript/">JavaScript</a><a href="/tags/objective-c/">Objective-C</a><a href="/tags/python/">Python</a><a href="/tags/regular-expression/">Regular Expression</a><a href="/tags/ruby/">Ruby</a></div></footer></article><article class=""><header class="entry-header"><h2 class="title"><a href="/post/moved-from-tumblr/">从 Tumblr 迁移到 Octopress</a></h2></header><div class="entry-content"><p>以前一直在用 Tumblr 作为 blog 托管，因为简单，还不用管流量、图片托管等问题，也支持自定义域名，不过最近开始满足不了我的一些需求：</p>
+<ul>
+<li>非 Photo 类型的文章难插入多张图片，通常都是用别的图床来放置图片，比如 Droplr；</li>
+<li>CSS/JS 的处理比较郁闷。</li>
+</ul>
+<p>所以就打算迁移到 GitHub + <a href="http://octopress.org/">Octopress</a> 上，虽然所有东西都是公开的。</p>
+<p>附 Octopress 简单教程：</p>
+<p>第一步，在 GitHub 创建一个新的 repo，将其命名为 &quot;username.github.com&quot;，&quot;username&quot; 是你的用户名。</p>
+<p>第二步，创建好之后，去 admin 页面选择 &quot;Automatic Page Generator&quot;。</p>
+<p>第三步，安装 Octopress：</p>
+<pre><code>git clone git://github.com/imathis/octopress.git octopress
+cd octopress <span class="comment"># 保证安装了 Ruby 和 rbenv/RVM，进入目录时会问你是否信任 .rvmrc，选是</span>
+gem install bundler
+<span class="comment"># rbenv 需要跑 `rbenv rehash`</span>
+bundle install
+rake install
+rake setup_github_pages <span class="comment"># 填入你的 repo 地址</span>
+rake generate
+</code></pre>
+
+<p>一些常用的操作如下：</p>
+<p><code>rake new_post[&quot;title&quot;]</code>：创建新的文章，<code>title</code> 尽量用英文吧，Mac Terminal 打中文会报错。创建的文章会用时间戳的方式，如 <code>2012-11-02-moved-from-tumblr.markdown</code> 保存到 <code>source/_post</code> 下，用任意编辑器打开即可。</p>
+<p><code>rake new_page[page-name]</code>：创建新的页面，比如个人简介什么的，会放在 <code>source/page-name</code> 下，默认主页是 <code>index.markdown</code>。</p>
+<p><code>rake generate</code>：把所有文件转换并复制到 <code>public/</code> 下面。<code>rake watch</code> 会监视文件并实时转换。</p>
+<p><code>rake preview</code>：启动一个 <code>localhost:4000</code> 服务器供预览。</p>
+<p><code>rake deploy</code>：如果没问题了，就用这个命令把文件提交到 GitHub。</p>
+<p>因为这个 repo（按照上面的例子是 <strong>octopress</strong>）和你的 GitHub pages 并不是同一个 repo，所以你可以再建一个 repo，把东西提交上去，这样也方便你写草稿，还可以用 <a href="http://bitbucket.org">Bitbucket</a> 的免费私有 repo。</p>
+<p>如果执行 <code>rake new_post</code> 或 <code>rake generate</code> 时碰到了类似 <code>invalid byte sequence in US-ASCII (ArgumentError)</code> 的问题，编辑一下这两个文件：</p>
+<pre><code><span class="comment"># rvm-path/gems/ruby-version/gems/jekyll-version/lib/jekyll/tags/include.rb</span>
+<span class="comment"># 把 source = File.read(<span class="yardoctag">@file</span>) 改成：</span>
+source = <span class="constant">File</span>.read(<span class="variable">@file</span>, <span class="symbol">:encoding</span> =&gt; <span class="string">"utf-8"</span>)
+
+<span class="comment"># rvm-path/gems/ruby-version/gems/jekyll-version/lib/jekyll/convertible.rb</span>
+<span class="comment"># 把 self.content = File.read(File.join(base, name)) 改成：</span>
+<span class="keyword">self</span>.content = <span class="constant">File</span>.read(<span class="constant">File</span>.join(base, name), <span class="symbol">:encoding</span> =&gt; <span class="string">"utf-8"</span>)
+</code></pre>
+<p>根据你的配置，把 <code>rvm-path</code>，<code>ruby-version</code> 和 <code>jekyll-version</code> 改成实际的路径。一般情况，<code>rvm-path</code> 是 <code>~/.rvm/</code>。</p>
+<p>或者在你的 <code>.bashrc</code>、<code>.zshrc</code> 等文件加入以下两个变量：</p>
+<pre><code><span class="keyword">export</span> LC_ALL=en_US<span class="variable">.UTF</span>-<span class="number">8</span>
+<span class="keyword">export</span> LANG=en_US<span class="variable">.UTF</span>-<span class="number">8</span>
+</code></pre>
+<p>这个问题是由于 Python 2.X 并没有把 Unicode 作为默认编码格式，Jekyll 也没有声明要用 Unicode 处理文件。</p>
+</div><footer class="entry-footer"><time datetime="2012-11-02T08:58:00.000Z">Nov 2nd, 2012</time><div class="tags"><a href="/tags/tumblr/">Tumblr</a><a href="/tags/octopress/">Octopress</a><a href="/tags/jekyll/">Jekyll</a><a href="/tags/github/">GitHub</a></div></footer></article><nav class="pagination"><a href="/page/2/" class="prev">Prev</a><a href="/archives" class="archives">Archives</a></nav></div><footer id="footer" class="inner page-footer"><Copyright>© 2013&nbsp;Chris Yip</Copyright></footer>

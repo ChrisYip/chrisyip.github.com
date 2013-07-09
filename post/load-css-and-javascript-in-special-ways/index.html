@@ -1,1 +1,172 @@
-<undefined></undefined>
+<!DOCTYPE html><meta charset="utf-8"><title>优化 CSS 和 JavaScript 请求数的另类方法</title><meta name="author" content="Chris Yip"><meta name="description" content="Jan Hančič 公布了一个在一次请求里同时加载 CSS 和 JavaScript 的方案，platypus.js。
+实现原理是利用 CSS 的 content 属性，把 JavaScript 转换成 base64 字符串放进去，再动态插入 DOM。
+示例 CSS：
+#platypus-0 {
+  display: none;
+  content: 	'YWxlcnQoJ0hpLCBteSBmcmllbmQhIEZyb20gQ2hyaXMnKQo=';
+}
+
+
+示例 JS：
+(function ( document ) {
+  var linkTags = document.querySelectorAll ( 'link[rel=&quot;stylesheet&quot;]' );
+  for ( var i = 0; i &lt; linkTags.length; i++ ) {
+    var dummyDiv = document.createElement ( 'div' );
+    dummyDiv.id = 'platypus-' + i;
+    document.body.appendChild ( dummyDiv );
+
+    var styles = document.defaultView.getComputedStyle ( dummyDiv, null );
+    var js = styles.getPropertyValue ( 'content' ); // w3c
+    //backgroundImage = someElement.currentStyle[&quot;background-image&quot;]; //IE
+    if ( js === '' ) {
+      continue;
+    }
+
+    dummyDiv.parentNode.removeChild ( dummyDiv );
+
+    if ( js[0] === &quot;'&quot; || js[0] === '&quot;' ) {
+      js = js.substr ( 1, js.length - 2 );
+    }
+
+    var scriptTag = document.createElement ( 'script' );
+    // window.atob - decode base64 string, unavailable on IE9-, MDN says IE10 supports it
+    scriptTag.innerHTML = atob ( js );
+    document.body.appendChild ( scriptTag );
+  };
+} ( document ) );
+
+
+按照 Jan 的说法，platypus.js 兼容非兼容视图的 IE9，大致上主流的桌面、移动浏览器都可以兼容。
+这个方案很有意思，虽然 CSS 文件的大小增加了，但在越来越快的带宽和越来越好的 CDN 的影响下，DNS Lookup、Connecting 和 Wating 的消耗说不定比多出的部分少不了多少，特别是小文件。
+我也想过利用 localStorage 来实现类似 manifest 的效果，简单的示例代码如下：
+var load = (function() {
+  var insertToDOM, getSource
+
+  insertToDOM = function( content ) {
+    var script = document.createElement( 'script' )
+    script.textContent = content
+    document.body.appendChild( script )
+  }
+
+  getSource = function( file ) {
+    var source = localStorage.getItem( file )
+    if (typeof source !== 'string') {
+      // if no record, get source from server
+      $.ajax( {
+        url: file,
+        success: function( data ) {
+          localStorage.setItem( file, data )
+          insertToDOM( data )
+        }
+      } )
+    } else {
+      insertToDOM( source )
+    }
+  }
+
+  return function(files) {
+    files.forEach( function( file ) {
+      getSource( file )
+    })
+  };
+})();
+
+load( ['//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js',
+  'script.js'] )
+
+
+特点：
+
+可以支持很多文件，理论上能用 Data URI 加载的都可以；
+localStorage 的访问速度远远快于 DNS Lookup 等消耗；
+localStorage 默认能支持最大 4MB 的储存，对于大部分站点完全足够；
+把脚本封装成 (fn)() 的形式并在底部插入特定的变量可判断版本、是否加载完成等，便于控制；
+可控性和易用性高于 manifest，不需要配置服务器，需要清空时操作 localStorage 即可，而 localStorage 的存储持久性和 manifest 基本一样。
+
+只不过，这种做法和 AMD、CommonJS 等规范不太合拍——至少我还没想到好做法——小团队项目开发似乎挺不错，暂时只是草稿性质的想法。"><meta name="keywords" content="Base64, CSS, JavaScript, localStorage, Performance"><meta property="og:title" content="优化 CSS 和 JavaScript 请求数的另类方法"><meta property="og:site_name" content="I'm Chris"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"><link rel="shortcut icon" href="/favicon.ico"><link rel="alternate" href="/atom.xml" title="I'm Chris" type="application/atom+xml"><link rel="stylesheet" href="/css/style.css" media="screen"><script async src="/js/theme.js"></script><script>var _gaq=_gaq||[];_gaq.push(["_setAccount","UA-15420910-3"]);_gaq.push(["_trackPageview"]);(function(){var a=document.createElement("script");a.type="text/javascript";a.async=!0;a.src=("https:"==document.location.protocol?"https://ssl":"http://www")+".google-analytics.com/ga.js";var b=document.getElementsByTagName("script")[0];b.parentNode.insertBefore(a,b)})();</script><!--[if IE]><div style="width:100%;position:fixed;top:0;left:0;background:#f00;color:#fff;text-align:center">Internet Explorer series are not supported.</div><![endif]--><header id="header" class="inner page-header"><h1><a href="/">I'm Chris</a></h1><div class="menubar"><nav id="header-menu" class="header-menu"><a class="toggle-menu">Menu</a><ul><li><a href="/about" class="menu-item">About</a></li><li><a href="/archives" class="menu-item">Archives</a></li><li><a href="/works" class="menu-item">Works</a></li></ul></nav><form action="http://google.com/search" method="get" class="search"><input name="q" autocomplete="off" class="search-field"><input type="hidden" name="q" value="site:chrisyip.im"><a class="button"></a></form><div class="follow_me"><a href="https://github.com/chrisyip" title="GitHub" class="github">GitHub</a><a href="https://twitter.com/chrisyipw" title="Twitter" class="twitter">Twitter</a><a href="/atom.xml" title="RSS" class="rss">RSS</a></div></div></header><div id="content" class="inner content"><article class=""><header class="entry-header"><h2 class="title"><a href="/post/load-css-and-javascript-in-special-ways/">优化 CSS 和 JavaScript 请求数的另类方法</a></h2></header><div class="entry-content"><p><a href="http://hancic.info/">Jan Hančič</a> 公布了一个在一次请求里同时加载 CSS 和 JavaScript 的方案，<a href="http://janhancic.github.com/platypus.js/">platypus.js</a>。</p>
+<p>实现原理是利用 CSS 的 <code>content</code> 属性，把 JavaScript 转换成 base64 字符串放进去，再动态插入 DOM。</p>
+<p>示例 CSS：</p>
+<pre><code><span class="id">#platypus-0</span> <span class="rules">{
+  <span class="rule"><span class="attribute">display</span>:<span class="value"> none;</span></span>
+  <span class="rule"><span class="attribute">content</span>:<span class="value"> 	<span class="string">'YWxlcnQoJ0hpLCBteSBmcmllbmQhIEZyb20gQ2hyaXMnKQo='</span>;</span></span>
+<span class="rule">}</span></span>
+</code></pre>
+
+<p>示例 JS：</p>
+<pre><code>(<span class="function"><span class="keyword">function</span> <span class="params">( document )</span> {</span>
+  <span class="keyword">var</span> linkTags = document.querySelectorAll ( <span class="string">'link[rel="stylesheet"]'</span> );
+  <span class="keyword">for</span> ( <span class="keyword">var</span> i = <span class="number">0</span>; i &lt; linkTags.length; i++ ) {
+    <span class="keyword">var</span> dummyDiv = document.createElement ( <span class="string">'div'</span> );
+    dummyDiv.id = <span class="string">'platypus-'</span> + i;
+    document.body.appendChild ( dummyDiv );
+
+    <span class="keyword">var</span> styles = document.defaultView.getComputedStyle ( dummyDiv, <span class="literal">null</span> );
+    <span class="keyword">var</span> js = styles.getPropertyValue ( <span class="string">'content'</span> ); <span class="comment">// w3c</span>
+    <span class="comment">//backgroundImage = someElement.currentStyle["background-image"]; //IE</span>
+    <span class="keyword">if</span> ( js === <span class="string">''</span> ) {
+      <span class="keyword">continue</span>;
+    }
+
+    dummyDiv.parentNode.removeChild ( dummyDiv );
+
+    <span class="keyword">if</span> ( js[<span class="number">0</span>] === <span class="string">"'"</span> || js[<span class="number">0</span>] === <span class="string">'"'</span> ) {
+      js = js.substr ( <span class="number">1</span>, js.length - <span class="number">2</span> );
+    }
+
+    <span class="keyword">var</span> scriptTag = document.createElement ( <span class="string">'script'</span> );
+    <span class="comment">// window.atob - decode base64 string, unavailable on IE9-, MDN says IE10 supports it</span>
+    scriptTag.innerHTML = atob ( js );
+    document.body.appendChild ( scriptTag );
+  };
+} ( document ) );
+</code></pre>
+
+<p>按照 Jan 的说法，platypus.js 兼容非兼容视图的 IE9，大致上主流的桌面、移动浏览器都可以兼容。</p>
+<p>这个方案很有意思，虽然 CSS 文件的大小增加了，但在越来越快的带宽和越来越好的 CDN 的影响下，DNS Lookup、Connecting 和 Wating 的消耗说不定比多出的部分少不了多少，特别是小文件。</p>
+<p>我也想过利用 <code>localStorage</code> 来实现类似 <code>manifest</code> 的效果，简单的示例代码如下：</p>
+<pre><code><span class="keyword">var</span> load = (<span class="keyword">function</span>() {
+  <span class="keyword">var</span> insertToDOM, getSource
+
+  insertToDOM = <span class="keyword">function</span>( content ) {
+    <span class="keyword">var</span> script = document.createElement( <span class="string">'script'</span> )
+    script.textContent = content
+    document.body.appendChild( script )
+  }
+
+  getSource = <span class="keyword">function</span>( file ) {
+    <span class="keyword">var</span> source = localStorage.getItem( file )
+    <span class="keyword">if</span> (<span class="keyword">typeof</span> source !== <span class="string">'string'</span>) {
+      <span class="comment">// if no record, get source from server</span>
+      $.ajax( {
+        url: file,
+        success: <span class="keyword">function</span>( data ) {
+          localStorage.setItem( file, data )
+          insertToDOM( data )
+        }
+      } )
+    } <span class="keyword">else</span> {
+      insertToDOM( source )
+    }
+  }
+
+  <span class="keyword">return</span> <span class="keyword">function</span>(files) {
+    files.forEach( <span class="keyword">function</span>( file ) {
+      getSource( file )
+    })
+  };
+})();
+
+load( [<span class="string">'//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js'</span>,
+  <span class="string">'script.js'</span>] )
+</code></pre>
+
+<p>特点：</p>
+<ul>
+<li>可以支持很多文件，理论上能用 Data URI 加载的都可以；</li>
+<li><code>localStorage</code> 的访问速度远远快于 DNS Lookup 等消耗；</li>
+<li><code>localStorage</code> 默认能支持最大 4MB 的储存，对于大部分站点完全足够；</li>
+<li>把脚本封装成 <code>(fn)()</code> 的形式并在底部插入特定的变量可判断版本、是否加载完成等，便于控制；</li>
+<li>可控性和易用性高于 <code>manifest</code>，不需要配置服务器，需要清空时操作 <code>localStorage</code> 即可，而 <code>localStorage</code> 的存储持久性和 <code>manifest</code> 基本一样。</li>
+</ul>
+<p>只不过，这种做法和 AMD、CommonJS 等规范不太合拍——至少我还没想到好做法——小团队项目开发似乎挺不错，暂时只是草稿性质的想法。</p>
+</div><footer class="entry-footer"><time datetime="2013-01-27T13:43:00.000Z">Jan 27th, 2013</time><div class="tags"><a href="/tags/css/">CSS</a><a href="/tags/javascript/">JavaScript</a><a href="/tags/performance/">Performance</a><a href="/tags/web-development/">Web Development</a></div><section class="comments"><h2 class="title"><a name="comments">Comments</a></h2><div id="disqus_thread"><noscript>Please enable JavaScript to view the<a href="http://disqus.com/?ref_noscript">comments powered by Disqus</a></noscript></div></section><script>var disqus_shortname="chrisyipw";(function(){var a=document.createElement("script");a.type="text/javascript";a.async=!0;a.src="http://chrisyipw.disqus.com/embed.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)})();</script></footer></article></div><footer id="footer" class="inner page-footer"><Copyright>© 2013&nbsp;Chris Yip</Copyright></footer>

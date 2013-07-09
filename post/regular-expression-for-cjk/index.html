@@ -1,1 +1,87 @@
-<undefined></undefined>
+<!DOCTYPE html><meta charset="utf-8"><title>适用于中日韩的正则表达式</title><meta name="author" content="Chris Yip"><meta name="description" content="之前我在 Twitter 发过用于匹配中文的正则表达式，但是发的表达式并不是很严谨，只是一个粗略的匹配，今天就进行补完吧。
+FYI，如果是用 Ruby，用内置的集合吧，如 /\p{Han}/，最省事，详情看文档。
+汉字匹配
+[一 -鿌] 是 4E00–9FCC 段。这个是最常用的汉字集。
+[㐀-䶵] 是 3400–4DBF 段。
+[𠀀-𪛖] 是 20000–2A6D6 段。
+[𪜀-𫠝] 是 2A700–2B81F 段。
+[⺀-⿕] 是 2E80–2FDF 段。
+[豈-舘] 是 F900-FA6D 段。
+[你-鼖] 是 2F800-2FA1B 段。
+在 Objective-C 里可以任意用上面的集合进行组合。
+Python 不会用，简单的测试发现 u&quot;[𠀀-𪛖]&quot; 会导致报错，不加 u 匹配出来的会是别的字符，。
+# -*- coding:utf-8 -*-
+import re
+prog = re.compile(u'[𠀀-𫠚]')
+result = prog.match(u'𠀀')
+print result
+
+
+For JavaScript
+JS 对五位的 Unicode 编码支持有问题，比如 𠀀 不管是以单字还是 \uD840\uDC00 方式是可以匹配，但是作为范围，如 [𠀀-𪛖] 会抛出 Range out of order in character class 异常。
+如有需要，建议使用 [一 -鿋] 和 [㐀-𫠚]。
+日文五十音匹配
+相对于汉字，这个难度就大降：
+[ぁ - ヶ゛゜ー]
+
+JavaScript、Objective-C、Python 和 Ruby 测试通过。
+韩文匹配
+[가-힝]
+
+不懂韩文，大致就是这样吧？
+JavaScript、Objective-C、Python 和 Ruby 测试通过。
+备注
+
+为什么我会选择用「字」而不是 Unicode 编码来匹配呢？因为五位 Unicode 编码的支持实在不能统一，用字的话，我常用的语言都可以兼容，省事。
+如果看到的是方块字，那是正常的，虽然显示不出来，但仍旧是那个编码。
+
+
+参考资料：
+
+http://en.wikipedia.org/wiki/List_of_Unicode_characters
+http://lcweb2.loc.gov/diglib/codetables/9.2.html
+http://lcweb2.loc.gov/diglib/codetables/9.3.html"><meta name="keywords" content="iOS, JavaScript, AngularJS, Angular, HTML, CSS, Objective-C, Freelancer, Web Development, Mobile Development, Mac, OS X, Mac Development, Development, 前端开发, 移动开发, Ruby"><meta property="og:title" content="适用于中日韩的正则表达式"><meta property="og:site_name" content="I'm Chris"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"><link rel="shortcut icon" href="/favicon.ico"><link rel="alternate" href="/atom.xml" title="I'm Chris" type="application/atom+xml"><link rel="stylesheet" href="/css/style.css" media="screen"><script async src="/js/theme.js"></script><script>var _gaq=_gaq||[];_gaq.push(["_setAccount","UA-15420910-3"]);_gaq.push(["_trackPageview"]);(function(){var a=document.createElement("script");a.type="text/javascript";a.async=!0;a.src=("https:"==document.location.protocol?"https://ssl":"http://www")+".google-analytics.com/ga.js";var b=document.getElementsByTagName("script")[0];b.parentNode.insertBefore(a,b)})();</script><!--[if IE]><div style="width:100%;position:fixed;top:0;left:0;background:#f00;color:#fff;text-align:center">Internet Explorer series are not supported.</div><![endif]--><header id="header" class="inner page-header"><h1><a href="/">I'm Chris</a></h1><div class="menubar"><nav id="header-menu" class="header-menu"><a class="toggle-menu">Menu</a><ul><li><a href="/about" class="menu-item">About</a></li><li><a href="/archives" class="menu-item">Archives</a></li><li><a href="/works" class="menu-item">Works</a></li></ul></nav><form action="http://google.com/search" method="get" class="search"><input name="q" autocomplete="off" class="search-field"><input type="hidden" name="q" value="site:chrisyip.im"><a class="button"></a></form><div class="follow_me"><a href="https://github.com/chrisyip" title="GitHub" class="github">GitHub</a><a href="https://twitter.com/chrisyipw" title="Twitter" class="twitter">Twitter</a><a href="/atom.xml" title="RSS" class="rss">RSS</a></div></div></header><div id="content" class="inner content"><article class=""><header class="entry-header"><h2 class="title"><a href="/post/regular-expression-for-cjk/">适用于中日韩的正则表达式</a></h2></header><div class="entry-content"><p>之前我在 Twitter 发过用于匹配中文的正则表达式，但是发的表达式并不是很严谨，只是一个粗略的匹配，今天就进行补完吧。</p>
+<p>FYI，如果是用 Ruby，用内置的集合吧，如 <code>/\p{Han}/</code>，最省事，详情看<a href="http://www.ruby-doc.org/core-1.9.3/Regexp.html">文档</a>。</p>
+<h3>汉字匹配</h3>
+<p><code>[一 -鿌]</code> 是 <code>4E00–9FCC</code> 段。这个是最常用的汉字集。</p>
+<p><code>[㐀-䶵]</code> 是 <code>3400–4DBF</code> 段。</p>
+<p><code>[𠀀-𪛖]</code> 是 <code>20000–2A6D6</code> 段。</p>
+<p><code>[𪜀-𫠝]</code> 是 <code>2A700–2B81F</code> 段。</p>
+<p><code>[⺀-⿕]</code> 是 <code>2E80–2FDF</code> 段。</p>
+<p><code>[豈-舘]</code> 是 <code>F900-FA6D</code> 段。</p>
+<p><code>[你-鼖]</code> 是 <code>2F800-2FA1B</code> 段。</p>
+<p>在 Objective-C 里可以任意用上面的集合进行组合。</p>
+<p>Python 不会用，简单的测试发现 <code>u&quot;[𠀀-𪛖]&quot;</code> 会导致报错，不加 <code>u</code> 匹配出来的会是别的字符，<code></code>。</p>
+<pre><code><span class="comment"># -*- coding:utf-8 -*-</span>
+<span class="keyword">import</span> re
+prog = re.compile(<span class="string">u'[𠀀-𫠚]'</span>)
+result = prog.match(<span class="string">u'𠀀'</span>)
+<span class="keyword">print</span> result
+</code></pre>
+
+<h4>For JavaScript</h4>
+<p>JS 对五位的 Unicode 编码支持有问题，比如 <code>𠀀</code> 不管是以单字还是 <code>\uD840\uDC00</code> 方式是可以匹配，但是作为范围，如 <code>[𠀀-𪛖]</code> 会抛出 <code>Range out of order in character class</code> 异常。</p>
+<p>如有需要，建议使用 <code>[一 -鿋]</code> 和 <code>[㐀-𫠚]</code>。</p>
+<h3>日文五十音匹配</h3>
+<p>相对于汉字，这个难度就大降：</p>
+<pre><code>[ぁ - ヶ゛゜ー]
+</code></pre>
+<p>JavaScript、Objective-C、Python 和 Ruby 测试通过。</p>
+<h3>韩文匹配</h3>
+<pre><code>[가-힝]
+</code></pre>
+<p>不懂韩文，大致就是这样吧？</p>
+<p>JavaScript、Objective-C、Python 和 Ruby 测试通过。</p>
+<h3>备注</h3>
+<ol>
+<li>为什么我会选择用「字」而不是 Unicode 编码来匹配呢？因为五位 Unicode 编码的支持实在不能统一，用字的话，我常用的语言都可以兼容，省事。</li>
+<li>如果看到的是方块字，那是正常的，虽然显示不出来，但仍旧是那个编码。</li>
+</ol>
+<hr>
+<p><em>参考资料：</em></p>
+<ul>
+<li><em><a href="http://en.wikipedia.org/wiki/List_of_Unicode_characters"><a href="http://en.wikipedia.org/wiki/List_of_Unicode_characters">http://en.wikipedia.org/wiki/List_of_Unicode_characters</a></a></em></li>
+<li><em><a href="http://lcweb2.loc.gov/diglib/codetables/9.2.html"><a href="http://lcweb2.loc.gov/diglib/codetables/9.2.html">http://lcweb2.loc.gov/diglib/codetables/9.2.html</a></a></em></li>
+<li><em><a href="http://lcweb2.loc.gov/diglib/codetables/9.3.html"><a href="http://lcweb2.loc.gov/diglib/codetables/9.3.html">http://lcweb2.loc.gov/diglib/codetables/9.3.html</a></a></em></li>
+</ul>
+</div><footer class="entry-footer"><time datetime="2012-11-03T11:02:00.000Z">Nov 3rd, 2012</time><div class="tags"><a href="/tags/javascript/">JavaScript</a><a href="/tags/objective-c/">Objective-C</a><a href="/tags/python/">Python</a><a href="/tags/regular-expression/">Regular Expression</a><a href="/tags/ruby/">Ruby</a></div><section class="comments"><h2 class="title"><a name="comments">Comments</a></h2><div id="disqus_thread"><noscript>Please enable JavaScript to view the<a href="http://disqus.com/?ref_noscript">comments powered by Disqus</a></noscript></div></section><script>var disqus_shortname="chrisyipw";(function(){var a=document.createElement("script");a.type="text/javascript";a.async=!0;a.src="http://chrisyipw.disqus.com/embed.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)})();</script></footer></article></div><footer id="footer" class="inner page-footer"><Copyright>© 2013&nbsp;Chris Yip</Copyright></footer>

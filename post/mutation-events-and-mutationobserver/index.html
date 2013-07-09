@@ -1,1 +1,262 @@
-<undefined></undefined>
+<!DOCTYPE html><meta charset="utf-8"><title>Mutation 事件和 MutationObserver</title><meta name="author" content="Chris Yip"><meta name="description" content="Mutation 事件
+DOM Level 3 提供了一系列的 mutation 事件，如 DOMAttrModified、DOMNodeInserted，供开发者观察 DOM 的变动。这些事件虽然不太常用，但却非常方便好用。比如在使用 ajax 往 DOM 添加新元素时，需要检查总高度超过了容器，常见的方法是在 ajax 完成时的回调函数里执行，但这样并不利于组织代码，甚至回调函数会很臃肿；如果使用 DOMNodeInserted 就好多了：
+$container.on( 'DOMNodeInserted', function() {
+  if ( children_height &gt; $container.height() ) {
+    // do something
+  }
+})
+
+$.ajax({
+  success: function( data ) {
+    $container.append( $( data.html ) )
+  }
+})
+
+
+这样职责就清晰很多—— ajax 的回调函数仅处理返回的数据。
+但 mutation 事件的性能太糟了，Chrome 也未必吃得消，而 Mozilla 在 Performance best practices in extensions 里也建议尽可能别用 mutation 事件。
+因此 mutation 事件的处境很尴尬，能用的只有它，但又不能用，最终也被 DOM Level 4 引入的 MutationObserver 取代了。
+MutationObserver
+先看以下代码：
+&lt;ul&gt;&lt;/ul&gt;
+
+&lt;script&gt;
+  var ul = document.querySelector('ul')
+    , observer
+  try {
+    observer = new ( window.MutationObserver ||
+                     window.WebKitMutationObserver )( function( mutationRecord,
+                                                    observer ) {
+      mutationRecord.forEach( function( mutation ) {
+        console.log( mutation )
+      })
+    })
+    observer.observe( ul, { attributes: true, childList: true } )
+  } catch ( ex ) {}
+
+  ul.className = 'list'
+  ul.appendChild( document.createElement( 'li' ) )
+  // 不会触发 
+  ul.children[0].className = 'item'
+
+  // 在不需要时，停止继续观察
+  observer.disconnect()
+&lt;/script&gt;
+
+
+目前支持的浏览器似乎只有 webkit 核心和 Firefox (14+），而在 Chrome 24 和 Safari 6.0.2 里仍属于私有实现，所以必须先判断：window.MutationObserver || window.WebKitMutationObserver。
+MutationObserver 创建实例时需要一个函数作为参数作为回调函数，该函数有两个参数，一个是包含所有被观察的 MutationRecord 实例的数组，一个是 MutationObserver 实例。
+observer.observe( node, anObject ) 接受两个参数，需观察的对象和事件类型。事件类型用对象的形式来赋值，如 { attributes: true, childList: true }，这决定了什么事件会被触发，比如上述例子执行结果为：
+{
+  addedNodes: null,
+  attributeName: &quot;class&quot;,
+  attributeNamespace: null,
+  nextSibling: null,
+  oldValue: null,
+  previousSibling: null,
+  removedNodes: null,
+  target: ul.list,
+  type: &quot;attributes&quot;
+}
+{
+  addedNodes: NodeList[1],
+  attributeName: null,
+  attributeNamespace: null,
+  nextSibling: null,
+  oldValue: null,
+  previousSibling: #text,
+  removedNodes: NodeList[0],
+  target: ul,
+  type: &quot;childList&quot;
+}
+
+
+MutationObserver 和一般的 event 不一样，默认仅观察指定对象，除非指定 subtree: true，所以更改 li 的 className 没有触发属性变动事件：
+ul.children[0].className = 'list'
+
+此外还要注意的是，被观察的对象是 node 类型，所以类似这样的操作也会触发事件：ul.appendChild( document.createTextNode( &#39;Hello World&#39; ) )。
+更详细的内容请参考 MDN 的文档。
+CSS 动画事件的妙用
+MutationObserver 虽然实用度和性能都很优秀，但毕竟是 DOM Level 4 的东西——太新——在老一点的浏览器有没有别的代替方案呢？
+如果只是需要 DOMNodeInserted，那可以利用 CSS 动画事件实现类似的效果：
+&lt;style&gt;
+  @-webkit-keyframes NodeInserted {  
+    from {}
+  }
+
+  @keyframes NodeInserted {  
+    from {  
+      clip: rect(0px, auto, auto, auto);  
+    }
+    to {  
+      clip: rect(0px, auto, auto, auto);
+    }
+  }
+
+  li {
+    -webkit-animation-duration: .001s;
+    animation-duration: .001s;
+    -webkit-animation-name: NodeInserted;
+    animation-name: NodeInserted;
+  }
+&lt;/style&gt;
+
+&lt;ul&gt;&lt;/ul&gt;
+
+&lt;script&gt;
+  var nodeInserted = function( event ) {
+    if ( 'NodeInserted' === event.animationName ) {
+      console.log( 'New node inserted!' )
+    }
+  }
+  document.addEventListener( 'webkitAnimationStart', nodeInserted, false )
+  document.addEventListener( 'animationstart', nodeInserted, false )
+
+  document.querySelector( 'ul' ).appendChild( document.createElement( 'li' ) )
+&lt;/script&gt;
+
+
+这个技巧利用了 CSS 动画开始时触发的 animationstart 事件，因为如果一个元素只有在 DOM 里才会开始动画。
+一些需要注意的地方：
+
+Webkit 系列（Chrome 24 &amp; Safari 6.0.2）要加上 prefix，事件绑定也是；
+尽量别用 jQuery.on() 绑定事件，因为 event 参数是被 jQuery 创建的，目前并不支持 event.animationName 等几个属性（1.9.0）；
+Chrome 24 有点奇葩，只有一个空的 from {} 也会触发动画事件（其他 webkit 系没测试）；
+Firefox 需要比较完整并有实际效果的 keyframes，比如示例代码里的 clip，如果想省事，可以单独用 from { opacity: 1 }，但不是所有属性都可以触发；
+keyframes 里的 CSS 属性要多注意，别不小心覆盖了需要的，比较安全的是 opacity 和 clip；
+建议通过判断 event.animationName 来避免非预期情况；
+建议用父元素做事件代理，如 document.querySelector( &#39;ul&#39; ).addEventListener( &#39;animationstart&#39;, nodeInserted, false )，并酌情停止冒泡。
+
+这个技巧可以用在任何支持 CSS 动画的浏览器上，泛用性比较高，可以参考我写的 Twitter Filter 用户脚本，做成 bookmarklet 一样可以用在别的浏览器。
+补充：IE9 只支持 5 个 mutation 事件，不支持 CSS 动画，MutationObserver 目前还没支持的迹象，所以忘了 IE 系列吧。"><meta name="keywords" content="iOS, JavaScript, AngularJS, Angular, HTML, CSS, Objective-C, Freelancer, Web Development, Mobile Development, Mac, OS X, Mac Development, Development, 前端开发, 移动开发, Ruby"><meta property="og:title" content="Mutation 事件和 MutationObserver"><meta property="og:site_name" content="I'm Chris"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"><link rel="shortcut icon" href="/favicon.ico"><link rel="alternate" href="/atom.xml" title="I'm Chris" type="application/atom+xml"><link rel="stylesheet" href="/css/style.css" media="screen"><script async src="/js/theme.js"></script><script>var _gaq=_gaq||[];_gaq.push(["_setAccount","UA-15420910-3"]);_gaq.push(["_trackPageview"]);(function(){var a=document.createElement("script");a.type="text/javascript";a.async=!0;a.src=("https:"==document.location.protocol?"https://ssl":"http://www")+".google-analytics.com/ga.js";var b=document.getElementsByTagName("script")[0];b.parentNode.insertBefore(a,b)})();</script><!--[if IE]><div style="width:100%;position:fixed;top:0;left:0;background:#f00;color:#fff;text-align:center">Internet Explorer series are not supported.</div><![endif]--><header id="header" class="inner page-header"><h1><a href="/">I'm Chris</a></h1><div class="menubar"><nav id="header-menu" class="header-menu"><a class="toggle-menu">Menu</a><ul><li><a href="/about" class="menu-item">About</a></li><li><a href="/archives" class="menu-item">Archives</a></li><li><a href="/works" class="menu-item">Works</a></li></ul></nav><form action="http://google.com/search" method="get" class="search"><input name="q" autocomplete="off" class="search-field"><input type="hidden" name="q" value="site:chrisyip.im"><a class="button"></a></form><div class="follow_me"><a href="https://github.com/chrisyip" title="GitHub" class="github">GitHub</a><a href="https://twitter.com/chrisyipw" title="Twitter" class="twitter">Twitter</a><a href="/atom.xml" title="RSS" class="rss">RSS</a></div></div></header><div id="content" class="inner content"><article class=""><header class="entry-header"><h2 class="title"><a href="/post/mutation-events-and-mutationobserver/">Mutation 事件和 MutationObserver</a></h2></header><div class="entry-content"><h3>Mutation 事件</h3>
+<p>DOM Level 3 提供了一系列的 mutation 事件，如 <code>DOMAttrModified</code>、<code>DOMNodeInserted</code>，供开发者观察 DOM 的变动。这些事件虽然不太常用，但却非常方便好用。比如在使用 ajax 往 DOM 添加新元素时，需要检查总高度超过了容器，常见的方法是在 ajax 完成时的回调函数里执行，但这样并不利于组织代码，甚至回调函数会很臃肿；如果使用 <code>DOMNodeInserted</code> 就好多了：</p>
+<pre><code>$container.on( <span class="string">'DOMNodeInserted'</span>, <span class="keyword">function</span>() {
+  <span class="keyword">if</span> ( children_height &gt; $container.height() ) {
+    <span class="comment">// do something</span>
+  }
+})
+
+$.ajax({
+  success: <span class="keyword">function</span>( data ) {
+    $container.append( $( data.html ) )
+  }
+})
+</code></pre>
+
+<p>这样职责就清晰很多—— ajax 的回调函数仅处理返回的数据。</p>
+<p>但 mutation 事件的性能太糟了，Chrome 也未必吃得消，而 Mozilla 在 <a href="https://developer.mozilla.org/en-US/docs/Extensions/Performance_best_practices_in_extensions">Performance best practices in extensions</a> 里也建议尽可能别用 mutation 事件。</p>
+<p>因此 mutation 事件的处境很尴尬，能用的只有它，但又不能用，最终也被 DOM Level 4 引入的 <code>MutationObserver</code> 取代了。</p>
+<h3>MutationObserver</h3>
+<p>先看以下代码：</p>
+<pre><code>&lt;ul&gt;&lt;/ul&gt;
+
+&lt;script&gt;
+  var ul = document.querySelector('ul')
+    , observer
+  try {
+    observer = new ( window.MutationObserver ||
+                     window.WebKitMutationObserver )( function( mutationRecord,
+                                                    observer ) {
+      mutationRecord.forEach( function( mutation ) {
+        console.log( mutation )
+      })
+    })
+    observer.observe( ul, { attributes: true, childList: true } )
+  } catch ( ex ) {}
+
+  ul.className = 'list'
+  ul.appendChild( document.createElement( 'li' ) )
+  // 不会触发 
+  ul.children[0].className = 'item'
+
+  // 在不需要时，停止继续观察
+  observer.disconnect()
+&lt;/script&gt;
+</code></pre>
+
+<p>目前支持的浏览器似乎只有 webkit 核心和 Firefox (14+），而在 Chrome 24 和 Safari 6.0.2 里仍属于私有实现，所以必须先判断：<code>window.MutationObserver || window.WebKitMutationObserver</code>。</p>
+<p><code>MutationObserver</code> 创建实例时需要一个函数作为参数作为回调函数，该函数有两个参数，一个是包含所有被观察的 <code>MutationRecord</code> 实例的数组，一个是 <code>MutationObserver</code> 实例。</p>
+<p><code>observer.observe( node, anObject )</code> 接受两个参数，需观察的对象和事件类型。事件类型用对象的形式来赋值，如 <code>{ attributes: true, childList: true }</code>，这决定了什么事件会被触发，比如上述例子执行结果为：</p>
+<pre><code>{
+  addedNodes: <span class="literal">null</span>,
+  attributeName: <span class="string">"class"</span>,
+  attributeNamespace: <span class="literal">null</span>,
+  nextSibling: <span class="literal">null</span>,
+  oldValue: <span class="literal">null</span>,
+  previousSibling: <span class="literal">null</span>,
+  removedNodes: <span class="literal">null</span>,
+  target: ul.list,
+  type: <span class="string">"attributes"</span>
+}
+{
+  addedNodes: NodeList[<span class="number">1</span>],
+  attributeName: <span class="literal">null</span>,
+  attributeNamespace: <span class="literal">null</span>,
+  nextSibling: <span class="literal">null</span>,
+  oldValue: <span class="literal">null</span>,
+  previousSibling: #text,
+  removedNodes: NodeList[<span class="number">0</span>],
+  target: ul,
+  type: <span class="string">"childList"</span>
+}
+</code></pre>
+
+<p><code>MutationObserver</code> 和一般的 <code>event</code> 不一样，默认仅观察指定对象，除非指定 <code>subtree: true</code>，所以更改 <code>li</code> 的 <code>className</code> 没有触发属性变动事件：</p>
+<pre><code><span class="title">ul</span>.children[<span class="number">0</span>].<span class="class">className = 'list'
+</code></pre>
+<p>此外还要注意的是，被观察的对象是 <code>node</code> 类型，所以类似这样的操作也会触发事件：<code>ul.appendChild( document.createTextNode( &#39;Hello World&#39; ) )</code>。</p>
+<p>更详细的内容请参考 <a href="https://developer.mozilla.org/en-US/docs/DOM/MutationObserver">MDN 的文档</a>。</p>
+<h3>CSS 动画事件的妙用</h3>
+<p><code>MutationObserver</code> 虽然实用度和性能都很优秀，但毕竟是 DOM Level 4 的东西——太新——在老一点的浏览器有没有别的代替方案呢？</p>
+<p>如果只是需要 <code>DOMNodeInserted</code>，那可以利用 CSS 动画事件实现类似的效果：</p>
+<pre><code>&lt;style&gt;
+  @-webkit-keyframes NodeInserted {  
+    from {}
+  }
+
+  @keyframes NodeInserted {  
+    from {  
+      clip: rect(0px, auto, auto, auto);  
+    }
+    to {  
+      clip: rect(0px, auto, auto, auto);
+    }
+  }
+
+  li {
+    -webkit-animation-duration: .001s;
+    animation-duration: .001s;
+    -webkit-animation-name: NodeInserted;
+    animation-name: NodeInserted;
+  }
+&lt;/style&gt;
+
+&lt;ul&gt;&lt;/ul&gt;
+
+&lt;script&gt;
+  var nodeInserted = function( event ) {
+    if ( 'NodeInserted' === event.animationName ) {
+      console.log( 'New node inserted!' )
+    }
+  }
+  document.addEventListener( 'webkitAnimationStart', nodeInserted, false )
+  document.addEventListener( 'animationstart', nodeInserted, false )
+
+  document.querySelector( 'ul' ).appendChild( document.createElement( 'li' ) )
+&lt;/script&gt;
+</code></pre>
+
+<p>这个技巧利用了 CSS 动画开始时触发的 <code>animationstart</code> 事件，因为如果一个元素只有在 DOM 里才会开始动画。</p>
+<p>一些需要注意的地方：</p>
+<ul>
+<li>Webkit 系列（Chrome 24 &amp; Safari 6.0.2）要加上 prefix，事件绑定也是；</li>
+<li>尽量别用 <code>jQuery.on()</code> 绑定事件，因为 <code>event</code> 参数是被 jQuery 创建的，目前并不支持 <code>event.animationName</code> 等几个属性（1.9.0）；</li>
+<li>Chrome 24 有点奇葩，只有一个空的 <code>from {}</code> 也会触发动画事件（其他 webkit 系没测试）；</li>
+<li>Firefox 需要比较完整并有实际效果的 <code>keyframes</code>，比如示例代码里的 <code>clip</code>，如果想省事，可以单独用 <code>from { opacity: 1 }</code>，但不是所有属性都可以触发；</li>
+<li><code>keyframes</code> 里的 CSS 属性要多注意，别不小心覆盖了需要的，比较安全的是 <code>opacity</code> 和 <code>clip</code>；</li>
+<li>建议通过判断 <code>event.animationName</code> 来避免非预期情况；</li>
+<li>建议用父元素做事件代理，如 <code>document.querySelector( &#39;ul&#39; ).addEventListener( &#39;animationstart&#39;, nodeInserted, false )</code>，并酌情停止冒泡。</li>
+</ul>
+<p>这个技巧可以用在任何支持 CSS 动画的浏览器上，泛用性比较高，可以参考我写的 <a href="http://userscripts.org/scripts/show/157225">Twitter Filter 用户脚本</a>，做成 bookmarklet 一样可以用在别的浏览器。</p>
+<p>补充：IE9 只支持 5 个 mutation 事件，不支持 CSS 动画，<code>MutationObserver</code> 目前还没支持的迹象，所以忘了 IE 系列吧。</p>
+</div><footer class="entry-footer"><time datetime="2013-01-26T12:22:00.000Z">Jan 26th, 2013</time><div class="tags"><a href="/tags/css/">CSS</a><a href="/tags/javascript/">JavaScript</a></div><section class="comments"><h2 class="title"><a name="comments">Comments</a></h2><div id="disqus_thread"><noscript>Please enable JavaScript to view the<a href="http://disqus.com/?ref_noscript">comments powered by Disqus</a></noscript></div></section><script>var disqus_shortname="chrisyipw";(function(){var a=document.createElement("script");a.type="text/javascript";a.async=!0;a.src="http://chrisyipw.disqus.com/embed.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)})();</script></footer></article></div><footer id="footer" class="inner page-footer"><Copyright>© 2013&nbsp;Chris Yip</Copyright></footer>
