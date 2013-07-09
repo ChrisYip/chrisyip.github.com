@@ -3,13 +3,23 @@
   <title><![CDATA[I'm Chris]]></title>
   <link href="http://chrisyip.im/atom.xml" rel="self"/>
   <link href="http://chrisyip.im"/>
-  <updated>2013-06-30T18:03:02.474Z</updated>
+  <updated>2013-07-09T02:38:06.078Z</updated>
   <id>http://chrisyip.im/</id>
   <author>
     <name><![CDATA[Chris Yip]]></name>
     <email><![CDATA[i@chrisyip.im]]></email>
   </author>
   <generator uri="http://zespia.tw/hexo">Hexo</generator>
+  <entry>
+    <title type="html"><![CDATA[&rarr;&nbsp;一篇无节操的 CSS3 3D Transform 解释文]]></title>
+    <link href="http://www.zhangxinxu.com/wordpress/?p=2592"/>
+    <id>http://chrisyip.im/post/css3-3d-transform-introduction/</id>
+    <published>2013-07-09T02:34:15.000Z</published>
+    <updated>2013-07-09T02:37:31.000Z</updated>
+    <content type="html"><![CDATA[<p><a href="http://www.zhangxinxu.com/life/about/">张鑫旭</a>写了一篇介绍 CSS3 3D transform 的文章，内容虽然有点掉节操的节奏，但通俗易懂。</p>
+<p><a href="http://www.zhangxinxu.com/wordpress/?p=2592">&infin; Permalink</a>]]></content>
+    <category scheme="http://chrisyip.im/tags/css/" term="CSS"/>
+  </entry>
   <entry>
     <title type="html"><![CDATA[雷柏 RATV 体验]]></title>
     <link href="http://chrisyip.im/post/rapoo-ratv/"/>
@@ -1098,27 +1108,5 @@ console.log(title(music_post)) <span class="comment">// 'HEY JADE'</span>
     <category scheme="http://chrisyip.im/tags/css/" term="CSS"/>
     <category scheme="http://chrisyip.im/tags/javascript/" term="JavaScript"/>
     <category scheme="http://chrisyip.im/tags/html/" term="HTML"/>
-  </entry>
-  <entry>
-    <title type="html"><![CDATA[Alfred 扩展：移除 OS X 右键菜单的重复项]]></title>
-    <link href="http://chrisyip.im/post/remove-duplicate-items-in-contextual-menu-with-alfred/"/>
-    <id>http://chrisyip.im/post/remove-duplicate-items-in-contextual-menu-with-alfred/</id>
-    <published>2012-11-07T10:14:00.000Z</published>
-    <updated>2013-04-17T14:33:18.000Z</updated>
-    <content type="html"><![CDATA[<p>升级到 Mountain Lion 之后，最恼人的是这个 bug：</p>
-<p><img src="http://d.pr/i/P0FH+" alt="Duplicate items in contextual menu"></p>
-<p>只要安装、升级程序都有可能造成重复项，实在烦人，但是并不是没有办法，可以用以下命名去重建右键菜单:</p>
-<pre><code>/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister -kill -domain local -domain system -domain user
-</code></pre>
-
-<p>复制到 Terminal 回车然后重启 Finder 就可以了。</p>
-<p>如果你是 Alfred 的 powerpack 用户，可以用我做的扩展，注意里面有重启 Finder 的命令，<code>killall Finder</code>，<strong>Finder 的工作还没做好之前，不要执行这个扩展，如有任何问题，本人不负责</strong>，你也可以在安装后删除那行命令：</p>
-<p><a href="http://d.pr/f/VsSF"><a href="http://d.pr/f/VsSF">http://d.pr/f/VsSF</a></a></p>
-<p><em>Image via <a href="http://forums.macrumors.com/showthread.php?t=1409978">MacRumors</a></em></p>
-<p><em>这是一篇老文，从旧 blog 里搬过来的，因为有点用。</em></p>
-]]></content>
-    <category scheme="http://chrisyip.im/tags/alfred/" term="Alfred"/>
-    <category scheme="http://chrisyip.im/tags/extension/" term="Extension"/>
-    <category scheme="http://chrisyip.im/tags/os-x/" term="OS X"/>
   </entry>
 </feed>
