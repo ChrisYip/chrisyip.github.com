@@ -3,7 +3,7 @@
   <title><![CDATA[I'm Chris]]></title>
   <link href="http://chrisyip.im/atom.xml" rel="self"/>
   <link href="http://chrisyip.im"/>
-  <updated>2013-07-10T15:46:43.712Z</updated>
+  <updated>2013-07-10T15:48:44.364Z</updated>
   <id>http://chrisyip.im/</id>
   <author>
     <name><![CDATA[Chris Yip]]></name>
@@ -15,9 +15,10 @@
     <link href="http://chrisyip.im/post/simplify-weibo/"/>
     <id>http://chrisyip.im/post/simplify-weibo/</id>
     <published>2013-07-10T15:41:25.000Z</published>
-    <updated>2013-07-10T15:46:35.000Z</updated>
+    <updated>2013-07-10T15:48:38.000Z</updated>
     <content type="html"><![CDATA[<p>最近在微博看信息比较多，发现微博的界面实在太乱，不能满足我「看」的需求，因此写了一个 <a href="http://stylebot.me/styles/2831">Simplify Weibo</a>，基于 <a href="https://chrome.google.com/webstore/detail/oiaejidbmkiecgbjeifoejpgmdaleoha">Stylebot</a>，预览图如下：</p>
 <p><img src="/bimg/simplify-weibo.png" alt="Simplify Weibo"></p>
+<p>PS: Retina 屏下字体效果会好很多哦！</p>
 ]]></content>
     <category scheme="http://chrisyip.im/tags/stylebot/" term="Stylebot"/>
     <category scheme="http://chrisyip.im/tags/weibo/" term="Weibo"/>
