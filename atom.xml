@@ -3,7 +3,7 @@
   <title><![CDATA[I'm Chris]]></title>
   <link href="http://chrisyip.im/atom.xml" rel="self"/>
   <link href="http://chrisyip.im"/>
-  <updated>2013-07-17T16:17:44.965Z</updated>
+  <updated>2013-07-17T16:21:17.021Z</updated>
   <id>http://chrisyip.im/</id>
   <author>
     <name><![CDATA[Chris Yip]]></name>
@@ -15,16 +15,18 @@
     <link href="http://chrisyip.im/post/vox-music-player/"/>
     <id>http://chrisyip.im/post/vox-music-player/</id>
     <published>2013-07-17T15:49:56.000Z</published>
-    <updated>2013-07-17T16:17:33.000Z</updated>
+    <updated>2013-07-17T16:21:12.000Z</updated>
     <content type="html"><![CDATA[<p>用了三年的 Mac，真的没用过一个让我满意的音乐播放器。</p>
 <p>在 Win，我们 Foobar、千千静听，连老头子 Winamp 也是不错的，但是 Mac，iTunes 太重，Cog 停止开发，Winamp for Mac 就是一坨屎，其他的不是要求 iTunes 常驻内存就是必须用（它们的）音乐库。</p>
 <p>我一度绝望，用着 Jing.fm、Xiami radio 等等来解决听歌问题，直到我遇上了 <a href="http://coppertino.com/vox/">Vox</a>，它给了我想要的一切：</p>
 <ul>
 <li>简洁的界面</li>
 <li>不需要加入音乐库即可播放歌曲</li>
+<li>菜单栏的控制工具条</li>
 <li>自动扫描 iTunes 曲库</li>
 </ul>
 <p><img src="/bimg/vox-music-player.png" alt="Vox"></p>
+<p>目前正在公测，bug 什么的肯定有，但我相当看好它，推荐试试。</p>
 <p>官方网站：<a href="http://coppertino.com/vox/"><a href="http://coppertino.com/vox/">http://coppertino.com/vox/</a></a></p>
 ]]></content>
     <category scheme="http://chrisyip.im/tags/app/" term="App"/>
