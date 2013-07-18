@@ -3,13 +3,39 @@
   <title><![CDATA[I'm Chris]]></title>
   <link href="http://chrisyip.im/atom.xml" rel="self"/>
   <link href="http://chrisyip.im"/>
-  <updated>2013-07-17T16:23:11.578Z</updated>
+  <updated>2013-07-18T07:10:15.061Z</updated>
   <id>http://chrisyip.im/</id>
   <author>
     <name><![CDATA[Chris Yip]]></name>
     <email><![CDATA[i@chrisyip.im]]></email>
   </author>
   <generator uri="http://zespia.tw/hexo">Hexo</generator>
+  <entry>
+    <title type="html"><![CDATA[Fiddler for Chrome Extension]]></title>
+    <link href="http://chrisyip.im/post/fiddler-for-chrome-extension/"/>
+    <id>http://chrisyip.im/post/fiddler-for-chrome-extension/</id>
+    <published>2013-07-18T06:26:24.000Z</published>
+    <updated>2013-07-18T07:09:59.000Z</updated>
+    <content type="html"><![CDATA[<p>相信做网页开发的没人不知道 Win 下的神级调试程序 <a href="http://fiddler2.com/">Fiddler</a> 吧？一直以来，Fiddler 都只支持 Win 平台，丝毫没有想要跨平台的迹象，Mac 用户感觉有点苦……</p>
+<p>然而 @<a href="http://weibo.com/welefen">welefen</a> 同学写了一个基于 Chrome 的 <a href="http://welefen.github.io/Fiddler/">Fiddler</a> 扩展，虽然初始功能还比较弱，但至少可以对请求进行简单的修改，比如以下规则：</p>
+<p><img src="/bimg/fiddler.png" alt="Fiddler: redirect Weibo to Twitter"></p>
+<p>这条规则就把到微博的访问重定向到 Twitter 上了。此外还能模拟 deply、cancel 什么的。</p>
+<p>我这刚好有个案例—— Pow 和 CDN 协同开发的问题。</p>
+<p>最近有一个项目，是用 AngularJS 写的，本地开发时用 Pow 托管，push 到 Git 仓库的时候会通过脚本自动同步到 CDN 服务器，本地资源 URL 和 CDN 是不一样的，所以就要么在 push 时跑脚本处理，要么手动修改，要么用 server + hosts（但 Pow 不行），而有了 Fiddler 就轻松了很多，比如：</p>
+<p>在 Jade 这么写：</p>
+<figure class="highlight lang-jade"><pre><span class="function"><span class="title">script</span><span class="params">(src='//cdn.example.com/js/app.js')</span>
+</pre></figure>
+
+<p>在 Fiddler 加入以下规则：</p>
+<p><img src="/bimg/fiddler-2.png" alt="Combine Pow and CDN server with Fiddler"></p>
+<p>这样既可以使用到本地的高速，也不必考虑上服务器时 URL 的修改。</p>
+<p>Fiddler for Chrome Exntesion 的主页：<a href="http://welefen.github.io/Fiddler/"><a href="http://welefen.github.io/Fiddler/">http://welefen.github.io/Fiddler/</a></a></p>
+]]></content>
+    <category scheme="http://chrisyip.im/tags/chrome/" term="Chrome"/>
+    <category scheme="http://chrisyip.im/tags/dev/" term="Dev"/>
+    <category scheme="http://chrisyip.im/tags/extension/" term="Extension"/>
+    <category scheme="http://chrisyip.im/tags/web/" term="Web"/>
+  </entry>
   <entry>
     <title type="html"><![CDATA[Vox: 一个漂亮的音乐播放器]]></title>
     <link href="http://chrisyip.im/post/vox-music-player/"/>
@@ -933,21 +959,5 @@ ssh         = +forward-override{forward-socks5 <span class="number">127.0</span>
     <category scheme="http://chrisyip.im/tags/os-x/" term="OS X"/>
     <category scheme="http://chrisyip.im/tags/pow/" term="Pow"/>
     <category scheme="http://chrisyip.im/tags/web/" term="Web"/>
-  </entry>
-  <entry>
-    <title type="html"><![CDATA[发布 Data URI Converter 1.0]]></title>
-    <link href="http://chrisyip.im/post/announcing-data-uri-converter/"/>
-    <id>http://chrisyip.im/post/announcing-data-uri-converter/</id>
-    <published>2012-11-25T09:37:00.000Z</published>
-    <updated>2013-04-17T14:32:53.000Z</updated>
-    <content type="html"><![CDATA[<p><a href="/data-uri-converter">Data URI Converter</a> 是我写的第一个 正式对外发布的 Mac App，写这货的动机是因为有段时间常用的拖曳式生成 DataURI 网站不是挂了就是被墙，剩下的都是不理想的，比如是传统 <code>&lt;input type=file&gt;</code>，所以萌生了写一个本地软件的想法。</p>
-<p>只是完成了原先计划的基础功能，如<strong>拖曳</strong>、<strong>自动识别 mime 类型</strong>、<strong>历史记录</strong>等，还有一些暂时没时间，先搁置，历史记录也做得相对简单了，预览图：</p>
-<p><img src="/data-uri-converter/screenshot2.png" alt="Data URI Converter Preview"></p>
-<p>欢迎任何意见或建议 :)</p>
-]]></content>
-    <category scheme="http://chrisyip.im/tags/app/" term="App"/>
-    <category scheme="http://chrisyip.im/tags/base64/" term="Base64"/>
-    <category scheme="http://chrisyip.im/tags/data-uri/" term="Data URI"/>
-    <category scheme="http://chrisyip.im/tags/os-x/" term="OS X"/>
   </entry>
 </feed>
