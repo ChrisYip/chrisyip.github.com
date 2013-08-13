@@ -3,13 +3,31 @@
   <title><![CDATA[I'm Chris]]></title>
   <link href="http://chrisyip.im/atom.xml" rel="self"/>
   <link href="http://chrisyip.im"/>
-  <updated>2013-07-18T07:10:15.061Z</updated>
+  <updated>2013-08-13T02:58:14.497Z</updated>
   <id>http://chrisyip.im/</id>
   <author>
     <name><![CDATA[Chris Yip]]></name>
     <email><![CDATA[i@chrisyip.im]]></email>
   </author>
   <generator uri="http://zespia.tw/hexo">Hexo</generator>
+  <entry>
+    <title type="html"><![CDATA[Authy - 二步验证的好助手]]></title>
+    <link href="http://chrisyip.im/post/authy/"/>
+    <id>http://chrisyip.im/post/authy/</id>
+    <published>2013-08-13T02:29:42.000Z</published>
+    <updated>2013-08-13T02:58:04.000Z</updated>
+    <content type="html"><![CDATA[<p>因为大家都知道的原因，我的 Google 账号一直都在用 Google Authenticator 进行二步验证。但是这货一直没怎么更新，连 iPhone 5 都没有支持，在 iOS 7 beta5 里更是连 app 标签都不显示了。</p>
+<p>然而真正的问题是昨天突然发现 Authenticator 里的 Google 账号被清空了，成了一个全新安装的 app。本想着干脆退回去用短信验证好了，这时候 双叶君 @<a href="https://twitter.com/leafduo">leafduo</a> 推荐了 <a href="https://www.authy.com/">Authy</a> 给我。</p>
+<p>试用了一下，确实不错。当然，核心功能和 Authenticator 是一样的 :P</p>
+<p>除了更新比 Authenticator 更新要勤快、对新设备支持更好之外，还有一个很有意思的功能：Mac 和移动设备通过蓝牙配对后，不必打开移动设备就可以在 Mac 上复制验证码。</p>
+<p>官方<a href="http://vimeo.com/71272779">介绍视频</a>：</p>
+<iframe src="http://player.vimeo.com/video/71272779?title=0&amp;byline=0&amp;portrait=0&amp;color=ed1c24" width="500" height="281" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+
+<p>推荐试试，反正我已经把 Google Authenticator 请出 iPhone 了 XD</p>
+]]></content>
+    <category scheme="http://chrisyip.im/tags/app/" term="App"/>
+    <category scheme="http://chrisyip.im/tags/google/" term="Google"/>
+  </entry>
   <entry>
     <title type="html"><![CDATA[Fiddler for Chrome Extension]]></title>
     <link href="http://chrisyip.im/post/fiddler-for-chrome-extension/"/>
@@ -937,27 +955,5 @@ ssh         = +forward-override{forward-socks5 <span class="number">127.0</span>
     <category scheme="http://chrisyip.im/tags/pow/" term="Pow"/>
     <category scheme="http://chrisyip.im/tags/privoxy/" term="Privoxy"/>
     <category scheme="http://chrisyip.im/tags/proxy/" term="Proxy"/>
-  </entry>
-  <entry>
-    <title type="html"><![CDATA[使用 Pow 和 Anvil 管理本地网站]]></title>
-    <link href="http://chrisyip.im/post/simplify-local-sites-management-with-pow-and-anvil/"/>
-    <id>http://chrisyip.im/post/simplify-local-sites-management-with-pow-and-anvil/</id>
-    <published>2012-12-23T10:34:00.000Z</published>
-    <updated>2013-03-12T10:49:48.000Z</updated>
-    <content type="html"><![CDATA[<p>做网页开发的（特别是 Rails 开发者）应该听过甚至在使用 <a href="http://pow.cx/">Pow</a> 了吧？Pow 让开发者从 <code>localhost:port</code> 地狱中解放出来，她让每个项目都可以通过以项目名（实际是文件夹名）和 <code>.dev</code> 组成的域名来代替 <code>localhost:port</code> 的方式，如 <code>http://project_name.dev/</code>，不管在易用性还是视觉上都是非常赞的。</p>
-<p>使用方法很简单，通过 <code>curl get.pow.cx | sh</code> 安装完后，把项目用 symbol link 连到 <code>~/.pow</code> 下就可以：</p>
-<pre><code><span class="title">cd</span> ~/.pow
-<span class="title">ln</span> -s /path/to/myapp
-</code></pre>
-<p>但是每次都要跑命令行还是有点麻烦，而 <a href="http://anvilformac.com/">Anvil</a> 就是为了解决这个问题而诞生的。</p>
-<p>Anvil 是一个只在菜单栏占一个位置的程序，如果要添加项目，只需要把文件夹拖放到菜单栏上的图标即可，Anvil 就为你做剩下的工作；删除项目时只需点击图标，在菜单里点击对应的删除按钮即可：</p>
-<p><img src="/bimg/anvil.png" alt="Anvil"></p>
-<p>Anvil 实在简单得没什么可以说的，不过有一点需要注意，因为<strong>Anvil 本质上相当于是 Pow 的图形界面</strong>，所以是需要安装 Pow 的，运行时 Anvil 也会提示需要安装 Pow；需要注意的是，Anvil（0.61）<strong>不能</strong>识别通过 <a href="http://mxcl.github.com/homebrew/">Homebrew</a> 安装的 Pow，需要通过 <code>curl get.pow.cx | sh</code> 或点击 Anvil 的安装按钮来安装 Pow。</p>
-]]></content>
-    <category scheme="http://chrisyip.im/tags/anvil/" term="Anvil"/>
-    <category scheme="http://chrisyip.im/tags/app/" term="App"/>
-    <category scheme="http://chrisyip.im/tags/os-x/" term="OS X"/>
-    <category scheme="http://chrisyip.im/tags/pow/" term="Pow"/>
-    <category scheme="http://chrisyip.im/tags/web/" term="Web"/>
   </entry>
 </feed>
